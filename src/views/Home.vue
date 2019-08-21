@@ -18,7 +18,7 @@ const columns = [
   { label: "姓名", key: "name"},
   { label: "年龄", key: "age" },
   { label: "详细", key: "detail"},
-  { label: "地址", key: "address"}
+  { label: "地址", key: "address", fixed: "right"}
 ];
 
 const data = [

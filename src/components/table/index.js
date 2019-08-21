@@ -1,6 +1,7 @@
 /**
  * 表格
- * 外边框：border
+ * 默认外边框：border
+ * 默认显示表格：showHeader
  * 表格内竖直线：verticalLine
  * 斑马纹：stripe，斑马纹颜色（需设置stripe有效）：stripeColor
  * 选中行高亮：highlightRow，选中事件：row-click(row, column)

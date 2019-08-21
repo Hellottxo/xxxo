@@ -1,110 +1,26 @@
 <template>
   <div class="xo-table">
-    <div class="xo-table-header" v-if="showHeader">
-      <table :class="{
-        'border-top': border,
-        'border-left': border,
-        'border-right': border
-      }">
-        <colgroup>
-          <col width="40" v-if="expand">
-          <col v-for="config in columns"
-          :key="config.key"
-          :width="config.width ? config.width : ''">
-        </colgroup>
-        <thead>
-          <tr>
-            <th
-            :class="{'border-right': verticalLine}"
-            v-if="expand">
-            
-            </th>
-            <th v-for="config in columns"
-            :key="config.key"
-            :class="{'border-right': verticalLine}">
-              <div class="cell"
-              :style="{
-              'justify-content': config.align,
-              'color': config.color
-              }">
-              {{ config.label }}
-              </div>
-            </th>
-          </tr>
-        </thead>
-      </table>
-    </div>
-    <div class="xo-table-body" v-if="data.length > 0">
-      <table :class="{
-        'border-left': border,
-        'border-right': border }">
-        <colgroup>
-          <col width="40" v-if="expand">
-          <col v-for="config in columns"
-          :key="config.key"
-          :width="config.width ? config.width : ''">
-        </colgroup>
-        <tbody>
-          <template v-for="(item, index) in data">
-            <tr :key="index"
-            :class="{
-              'stripe': stripe && (index + 1)%2 === 0,
-              'highlight': index === highlightIndex
-            }"
-            :style="{ 'background-color': stripeColor && (index + 1)%2 === 0 ? stripeColor : '' }">
-              <td
-              :class="{ 'border-right': verticalLine }"
-              @click="showExpand(index)"
-              v-if="expand">
-                <div class="cell">
-                  <i class="icon-triangle"
-                  style="top: 3px; right:10px"
-                  :class="{'open': hasRowExpand.indexOf(index) > -1}"
-                  v-if="item.rowExpand"></i>
-                </div>
-              </td>
-              <td v-for="(config, i) in columns"
-              :key="config.key"
-              :class="{ 'border-right': verticalLine }"
-              @click="clickRow(index, config.$index)">
-                <div class="cell">
-                  <span :title="item[config.key]">
-                    {{ item[config.key] }}
-                  </span>
-                  <i class="icon-triangle"
-                  v-if="item.children && (item.arrowPosition ? item.arrowPosition === config.key : i === 0)"
-                  :class="{'open': hasChildOpen.indexOf(index) > -1}"></i>
-                </div>
-              </td>
-            </tr>
-            <template v-if="item.children && hasChildOpen.indexOf(index) > -1">
-              <tr 
-              v-for="child in item.children"
-              :key="child.$index"
-              class="child-tr">
-                <td v-if="expand"
-                :class="{ 'border-right': verticalLine }"></td>
-                <td v-for="config in (childcolumns ? childcolumns : columns)"
-                :key="config.key"
-                :class="{ 'border-right': verticalLine }">
-                  <div class="cell">
-                    <span :title="child[config.key]">
-                      {{ child[config.key] }}
-                    </span>
-                  </div>
-                </td>
-              </tr>
-            </template>
-            <tr class="slot" :key="item.$index"
-            v-if="hasRowExpand.indexOf(index) > -1 && item.rowExpand">
-              <td :colspan="columns.length+1">
-                <slot name="append" :data="item"></slot>
-              </td>
-            </tr>
-          </template>
-        </tbody>
-      </table>
-    </div>
+    <template v-if="showHeader">
+      <table-header
+      :border="border"
+      :expand="expand"
+      :columns="columns"
+      :verticalLine="verticalLine"></table-header>
+    </template>
+    <template>
+      <table-body
+      :columns="columns"
+      :childcolumns="childcolumns"
+      :data="data"
+      :border="border"
+      :verticalLine="verticalLine"
+      :stripe="stripe"
+      :stripeColor="stripeColor"
+      :highlightRow="highlightRow"
+      :expand="expand"
+      @row-click="rowClick"
+      ></table-body>
+    </template>
     <div class="xo-table-tip" v-if="data.length === 0">
       <table 
         :class="{
@@ -121,15 +37,21 @@
 </template>
 
 <script>
+import tableHeader from './table-header';
+import tableBody from './table-body';
+
 export default {
   name: 'xoTable',
+  components:{
+    tableHeader,
+    tableBody,
+  },
   data() {
     return {
       highlightIndex: -1,
       hasChildOpen: [],
       hasRowExpand: [],
       hasSelect: [],
-      isAllChecked: false
     };
   },
   props: {
@@ -166,40 +88,19 @@ export default {
     },
   },
   methods: {
-    clickRow(row, column) {
-      if (this.highlightRow) {
-        this.highlightIndex = row;
-      }
-      this.$emit('row-click', row, column);
-      if(this.data[row].children) {
-        const flag = this.hasChildOpen.indexOf(row);
-        if(flag > -1) {
-          this.hasChildOpen.splice(flag, 1);
-        }else {
-          this.hasChildOpen.push(row);
-        }
-      }
-    },
-    showExpand(index) {
-      const flag = this.hasRowExpand.indexOf(index);
-      if(flag > -1) {
-        this.hasRowExpand.splice(flag, 1);
-      }else {
-        this.hasRowExpand.push(index);
-      }
+    rowClick(row,column) {
+      this.$emit('row-click', row, column)
     }
-  },
+  }
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .xo-table {
   display: flex;
   flex: 1;
   flex-direction: column;
-  .xo-table-header {
-    overflow: auto;
-  }
+  position: relative;
   .xo-table-body {
     overflow: auto;
   }
