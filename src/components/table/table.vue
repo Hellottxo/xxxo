@@ -1,29 +1,93 @@
 <template>
-  <div class="xo-table">
-    <template v-if="showHeader">
+  <div class="xo-table"
+  :style="{
+  height: `${height}px`,
+  width: `${width}px`}">
+    <div class="xo-table-header"
+    v-if="showHeader">
       <table-header
-      :border="border"
-      :expand="expand"
-      :columns="columns"
-      :verticalLine="verticalLine"></table-header>
-    </template>
-    <template>
+        :border="border"
+        :expand="expand"
+        :columns="columns"
+        :verticalLine="verticalLine"
+        :style="{marginLeft: `${scrollWidth}px`}"
+        :showGutter="showGutter"
+      ></table-header>
+    </div>
+    <div
+    class="xo-table-body"
+    @scroll="tableScroll"
+    ref="displayTableBody">
       <table-body
-      :columns="columns"
-      :childcolumns="childcolumns"
-      :data="data"
-      :border="border"
-      :verticalLine="verticalLine"
-      :stripe="stripe"
-      :stripeColor="stripeColor"
-      :highlightRow="highlightRow"
-      :expand="expand"
-      @row-click="rowClick"
-      ></table-body>
-    </template>
+        :columns="columns"
+        :childcolumns="childcolumns"
+        :data="data"
+        :border="border"
+        :verticalLine="verticalLine"
+        :stripe="stripe"
+        :stripeColor="stripeColor"
+        :highlightRow="highlightRow"
+        :expand="expand"
+        @row-click="rowClick"
+        ref="scrollTableBody"
+      >
+        <template v-slot="scope" v-if="$scopedSlots.default">
+          <slot :data="scope.data"></slot>
+        </template>
+        <template v-slot:append="scope">
+          <slot name="append" :data="scope.data"></slot>
+        </template>
+      </table-body>
+    </div>
+    <div
+    :style="{
+    height: `${height}px`,
+    width: `${width}px`,
+    }"
+    class="xo-table-endFixed"
+    v-if="this.rightFlag > -1">
+      <div
+      class="xo-table-header"
+      v-if="showHeader">
+        <table-header
+          :border="border"
+          :expand="expand"
+          :columns="columns"
+          :verticalLine="verticalLine"
+          :showGutter="showGutter"
+          :rightFlag="rightFlag"
+          :leftFlag="leftFlag"
+          :width="width"
+        ></table-header>
+      </div>
+      <div
+      class="xo-table-body">
+        <table-body
+          :columns="columns"
+          :childcolumns="childcolumns"
+          :data="data"
+          :border="border"
+          :verticalLine="verticalLine"
+          :stripe="stripe"
+          :stripeColor="stripeColor"
+          :highlightRow="highlightRow"
+          :expand="expand"
+          @row-click="rowClick"
+          :rightFlag="rightFlag"
+          :width="width"
+          :leftFlag="leftFlag"
+        >
+          <template v-slot="scope" v-if="$scopedSlots.default">
+            <slot :data="scope.data"></slot>
+          </template>
+          <template v-slot:append="scope">
+            <slot name="append" :data="scope.data"></slot>
+          </template>
+        </table-body>
+      </div>
+    </div>
     <div class="xo-table-tip" v-if="data.length === 0">
-      <table 
-        :class="{
+      <table :class="{
         'border-left': border,
         'border-right': border }">
         <tbody>
@@ -37,12 +101,12 @@
 </template>
 
 <script>
-import tableHeader from './table-header';
-import tableBody from './table-body';
+import tableHeader from "./table-header";
+import tableBody from "./table-body";
 
 export default {
-  name: 'xoTable',
-  components:{
+  name: "xoTable",
+  components: {
     tableHeader,
     tableBody,
   },
@@ -52,6 +116,10 @@ export default {
       hasChildOpen: [],
       hasRowExpand: [],
       hasSelect: [],
+      scrollWidth: 0,
+      showGutter: false,
+      rightFlag: -1,
+      leftFlag: -1,
     };
   },
   props: {
@@ -76,7 +144,7 @@ export default {
     },
     stripeColor: {
       type: String,
-      default: '',
+      default: "",
     },
     highlightRow: {
       type: Boolean,
@@ -86,11 +154,33 @@ export default {
       type: Boolean,
       default: false,
     },
+    width: {
+      type: String,
+      default: '100%',
+    },
+    height: {
+      type: String,
+      default: '100%',
+    }
   },
   methods: {
-    rowClick(row,column) {
-      this.$emit('row-click', row, column)
+    rowClick(row, column) {
+      this.$emit("row-click", row, column);
+    },
+    tableScroll(e) {
+      this.scrollWidth = -e.target.scrollLeft;
     }
+  },
+  mounted() {
+    const displayHeight = this.$refs.displayTableBody.clientHeight;
+    const scrollHeight = this.$refs.scrollTableBody.$el.clientHeight;
+    if(displayHeight < scrollHeight) {
+      this.showGutter = true;
+    }else {
+      this.showGutter = false;
+    }
+    this.rightFlag = this.columns.findIndex(e => e.fixed === "right");
+    this.leftFlag = this.columns.findIndex(e => e.fixed === "left");
   }
 };
 </script>
@@ -101,22 +191,45 @@ export default {
   flex: 1;
   flex-direction: column;
   position: relative;
+  .xo-table-header {
+    overflow: hidden;
+  }
   .xo-table-body {
     overflow: auto;
+    flex: 1;
+  }
+  .xo-table-endFixed {
+    position: absolute;
+    right: 0;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+  }
+  .xo-table-body::-webkit-scrollbar {/*滚动条整体样式*/
+    width: 10px;     /*高宽分别对应横竖滚动条的尺寸*/
+    height: 10px;
+    }
+  .xo-table-body::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+    border-radius: 10px;
+    background: #e8eaec;
+  }
+  .xo-table-body::-webkit-scrollbar-track {/*滚动条里面轨道*/
+    border-radius: 10px;
+    background: #fff;
   }
   table {
     width: 100%;
     table-layout: fixed;
-    border-collapse:collapse;
+    border-collapse: collapse;
     user-select: none;
     font-size: 12px;
     color: #515a6e;
   }
-  tr{
+  tr {
     background: #fff;
   }
   tr:hover {
-    background: #FAFBFC;
+    background: #fafbfc;
   }
   th {
     border-bottom: 1px solid #e8eaec;
@@ -141,9 +254,13 @@ export default {
   .cell {
     padding: 7px;
     position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
   }
   .icon-triangle {
-    width: 0; 
+    width: 0;
     height: 0;
     border-width: 5px;
     border-style: solid;
@@ -175,7 +292,7 @@ export default {
     width: 100vh;
   }
   .highlight {
-    background-color: #ebf7ff !important
+    background-color: #ebf7ff !important;
   }
 }
 </style>
