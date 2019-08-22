@@ -91,8 +91,10 @@ export default {
     }
   },
   mounted() {
-    const tableWidth = this.$refs.table.offsetWidth;
-    this.leftWidth = tableWidth - this.width
+    const tableWidth = this.$refs.table.clientWidth;
+    console.log(this.$refs.table.clientWidth)
+    this.leftWidth = this.width - tableWidth -1
+
   }
 };
 </script>

@@ -24,7 +24,7 @@
           >
             <td
             :class="{ 'border-right': verticalLine,
-            'hidden': rightFlag||leftFlag}"
+            'hidden': rightFlag > -1||leftFlag > -1}"
             @click="showExpand(index)" v-if="expand">
               <div class="cell">
                 <i
@@ -173,9 +173,9 @@ export default {
     }
   },
   mounted() {
-    const tableWidth = this.$refs.table.offsetWidth;
-    console.log(this.$refs.table.offsetWidth)
-    this.leftWidth = tableWidth - this.width
+    const tableWidth = this.$refs.table.clientWidth;
+    console.log(this.$refs.table.clientWidth);
+    this.leftWidth = this.width - tableWidth - 11;
   }
 };
 </script>

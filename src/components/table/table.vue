@@ -41,7 +41,7 @@
     </div>
     <div
     :style="{
-    height: `${height}px`,
+    height: `${height - 10}px`,
     width: `${width}px`,
     }"
     class="xo-table-endFixed"
