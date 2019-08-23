@@ -1,10 +1,5 @@
 <template>
   <div
-  :class="{
-    'border-top': border,
-    'border-left': border,
-    'border-right': border,
-  }"
   class="table-header">
     <table
       :style="{
@@ -93,8 +88,7 @@ export default {
   },
   mounted() {
     const tableWidth = this.$refs.table.clientWidth;
-    this.leftWidth = this.width - tableWidth - 1;
-
+    this.leftWidth = this.width - tableWidth + 1;
   }
 };
 </script>

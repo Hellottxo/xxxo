@@ -1,8 +1,16 @@
 <template>
-  <div class="xo-table"
+  <div
+  class="xo-table"
   :style="{
-  height: `${height}px`,
-  width: `${width}px`}">
+    height: `${height}px`,
+    width: `${width}px`,
+  }"
+  :class="{
+    'border-top': border,
+    'border-left': border,
+    'border-right': border,
+    'border-bottom': border,
+  }">
     <div
     class="xo-table-header"
     v-if="showHeader">
@@ -13,12 +21,14 @@
         :verticalLine="verticalLine"
         :style="{marginLeft: `${scrollWidth}px`}"
         :showGutter="showGutter"
+        ref="tableHeader"
       ></table-header>
     </div>
     <div
     class="xo-table-body"
     @scroll="tableScroll"
-    ref="displayTableBody">
+    ref="displayTableBody"
+    >
       <table-body
         :columns="columns"
         :childcolumns="childcolumns"
@@ -43,12 +53,14 @@
     <div
     :style="{
     height: `${height - 10}px`,
-    width: `${width}px`,
+    width: `${lastColumnsWidth - 10}px`,
+    right: this.showGutter ? `10px` : 0
     }"
+    @mousewheel="fixedMousewheel"
     class="xo-table-endFixed"
     v-if="this.rightFlag > -1">
       <div
-      class="xo-table-header"
+      class="xo-table-fixed_header"
       v-if="showHeader">
         <table-header
           :border="border"
@@ -58,11 +70,11 @@
           :showGutter="showGutter"
           :rightFlag="rightFlag"
           :leftFlag="leftFlag"
-          :width="width"
+          :width="lastColumnsWidth"
         ></table-header>
       </div>
       <div
-      class="xo-table-body">
+      class="xo-table-fixed_body">
         <table-body
           :columns="columns"
           :childcolumns="childcolumns"
@@ -76,8 +88,9 @@
           @row-click="rowClick"
           :rightFlag="rightFlag"
           :leftFlag="leftFlag"
-          :width="width"
+          :width="lastColumnsWidth"
           :height="height"
+          :scrollTopWidth="scrollTopWidth"
         >
           <template v-slot="scope" v-if="$scopedSlots.default">
             <slot :data="scope.data"></slot>
@@ -122,6 +135,9 @@ export default {
       showGutter: false,
       rightFlag: -1,
       leftFlag: -1,
+      scrollTopWidth: 0,
+      canScrollHeight: 0,
+      lastColumnsWidth: 0
     };
   },
   props: {
@@ -171,11 +187,18 @@ export default {
     },
     tableScroll(e) {
       this.scrollWidth = -e.target.scrollLeft;
+      this.scrollTopWidth = -e.target.scrollTop;
+    },
+    fixedMousewheel(e) {
+      if(this.canScrollHeight > 0) {
+        this.$refs.displayTableBody.scrollTop += e.deltaY
+      }
     }
   },
   mounted() {
     const displayHeight = this.$refs.displayTableBody.clientHeight;
     const scrollHeight = this.$refs.scrollTableBody.$el.clientHeight;
+    this.canScrollHeight = scrollHeight - displayHeight;
     if(displayHeight < scrollHeight) {
       this.showGutter = true;
     }else {
@@ -183,6 +206,10 @@ export default {
     }
     this.rightFlag = this.columns.findIndex(e => e.fixed === "right");
     this.leftFlag = this.columns.findIndex(e => e.fixed === "left");
+    const th = this.$refs.tableHeader.$el.getElementsByTagName('th');
+    const len = th.length;
+      this.lastColumnsWidth = len > this.columns.length ? 
+      `${th[len - 1].clientWidth}` : `${th[len].clientWidth}`;
   }
 };
 </script>
@@ -206,6 +233,9 @@ export default {
     display: flex;
     flex: 1;
     flex-direction: column;
+    .xo-table-fixed_body {
+      overflow: hidden;
+    }
   }
   .xo-table-body::-webkit-scrollbar {/*滚动条整体样式*/
     width: 10px;     /*高宽分别对应横竖滚动条的尺寸*/
@@ -216,7 +246,6 @@ export default {
     background: #e8eaec;
   }
   .xo-table-body::-webkit-scrollbar-track {/*滚动条里面轨道*/
-    border-radius: 10px;
     background: #fff;
   }
   table {
@@ -240,15 +269,6 @@ export default {
   td {
     padding: 3px;
     border-bottom: 1px solid #e8eaec;
-  }
-  .border-right {
-    border-right: 1px solid #e8eaec;
-  }
-  .border-left {
-    border-left: 1px solid #e8eaec;
-  }
-  .border-top {
-    border-top: 1px solid #e8eaec;
   }
   .stripe {
     background-color: #f8f8f9;
@@ -296,5 +316,17 @@ export default {
   .highlight {
     background-color: #ebf7ff !important;
   }
+}
+.border-right {
+  border-right: 1px solid #e8eaec;
+}
+.border-left {
+  border-left: 1px solid #e8eaec;
+}
+.border-top {
+  border-top: 1px solid #e8eaec;
+}
+.border-bottom {
+  border-bottom: 1px solid #e8eaec;
 }
 </style>

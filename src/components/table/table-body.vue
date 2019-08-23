@@ -1,13 +1,11 @@
 <template>
-  <div class="table-body"
-  :class="{
-  'border-left': border,
-  'border-right': border }">
+  <div class="table-body">
     <table 
       ref="table"
       :style="{
       marginLeft: 
-      rightFlag > -1 || leftFlag > -1 ? `${leftWidth}px` : 0
+      rightFlag > -1 || leftFlag > -1 ? `${leftWidth}px` : 0,
+      marginTop: scrollTopWidth !== 0 ? `${scrollTopWidth}px` : 0
       }">
       <colgroup>
         <col width="40" v-if="expand">
@@ -25,9 +23,15 @@
             stripeColor && (index + 1)%2 === 0 ? stripeColor : '' }"
           >
             <td
-            :class="{ 'border-right': verticalLine,
-            'hidden': rightFlag > -1||leftFlag > -1}"
-            @click="showExpand(index)" v-if="expand">
+            :class="{
+              'border-right': verticalLine,
+              'hidden': rightFlag > -1 || leftFlag > -1,
+            }"
+            :style="{
+              borderBottom: index === data.length - 1 ? 'none' : ''
+            }"
+            @click="showExpand(index)"
+            v-if="expand">
               <div class="cell">
                 <i
                   class="icon-triangle"
@@ -44,6 +48,9 @@
               'border-right': verticalLine,
               'hidden': isHidden(config.fixed) }"
               @click="rowClick(index, config.$index)"
+              :style="{
+                borderBottom: index === data.length - 1 ? 'none' : ''
+              }"
             >
               <template v-if="$scopedSlots.default">
                 <div class="cell">
@@ -92,12 +99,11 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
 export default {
   data() {
     return {
       highlightIndex: -1,
-      hasChildOpen: [],
-      hasRowExpand: [],
       hasSelect: [],
       leftWidth: 0
     };
@@ -146,29 +152,46 @@ export default {
       type: String,
       default: ''
     },
+    scrollTopWidth: {
+      type: Number,
+      default: 0
+    }
+  },
+  computed: {
+    ...mapState('tableModuel', ['clickRow', 'hasChildOpen', 'hasRowExpand']),
+  },
+  watch: {
+    clickRow() {
+      if (this.highlightRow) {
+        this.highlightIndex = this.clickRow;
+      }
+    },
   },
   methods: {
+    ...mapMutations('tableModuel', ['chgClickRow', 'chgChildOpen', 'chgRowExpand']),
     rowClick(row, column) {
-      if (this.highlightRow) {
-        this.highlightIndex = row;
-      }
+      this.chgClickRow(row);
       this.$emit("row-click", row, column);
-      if (this.data[row].children) {
-        const flag = this.hasChildOpen.indexOf(row);
+      if (this.data[this.clickRow].children) {
+        let temp = this.hasChildOpen;
+        const flag = temp.indexOf(this.clickRow);
         if (flag > -1) {
-          this.hasChildOpen.splice(flag, 1);
+          temp.splice(flag, 1);
         } else {
-          this.hasChildOpen.push(row);
+          temp.push(this.clickRow);
         }
+        this.chgChildOpen(temp);
       }
     },
     showExpand(index) {
-      const flag = this.hasRowExpand.indexOf(index);
+      let temp = this.hasRowExpand;
+      const flag = temp.indexOf(index);
       if (flag > -1) {
-        this.hasRowExpand.splice(flag, 1);
+        temp.splice(flag, 1);
       } else {
-        this.hasRowExpand.push(index);
+        temp.push(index);
       }
+      this.chgRowExpand(temp);
     },
     isHidden(val) {
       if(this.rightFlag > -1 || this.leftFlag > -1) {
@@ -180,8 +203,7 @@ export default {
   },
   mounted() {
     const tableWidth = this.$refs.table.clientWidth;
-    const val = this.height - this.$refs.table.clientHeight < 0 ? 11 : 2;
-    this.leftWidth = this.width - tableWidth - val;
+    this.leftWidth = this.width - tableWidth;
   }
 };
 </script>
