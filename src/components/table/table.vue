@@ -3,7 +3,8 @@
   :style="{
   height: `${height}px`,
   width: `${width}px`}">
-    <div class="xo-table-header"
+    <div
+    class="xo-table-header"
     v-if="showHeader">
       <table-header
         :border="border"
@@ -74,8 +75,9 @@
           :expand="expand"
           @row-click="rowClick"
           :rightFlag="rightFlag"
-          :width="width"
           :leftFlag="leftFlag"
+          :width="width"
+          :height="height"
         >
           <template v-slot="scope" v-if="$scopedSlots.default">
             <slot :data="scope.data"></slot>
@@ -208,7 +210,7 @@ export default {
   .xo-table-body::-webkit-scrollbar {/*滚动条整体样式*/
     width: 10px;     /*高宽分别对应横竖滚动条的尺寸*/
     height: 10px;
-    }
+  }
   .xo-table-body::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
     border-radius: 10px;
     background: #e8eaec;

@@ -1,15 +1,16 @@
 <template>
-  <div class="table-header">
+  <div
+  :class="{
+    'border-top': border,
+    'border-left': border,
+    'border-right': border,
+  }"
+  class="table-header">
     <table
-      ref="table"
-      :class="{
-        'border-top': border,
-        'border-left': border,
-        'border-right': border,
-      }"
       :style="{
-      marginLeft: rightFlag > -1 || leftFlag > -1 ? `${leftWidth}px` : 0
+      marginLeft: rightFlag > -1 || leftFlag > -1 ? `${leftWidth-1}px` : 0
       }"
+      ref="table"
     >
       <colgroup>
         <col width="40" v-if="expand">
@@ -92,8 +93,7 @@ export default {
   },
   mounted() {
     const tableWidth = this.$refs.table.clientWidth;
-    console.log(this.$refs.table.clientWidth)
-    this.leftWidth = this.width - tableWidth -1
+    this.leftWidth = this.width - tableWidth - 1;
 
   }
 };

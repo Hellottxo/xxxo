@@ -1,8 +1,9 @@
 <template>
-  <div class="table-body" v-if="data.length > 0">
-    <table :class="{
-      'border-left': border,
-      'border-right': border }"
+  <div class="table-body"
+  :class="{
+  'border-left': border,
+  'border-right': border }">
+    <table 
       ref="table"
       :style="{
       marginLeft: 
@@ -20,7 +21,8 @@
               'stripe': stripe && (index + 1)%2 === 0,
               'highlight': index === highlightIndex,
             }"
-            :style="{ 'background-color': stripeColor && (index + 1)%2 === 0 ? stripeColor : '' }"
+            :style="{ 'background-color':
+            stripeColor && (index + 1)%2 === 0 ? stripeColor : '' }"
           >
             <td
             :class="{ 'border-right': verticalLine,
@@ -139,7 +141,11 @@ export default {
     width: {
       type: String,
       default: ''
-    }
+    },
+    height: {
+      type: String,
+      default: ''
+    },
   },
   methods: {
     rowClick(row, column) {
@@ -174,8 +180,8 @@ export default {
   },
   mounted() {
     const tableWidth = this.$refs.table.clientWidth;
-    console.log(this.$refs.table.clientWidth);
-    this.leftWidth = this.width - tableWidth - 11;
+    const val = this.height - this.$refs.table.clientHeight < 0 ? 11 : 2;
+    this.leftWidth = this.width - tableWidth - val;
   }
 };
 </script>
