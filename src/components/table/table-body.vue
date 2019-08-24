@@ -9,7 +9,7 @@
       }">
       <colgroup>
         <col width="40" v-if="expand">
-        <col v-for="config in columns" :key="config.key" :width="config.width ? config.width : ''">
+        <col v-for="config in tableColumns" :key="config.key" :width="config.width ? config.width : ''">
       </colgroup>
       <tbody>
         <template v-for="(item, index) in data">
@@ -42,7 +42,7 @@
               </div>
             </td>
             <td
-              v-for="(config, i) in columns"
+              v-for="(config, i) in tableColumns"
               :key="config.key"
               :class="{
               'border-right': verticalLine,
@@ -73,7 +73,7 @@
             <tr v-for="child in item.children" :key="child.$index" class="child-tr">
               <td v-if="expand" :class="{ 'border-right': verticalLine }"></td>
               <td
-                v-for="config in (childcolumns ? childcolumns : columns)"
+                v-for="config in (childcolumns ? childcolumns : tableColumns)"
                 :key="config.key"
                 :class="{ 'border-right': verticalLine }"
               >
@@ -88,7 +88,7 @@
             :key="item.$index"
             v-if="hasRowExpand.indexOf(index) > -1 && item.rowExpand"
           >
-            <td :colspan="columns.length+1">
+            <td :colspan="tableColumns.length+1">
               <slot name="append" :data="item"></slot>
             </td>
           </tr>
@@ -109,7 +109,6 @@ export default {
     };
   },
   props: {
-    columns: Array,
     childcolumns: Array,
     data: Array,
     border: {
@@ -158,7 +157,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('tableModuel', ['clickRow', 'hasChildOpen', 'hasRowExpand']),
+    ...mapState('tableModuel', ['clickRow', 'hasChildOpen', 'hasRowExpand', 'tableColumns', 'rightFixedWidth']),
   },
   watch: {
     clickRow() {
@@ -203,7 +202,7 @@ export default {
   },
   mounted() {
     const tableWidth = this.$refs.table.clientWidth;
-    this.leftWidth = this.width - tableWidth;
+    this.leftWidth = this.rightFixedWidth - tableWidth;
   }
 };
 </script>

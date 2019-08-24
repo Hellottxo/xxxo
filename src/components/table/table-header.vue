@@ -9,14 +9,14 @@
     >
       <colgroup>
         <col width="40" v-if="expand">
-        <col v-for="config in columns" :key="config.key" :width="config.width ? config.width : ''">
+        <col v-for="config in tableColumns" :key="config.key" :width="config.width ? config.width : ''">
         <col width="10px" v-if="showGutter">
       </colgroup>
       <thead>
         <tr>
           <th :class="{'border-right': verticalLine}" v-if="expand"></th>
           <th
-          v-for="config in columns"
+          v-for="config in tableColumns"
           :key="config.key"
           :class="{
             'border-right': verticalLine,
@@ -39,14 +39,16 @@
 </template>
 
 <script>
+import { mapState, mapMutations} from 'vuex';
+
 export default {
   data() {
     return {
-      leftWidth: 0
+      leftWidth: 0,
+      rightFixedWidth: 0
     }
   },
   props: {
-    columns: Array,
     border: {
       type: Boolean,
       default: true
@@ -55,7 +57,6 @@ export default {
       type: Boolean,
       default: false
     },
-    columns: Array,
     verticalLine: {
       type: Boolean,
       default: false
@@ -77,18 +78,30 @@ export default {
       default: ''
     }
   },
+  computed: {
+    ...mapState('tableModuel', ['tableColumns'])
+  },
   methods: {
+    ...mapMutations('tableModuel', ['chgRightFixedWidth']),
     isHidden(val) {
       if(this.rightFlag > -1 || this.leftFlag > -1) {
         return !val ? true : false;
       }else {
         return false;
       }
+    },
+    getRightFixedWidth() {
+      const th = this.$refs.table.getElementsByTagName('th');
+      const len = th.length;
+      this.rightFixedWidth = len > this.tableColumns.length ? 
+       `${th[len - 1].clientWidth}` : `${th[len].clientWidth}`;
+      this.chgRightFixedWidth(this.rightFixedWidth);
     }
   },
   mounted() {
+    this.getRightFixedWidth();
     const tableWidth = this.$refs.table.clientWidth;
-    this.leftWidth = this.width - tableWidth + 1;
+    this.leftWidth = this.rightFixedWidth - tableWidth - 9;
   }
 };
 </script>

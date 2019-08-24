@@ -1,14 +1,18 @@
 export default {
   namespaced: true,
   state: {
-    lastColumnsWidth: '',
+    tableColumns: [],
+    rightFixedWidth: '',
     clickRow: -1,
     hasChildOpen: [],
     hasRowExpand: [],
   },
   mutations: {
-    chglastColumnsWidth(state, value) {
-      state.lastColumnsWidth = value;
+    chgTableColumns(state, value) {
+      state.tableColumns = value;
+    },
+    chgRightFixedWidth(state, value) {
+      state.rightFixedWidth = value;
     },
     chgClickRow(state, value) {
       state.clickRow = value;

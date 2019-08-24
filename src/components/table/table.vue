@@ -17,7 +17,6 @@
       <table-header
         :border="border"
         :expand="expand"
-        :columns="columns"
         :verticalLine="verticalLine"
         :style="{marginLeft: `${scrollWidth}px`}"
         :showGutter="showGutter"
@@ -30,7 +29,6 @@
     ref="displayTableBody"
     >
       <table-body
-        :columns="columns"
         :childcolumns="childcolumns"
         :data="data"
         :border="border"
@@ -53,7 +51,7 @@
     <div
     :style="{
     height: `${height - 10}px`,
-    width: `${lastColumnsWidth - 10}px`,
+    width: `${rightFixedWidth - 10}px`,
     right: this.showGutter ? `10px` : 0
     }"
     @mousewheel="fixedMousewheel"
@@ -65,18 +63,15 @@
         <table-header
           :border="border"
           :expand="expand"
-          :columns="columns"
           :verticalLine="verticalLine"
           :showGutter="showGutter"
           :rightFlag="rightFlag"
           :leftFlag="leftFlag"
-          :width="lastColumnsWidth"
         ></table-header>
       </div>
       <div
       class="xo-table-fixed_body">
         <table-body
-          :columns="columns"
           :childcolumns="childcolumns"
           :data="data"
           :border="border"
@@ -88,7 +83,6 @@
           @row-click="rowClick"
           :rightFlag="rightFlag"
           :leftFlag="leftFlag"
-          :width="lastColumnsWidth"
           :height="height"
           :scrollTopWidth="scrollTopWidth"
         >
@@ -118,6 +112,7 @@
 <script>
 import tableHeader from "./table-header";
 import tableBody from "./table-body";
+import { mapState, mapMutations } from 'vuex';
 
 export default {
   name: "xoTable",
@@ -181,7 +176,11 @@ export default {
       default: '100%',
     }
   },
+  computed: {
+    ...mapState('tableModuel', ['rightFixedWidth'])
+  },
   methods: {
+    ...mapMutations('tableModuel', ['chgTableColumns']),
     rowClick(row, column) {
       this.$emit("row-click", row, column);
     },
@@ -193,23 +192,40 @@ export default {
       if(this.canScrollHeight > 0) {
         this.$refs.displayTableBody.scrollTop += e.deltaY
       }
+    },
+    getTableColumns() {
+      let temp = [],
+      leftTemp = [],
+      rightTemp = [];
+      this.columns.forEach(e => {
+        if(e.fixed === 'left') {
+          leftTemp.push(e);
+        }else if(e.fixed === 'right') {
+          rightTemp.push(e);
+        }else {
+          temp.push(e);
+        }
+        this.chgTableColumns(leftTemp.concat(temp).concat(rightTemp));
+      })
+    },
+    isShowGutter() {
+      const displayHeight = this.$refs.displayTableBody.clientHeight;
+      const scrollHeight = this.$refs.scrollTableBody.$el.clientHeight;
+      this.canScrollHeight = scrollHeight - displayHeight;
+      if(displayHeight < scrollHeight) {
+        this.showGutter = true;
+      }else {
+        this.showGutter = false;
+      }
     }
   },
   mounted() {
-    const displayHeight = this.$refs.displayTableBody.clientHeight;
-    const scrollHeight = this.$refs.scrollTableBody.$el.clientHeight;
-    this.canScrollHeight = scrollHeight - displayHeight;
-    if(displayHeight < scrollHeight) {
-      this.showGutter = true;
-    }else {
-      this.showGutter = false;
-    }
+    this.isShowGutter();
+    this.getTableColumns();
     this.rightFlag = this.columns.findIndex(e => e.fixed === "right");
     this.leftFlag = this.columns.findIndex(e => e.fixed === "left");
-    const th = this.$refs.tableHeader.$el.getElementsByTagName('th');
-    const len = th.length;
-      this.lastColumnsWidth = len > this.columns.length ? 
-      `${th[len - 1].clientWidth}` : `${th[len].clientWidth}`;
+    const temp = []
+    
   }
 };
 </script>
