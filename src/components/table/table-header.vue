@@ -101,7 +101,7 @@ export default {
   mounted() {
     this.getRightFixedWidth();
     const tableWidth = this.$refs.table.clientWidth;
-    this.leftWidth = this.rightFixedWidth - tableWidth - 9;
+    this.leftWidth = this.rightFixedWidth - tableWidth;
   }
 };
 </script>

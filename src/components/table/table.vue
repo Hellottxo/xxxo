@@ -219,13 +219,13 @@ export default {
       }
     }
   },
+  created() {
+    this.getTableColumns();
+  },
   mounted() {
     this.isShowGutter();
-    this.getTableColumns();
     this.rightFlag = this.columns.findIndex(e => e.fixed === "right");
     this.leftFlag = this.columns.findIndex(e => e.fixed === "left");
-    const temp = []
-    
   }
 };
 </script>
