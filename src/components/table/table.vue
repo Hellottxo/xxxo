@@ -5,6 +5,7 @@
   :style="{
     height: `${height}px`,
     width: `${width}px`,
+    minWidth: `${endFixedWidth + startFixedWidth}px`,
   }"
   :class="{
     'border-top': border,
