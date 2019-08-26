@@ -23,6 +23,7 @@
             :style="{ 'background-color':
             stripeColor && (index + 1)%2 === 0 ? stripeColor : '' }"
             @mouseenter="hoverRow(index)"
+            @mouseleave="hoverRow(-1)"
           >
             <td
             :class="{
