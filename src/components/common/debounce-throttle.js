@@ -4,19 +4,18 @@
  * @param wait 延迟执行毫秒数
  * @param timeout 定时器
  */
-function debounce(func, wait, timeout) {
+function debounce(func, wait) {
   const that = this;
   /* eslint-disable */
   const args = arguments;
   /* eslint-disable */
-  if (timeout) clearTimeout(timeout);
+  if (that.timeout) clearTimeout(that.timeout);
 
-  const callNow = !timeout;
-  timeout = setTimeout(() => {
-    timeout = null;
-    if (!timeout && !callNow) func.apply(that, args);
+  const callNow = !that.timeout;
+  that.timeout = setTimeout(() => {
+    that.timeout = null;
+    if (!that.timeout && !callNow) func.apply(that, args);
   }, wait);
-
   if (callNow) func.apply(that, args);
 }
 
@@ -27,12 +26,12 @@ function debounce(func, wait, timeout) {
  * @param wait 延迟执行毫秒数
  * @param time 记录时间戳
  */
-function throttle(func, wait, time) {
+function throttle(func, wait) {
   const now = Date.now();
   const that = this;
-  if (now - time > wait) {
+  if (now - that.time > wait) {
     /* eslint-disable */
-    time = now;
+    that.time = now;
     /* eslint-disable */
     func.apply(that, args);
   }

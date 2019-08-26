@@ -102,7 +102,6 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-import { debounce } from '../common/debounce-throttle.js';
 
 export default {
   data() {
@@ -171,12 +170,11 @@ export default {
     },
     width() {
       this.$nextTick(() => {
-        this.debounce(this.setLeftWidth, 800, this.timeout)
+        this.setLeftWidth();
       })
     }
   },
   methods: {
-    debounce: debounce,
     ...mapMutations('tableModuel', ['chgClickRow', 'chgChildOpen', 'chgRowExpand', 'chgHoverIndex']),
     rowClick(row, column) {
       this.chgClickRow(row);

@@ -41,7 +41,6 @@
 
 <script>
 import { mapState, mapMutations} from 'vuex';
-import { debounce } from '../common/debounce-throttle.js';
 
 export default {
   data() {
@@ -88,12 +87,11 @@ export default {
   watch: {
     width() {
       this.$nextTick(() => {
-        this.debounce(this.setFixedWidth, 800, this.timeout)
+        this.setFixedWidth();
       })
     }
   },
   methods: {
-    debounce: debounce,
     ...mapMutations('tableModuel', ['chgEndFixedWidth', 'chgStartFixedWidth', 'chgEndLeftWidth']),
     isHidden(val) {
       if(this.endFixed) {
