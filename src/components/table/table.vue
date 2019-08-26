@@ -1,5 +1,6 @@
 <template>
   <div
+  ref="xoTable"
   class="xo-table"
   :style="{
     height: `${height}px`,
@@ -49,14 +50,14 @@
       </table-body>
     </div>
     <div
-    :style="{
-    height: `${height - 10}px`,
-    width: `${rightFixedWidth - 10}px`,
-    right: this.showGutter ? `10px` : 0
-    }"
-    @mousewheel="fixedMousewheel"
-    class="xo-table-endFixed"
-    v-if="this.rightFlag > -1">
+      :style="{
+      height: `${height - 10}px`,
+      width: `${endFixedWidth}px`,
+      right: this.showGutter ? `10px` : 0
+      }"
+      @mousewheel="fixedMousewheel"
+      class="xo-table-endFixed"
+      v-if="this.endFixed">
       <div
       class="xo-table-fixed_header"
       v-if="showHeader">
@@ -65,8 +66,8 @@
           :expand="expand"
           :verticalLine="verticalLine"
           :showGutter="showGutter"
-          :rightFlag="rightFlag"
-          :leftFlag="leftFlag"
+          :endFixed="endFixed"
+          :width="tableWidth"
         ></table-header>
       </div>
       <div
@@ -81,9 +82,54 @@
           :highlightRow="highlightRow"
           :expand="expand"
           @row-click="rowClick"
-          :rightFlag="rightFlag"
-          :leftFlag="leftFlag"
+          :endFixed="endFixed"
+          :width="tableWidth"
           :height="height"
+          :scrollTopWidth="scrollTopWidth"
+        >
+          <template v-slot="scope" v-if="$scopedSlots.default">
+            <slot :data="scope.data"></slot>
+          </template>
+          <template v-slot:append="scope">
+            <slot name="append" :data="scope.data"></slot>
+          </template>
+        </table-body>
+      </div>
+    </div>
+    <div
+      :style="{
+      height: `${height - 10}px`,
+      width: `${startFixedWidth}px`,
+      }"
+      @mousewheel="fixedMousewheel"
+      class="xo-table-startFixed"
+      v-if="this.startFixed">
+      <div
+      class="xo-table-fixed_header"
+      v-if="showHeader">
+        <table-header
+          :border="border"
+          :expand="expand"
+          :verticalLine="verticalLine"
+          :showGutter="showGutter"
+          :startFixed="startFixed"
+          :width="tableWidth"
+        ></table-header>
+      </div>
+      <div class="xo-table-fixed_body">
+        <table-body
+          :childcolumns="childcolumns"
+          :data="data"
+          :border="border"
+          :verticalLine="verticalLine"
+          :stripe="stripe"
+          :stripeColor="stripeColor"
+          :highlightRow="highlightRow"
+          :expand="expand"
+          @row-click="rowClick"
+          :startFixed="startFixed"
+          :height="height"
+          :width="tableWidth"
           :scrollTopWidth="scrollTopWidth"
         >
           <template v-slot="scope" v-if="$scopedSlots.default">
@@ -113,6 +159,7 @@
 import tableHeader from "./table-header";
 import tableBody from "./table-body";
 import { mapState, mapMutations } from 'vuex';
+import { debounce } from '../common/debounce-throttle.js';
 
 export default {
   name: "xoTable",
@@ -128,11 +175,13 @@ export default {
       hasSelect: [],
       scrollWidth: 0,
       showGutter: false,
-      rightFlag: -1,
-      leftFlag: -1,
       scrollTopWidth: 0,
       canScrollHeight: 0,
-      lastColumnsWidth: 0
+      lastColumnsWidth: 0,
+      endFixed: false,
+      startFixed: false,
+      tableWidth: "",
+      timeout: null
     };
   },
   props: {
@@ -177,9 +226,10 @@ export default {
     }
   },
   computed: {
-    ...mapState('tableModuel', ['rightFixedWidth'])
+    ...mapState('tableModuel', ['endFixedWidth', 'startFixedWidth'])
   },
   methods: {
+    debounce: debounce,
     ...mapMutations('tableModuel', ['chgTableColumns']),
     rowClick(row, column) {
       this.$emit("row-click", row, column);
@@ -195,17 +245,19 @@ export default {
     },
     getTableColumns() {
       let temp = [],
-      leftTemp = [],
-      rightTemp = [];
+      startTemp = [],
+      endTemp = [];
       this.columns.forEach(e => {
-        if(e.fixed === 'left') {
-          leftTemp.push(e);
-        }else if(e.fixed === 'right') {
-          rightTemp.push(e);
+        if(e.fixed === 'start') {
+          startTemp.push(e);
+        }else if(e.fixed === 'end') {
+          endTemp.push(e);
         }else {
           temp.push(e);
         }
-        this.chgTableColumns(leftTemp.concat(temp).concat(rightTemp));
+        this.endFixed = endTemp.length > 0 ? true : false;
+        this.startFixed = startTemp.length > 0 ? true : false;
+        this.chgTableColumns(startTemp.concat(temp).concat(endTemp));
       })
     },
     isShowGutter() {
@@ -217,6 +269,9 @@ export default {
       }else {
         this.showGutter = false;
       }
+    },
+    setTableWidth() {
+      this.tableWidth = `${this.$refs.xoTable.clientWidth}`;
     }
   },
   created() {
@@ -224,8 +279,11 @@ export default {
   },
   mounted() {
     this.isShowGutter();
-    this.rightFlag = this.columns.findIndex(e => e.fixed === "right");
-    this.leftFlag = this.columns.findIndex(e => e.fixed === "left");
+    this.setTableWidth()
+    const that = this;
+    window.onresize = function temp() {
+      that.debounce(that.setTableWidth, 800, that.timeout)
+    }
   }
 };
 </script>
@@ -245,13 +303,19 @@ export default {
   }
   .xo-table-endFixed {
     position: absolute;
-    right: 0;
     display: flex;
     flex: 1;
     flex-direction: column;
-    .xo-table-fixed_body {
-      overflow: hidden;
-    }
+  }
+  .xo-table-fixed_body {
+    overflow: hidden;
+  }
+  .xo-table-startFixed {
+    position: absolute;
+    left: 0;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
   }
   .xo-table-body::-webkit-scrollbar {/*滚动条整体样式*/
     width: 10px;     /*高宽分别对应横竖滚动条的尺寸*/

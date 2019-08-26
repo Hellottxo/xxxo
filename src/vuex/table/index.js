@@ -2,17 +2,22 @@ export default {
   namespaced: true,
   state: {
     tableColumns: [],
-    rightFixedWidth: '',
+    endFixedWidth: '',
+    startFixedWidth: '',
     clickRow: -1,
     hasChildOpen: [],
     hasRowExpand: [],
+    endLeftWidth: 0,
   },
   mutations: {
     chgTableColumns(state, value) {
       state.tableColumns = value;
     },
-    chgRightFixedWidth(state, value) {
-      state.rightFixedWidth = value;
+    chgEndFixedWidth(state, value) {
+      state.endFixedWidth = value;
+    },
+    chgStartFixedWidth(state, value) {
+      state.startFixedWidth = value;
     },
     chgClickRow(state, value) {
       state.clickRow = value;
@@ -22,6 +27,9 @@ export default {
     },
     chgRowExpand(state, value) {
       state.hasRowExpand = value;
+    },
+    chgEndLeftWidth(state, value) {
+      state.endLeftWidth = value;
     },
   },
 };

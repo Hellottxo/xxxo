@@ -3,9 +3,9 @@
     <table 
       ref="table"
       :style="{
-      marginLeft: 
-      rightFlag > -1 || leftFlag > -1 ? `${leftWidth}px` : 0,
-      marginTop: scrollTopWidth !== 0 ? `${scrollTopWidth}px` : 0
+      marginLeft: `${leftWidth}px`,
+      marginTop: scrollTopWidth !== 0 ? `${scrollTopWidth}px` : 0,
+      width: `${width}px`
       }">
       <colgroup>
         <col width="40" v-if="expand">
@@ -24,8 +24,7 @@
           >
             <td
             :class="{
-              'border-right': verticalLine,
-              'hidden': rightFlag > -1 || leftFlag > -1,
+              'border-right': verticalLine
             }"
             :style="{
               borderBottom: index === data.length - 1 ? 'none' : ''
@@ -100,6 +99,8 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
+import { debounce } from '../common/debounce-throttle.js';
+
 export default {
   data() {
     return {
@@ -135,13 +136,13 @@ export default {
       type: Boolean,
       default: false
     },
-    rightFlag: {
-      type: Number,
-      default: -1
+    endFixed: {
+      type: Boolean,
+      default: false
     },
-    leftFlag: {
-      type: Number,
-      default: -1
+    startFixed: {
+      type: Boolean,
+      default: false
     },
     width: {
       type: String,
@@ -157,7 +158,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('tableModuel', ['clickRow', 'hasChildOpen', 'hasRowExpand', 'tableColumns', 'rightFixedWidth']),
+    ...mapState('tableModuel', ['clickRow', 'hasChildOpen', 'hasRowExpand', 'tableColumns', 'endFixedWidth', 'endLeftWidth']),
   },
   watch: {
     clickRow() {
@@ -165,8 +166,14 @@ export default {
         this.highlightIndex = this.clickRow;
       }
     },
+    width() {
+      this.$nextTick(() => {
+        this.debounce(this.setLeftWidth, 800, this.timeout)
+      })
+    }
   },
   methods: {
+    debounce: debounce,
     ...mapMutations('tableModuel', ['chgClickRow', 'chgChildOpen', 'chgRowExpand']),
     rowClick(row, column) {
       this.chgClickRow(row);
@@ -193,16 +200,25 @@ export default {
       this.chgRowExpand(temp);
     },
     isHidden(val) {
-      if(this.rightFlag > -1 || this.leftFlag > -1) {
-        return !val ? true : false;
+      if(this.endFixed) {
+        return val === 'end' ? false : true;
+      }else if(this.startFixed){
+        return val === 'start' ? false : true;
       }else {
         return false;
+      }
+    },
+    setLeftWidth() {
+      const tableWidth = this.$refs.table.clientWidth;
+      if(this.endFixed) {
+        if(this.$parent.$refs.displayTableBody.clientWidth < tableWidth) {
+          this.leftWidth = this.endLeftWidth;
+        }
       }
     }
   },
   mounted() {
-    const tableWidth = this.$refs.table.clientWidth;
-    this.leftWidth = this.rightFixedWidth - tableWidth;
+    this.setLeftWidth();
   }
 };
 </script>

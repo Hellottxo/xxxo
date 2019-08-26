@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <xo-table height=300 width=800 :columns="columns" :data="data" :expand="true" :highlight-row="true">
+    <xo-table height=300 :columns="columns" :data="data" :expand="true" :highlight-row="true">
       <!-- <template v-slot="scope">
         <button>{{scope.data.name}}</button>
       </template> -->
@@ -18,13 +18,13 @@
 import xoTable from "../components/table/table";
 
 const columns = [
-  { label: "姓名", key: "name", width: 200 },
-  { label: "年龄", key: "age", width: 200},
+  { label: "姓名", key: "name", width: 200 , fixed: "end"},
+  { label: "年龄", key: "age", width: 200, fixed: "start"},
   { label: "详细", key: "detail", width: 200},
-  { label: "姓名", key: "a", width: 200 },
-  { label: "年龄", key: "b", width: 200},
-  { label: "详细", key: "c", width: 200},
-  { label: "地址", key: "address", width: 200, fixed: "right"},
+  { label: "a", key: "a", width: 200 },
+  { label: "b", key: "b", width: 200},
+  { label: "c", key: "c", width: 200},
+  { label: "地址", key: "address", width: 200, fixed: "end"},
 ];
 
 const data = [

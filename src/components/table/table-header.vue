@@ -3,7 +3,8 @@
   class="table-header">
     <table
       :style="{
-      marginLeft: rightFlag > -1 || leftFlag > -1 ? `${leftWidth-1}px` : 0
+        marginLeft:`${endFixed ? leftWidth-1 : 0}px`,
+        width: `${width}px`
       }"
       ref="table"
     >
@@ -40,12 +41,15 @@
 
 <script>
 import { mapState, mapMutations} from 'vuex';
+import { debounce } from '../common/debounce-throttle.js';
 
 export default {
   data() {
     return {
       leftWidth: 0,
-      rightFixedWidth: 0
+      endFixedWidth: 0,
+      startFixedwidth: 0,
+      timeout: null
     }
   },
   props: {
@@ -65,13 +69,13 @@ export default {
       type: Boolean,
       default: false
     },
-    rightFlag: {
-      type: Number,
-      default: -1
+    endFixed: {
+      type: Boolean,
+      default: false
     },
-    leftFlag: {
-      type: Number,
-      default: -1
+    startFixed: {
+      type: Boolean,
+      default: false
     },
     width: {
       type: String,
@@ -81,27 +85,61 @@ export default {
   computed: {
     ...mapState('tableModuel', ['tableColumns'])
   },
+  watch: {
+    width() {
+      this.$nextTick(() => {
+        this.debounce(this.setFixedWidth, 800, this.timeout)
+      })
+    }
+  },
   methods: {
-    ...mapMutations('tableModuel', ['chgRightFixedWidth']),
+    debounce: debounce,
+    ...mapMutations('tableModuel', ['chgEndFixedWidth', 'chgStartFixedWidth', 'chgEndLeftWidth']),
     isHidden(val) {
-      if(this.rightFlag > -1 || this.leftFlag > -1) {
-        return !val ? true : false;
+      if(this.endFixed) {
+        return val === 'end' ? false : true;
+      }else if(this.startFixed){
+        return val === 'start' ? false : true;
       }else {
         return false;
       }
     },
-    getRightFixedWidth() {
+    getFixedCount(str) {
+      let temp = this.tableColumns.filter(e => e.fixed === str);
+      return temp.length;
+    },
+    getFixedWidth(str) {
+      let count = this.getFixedCount(str);
       const th = this.$refs.table.getElementsByTagName('th');
       const len = th.length;
-      this.rightFixedWidth = len > this.tableColumns.length ? 
-       `${th[len - 1].clientWidth}` : `${th[len].clientWidth}`;
-      this.chgRightFixedWidth(this.rightFixedWidth);
+      if(this.showGutter && str === 'end') count +=1;
+      let width = 0;
+        while(count > 0) {
+          if(str === 'end') {
+            width += th[len - count].clientWidth;
+          }else {
+            width += th[count].clientWidth;
+          }
+          count--;
+        }
+      return width;
+    },
+    setFixedWidth() {
+      const width = this.$refs.table.clientWidth;
+      if(this.endFixed) {
+        this.endFixedWidth = this.getFixedWidth('end');
+        this.chgEndFixedWidth(this.endFixedWidth);
+        this.leftWidth = this.endFixedWidth - width + 11;
+        this.chgEndLeftWidth(this.leftWidth)
+      }
+      if(this.startFixed) {
+        this.startFixedwidth = this.expand ? this.getFixedWidth('start') + 40 : this.getFixedWidth('start');
+        this.chgStartFixedWidth(this.startFixedwidth);
+      }
     }
   },
   mounted() {
-    this.getRightFixedWidth();
-    const tableWidth = this.$refs.table.clientWidth;
-    this.leftWidth = this.rightFixedWidth - tableWidth;
+    this.setFixedWidth();
   }
 };
 </script>
