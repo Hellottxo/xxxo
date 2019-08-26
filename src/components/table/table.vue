@@ -339,7 +339,7 @@ export default {
   tr {
     background: #fff;
   }
-  tr:hover {
+  .hover {
     background: #fafbfc;
   }
   th {

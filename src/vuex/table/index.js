@@ -8,6 +8,7 @@ export default {
     hasChildOpen: [],
     hasRowExpand: [],
     endLeftWidth: 0,
+    hoverIndex: -1,
   },
   mutations: {
     chgTableColumns(state, value) {
@@ -30,6 +31,9 @@ export default {
     },
     chgEndLeftWidth(state, value) {
       state.endLeftWidth = value;
+    },
+    chgHoverIndex(state, value) {
+      state.hoverIndex = value;
     },
   },
 };

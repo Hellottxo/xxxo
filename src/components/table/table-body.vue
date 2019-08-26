@@ -18,9 +18,11 @@
             :class="{
               'stripe': stripe && (index + 1)%2 === 0,
               'highlight': index === highlightIndex,
+              'hover': index === hoverIndex
             }"
             :style="{ 'background-color':
             stripeColor && (index + 1)%2 === 0 ? stripeColor : '' }"
+            @mouseenter="hoverRow(index)"
           >
             <td
             :class="{
@@ -158,7 +160,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('tableModuel', ['clickRow', 'hasChildOpen', 'hasRowExpand', 'tableColumns', 'endFixedWidth', 'endLeftWidth']),
+    ...mapState('tableModuel', ['clickRow', 'hasChildOpen', 'hasRowExpand', 'tableColumns', 'endFixedWidth', 'endLeftWidth', 'hoverIndex']),
   },
   watch: {
     clickRow() {
@@ -174,7 +176,7 @@ export default {
   },
   methods: {
     debounce: debounce,
-    ...mapMutations('tableModuel', ['chgClickRow', 'chgChildOpen', 'chgRowExpand']),
+    ...mapMutations('tableModuel', ['chgClickRow', 'chgChildOpen', 'chgRowExpand', 'chgHoverIndex']),
     rowClick(row, column) {
       this.chgClickRow(row);
       this.$emit("row-click", row, column);
@@ -188,6 +190,9 @@ export default {
         }
         this.chgChildOpen(temp);
       }
+    },
+    hoverRow(index) {
+      this.chgHoverIndex(index);
     },
     showExpand(index) {
       let temp = this.hasRowExpand;
