@@ -160,10 +160,11 @@
 import tableHeader from "./table-header";
 import tableBody from "./table-body";
 import { mapState, mapMutations } from 'vuex';
-import { debounce } from '../common/debounce-throttle.js';
+import { debounceThrottle } from '../../mixins/debounce-throttle.js';
 
 export default {
   name: "xoTable",
+  mixins: [debounceThrottle],
   components: {
     tableHeader,
     tableBody,
@@ -181,8 +182,7 @@ export default {
       lastColumnsWidth: 0,
       endFixed: false,
       startFixed: false,
-      tableWidth: "",
-      timeout: null
+      tableWidth: ""
     };
   },
   props: {
@@ -230,7 +230,6 @@ export default {
     ...mapState('tableModuel', ['endFixedWidth', 'startFixedWidth'])
   },
   methods: {
-    debounce: debounce,
     ...mapMutations('tableModuel', ['chgTableColumns']),
     rowClick(row, column) {
       this.$emit("row-click", row, column);
