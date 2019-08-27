@@ -281,7 +281,7 @@ export default {
     this.isShowGutter();
     this.setTableWidth()
     const that = this;
-    window.onresize = function temp() {
+    window.onresize = function() {
       that.debounce(that.setTableWidth, 500, that.timeout)
     }
   }

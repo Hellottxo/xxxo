@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <xo-input type="textarea"></xo-input>
     <xo-table height=300 :columns="columns" :data="data" :expand="true" :highlight-row="true">
       <!-- <template v-slot="scope">
         <button>{{scope.data.name}}</button>
@@ -16,6 +17,7 @@
 <script>
 // @ is an alias to /src
 import xoTable from "../components/table/table";
+import xoInput from "../components/input/input"
 
 const columns = [
   { label: "姓名", key: "name", width: 200 , fixed: "end"},
@@ -48,6 +50,7 @@ export default {
   name: 'home',
   components: {
     xoTable,
+    xoInput
   },
   data() {
     return {
