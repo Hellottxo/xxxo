@@ -14,10 +14,10 @@ export default function calctextareaHeight(ele, value) {
     paddingBottom,
     borderWidth,
     fontSize,
-    fontWeight
+    fontWeight,
   } = style;
   const styleMap = {
-    'width': width,
+    width,
     'box-sizing': boxSizing,
     'padding-top': paddingTop,
     'padding-bottom': paddingBottom,
