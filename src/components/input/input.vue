@@ -35,7 +35,7 @@
 
 <script>
 import '../../common/icon.css'
-import { setTimeout } from 'timers';
+import calctetxtareaHeight from './calctextareaHeight.js'
 
 export default {
   name: "xoInput",
@@ -96,25 +96,22 @@ export default {
       if(this.inputType === 'password') this.isPassword = true;
     },
     resizeTextarea() {
-      const textarea = document.getElementsByTagName('textarea');
-      const style = window.getComputedStyle(this.$refs.textarea, null);
-      const boxSizing = style.boxSizing;
-      const paddingTop = this.getPx(style.paddingTop);
-      const paddingBottom = this.getPx(style.paddingBottom);
-      const borderTopWidth = this.getPx(style.borderTopWidth);
-      const borderBottomWidth = this.getPx(style.borderBottomWidth);
-      this.textareaHeight = 'auto';
-      setTimeout(() => {
-        if(boxSizing === 'content-box') {
-          this.textareaHeight = `${textarea[0].scrollHeight - paddingTop - paddingBottom}px`;
-        }else if(boxSizing === 'border-box') {
-          this.textareaHeight = `${textarea[0].scrollHeight + borderTopWidth + borderBottomWidth}px`;
-        }
-      },0)
-    },
-    getPx(str) {
-      const len = str.length;
-      return Number(str.slice(0, len-2));
+      // const textarea = document.getElementsByTagName('textarea');
+      // const style = window.getComputedStyle(this.$refs.textarea, null);
+      // const boxSizing = style.boxSizing;
+      // const paddingTop = this.getPx(style.paddingTop);
+      // const paddingBottom = this.getPx(style.paddingBottom);
+      // const borderTopWidth = this.getPx(style.borderTopWidth);
+      // const borderBottomWidth = this.getPx(style.borderBottomWidth);
+      // this.textareaHeight = 'auto';
+      // setTimeout(() => {
+      //   if(boxSizing === 'content-box') {
+      //     this.textareaHeight = `${textarea[0].scrollHeight - paddingTop - paddingBottom}px`;
+      //   }else if(boxSizing === 'border-box') {
+      //     this.textareaHeight = `${textarea[0].scrollHeight + borderTopWidth + borderBottomWidth}px`;
+      //   }
+      // },0)
+      this.textareaHeight = calctetxtareaHeight(this.$refs.textarea, this.input);
     }
   },
   mounted() {
