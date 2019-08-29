@@ -21,7 +21,7 @@
       <textarea
       ref="textarea"
       v-model="input"
-      :style="textareaStyle"
+      :style="{height: textareaHeight}"
       v-else
       :class="{focus: isFocus}"
       @focus="setFocus(true)"
@@ -35,6 +35,7 @@
 
 <script>
 import '../../common/icon.css'
+import { setTimeout } from 'timers';
 
 export default {
   name: "xoInput",
@@ -68,7 +69,7 @@ export default {
       isPassword: false,
       inputType: 'text',
       inputWrapWidth: 0,
-      textareaStyle: {}
+      textareaHeight: ''
     }
   },
   watch: {
@@ -96,10 +97,24 @@ export default {
     },
     resizeTextarea() {
       const textarea = document.getElementsByTagName('textarea');
-      let style = {};
-      style.height = `${textarea[0].scrollHeight}px`;
-      // this.textareaStyle = style;
-      console.log(style.height)
+      const style = window.getComputedStyle(this.$refs.textarea, null);
+      const boxSizing = style.boxSizing;
+      const paddingTop = this.getPx(style.paddingTop);
+      const paddingBottom = this.getPx(style.paddingBottom);
+      const borderTopWidth = this.getPx(style.borderTopWidth);
+      const borderBottomWidth = this.getPx(style.borderBottomWidth);
+      this.textareaHeight = 'auto';
+      setTimeout(() => {
+        if(boxSizing === 'content-box') {
+          this.textareaHeight = `${textarea[0].scrollHeight - paddingTop - paddingBottom}px`;
+        }else if(boxSizing === 'border-box') {
+          this.textareaHeight = `${textarea[0].scrollHeight + borderTopWidth + borderBottomWidth}px`;
+        }
+      },0)
+    },
+    getPx(str) {
+      const len = str.length;
+      return Number(str.slice(0, len-2));
     }
   },
   mounted() {
