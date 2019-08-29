@@ -28,7 +28,7 @@
       @blur="setFocus(false)"
       ></textarea>
       <i v-if="clearable && input && isMouseenter" class="clear" @click="clearSelect">x</i>
-      <i v-if="type === 'password' && isMouseenter" class="eye" @click="isPassword = !isPassword"></i>
+      <i v-if="type === 'password' && isMouseenter" class="icon-eye" @click="isPassword = !isPassword"></i>
     </div>
   </div>
 </template>

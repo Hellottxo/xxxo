@@ -28,7 +28,13 @@
               'justify-content': config.align,
               'color': config.color
               }"
-            >{{ config.label }}</div>
+            >
+            <span>{{ config.label }}</span>
+            <span v-if="config.sort">
+              <i class="icon-caret-top top"></i>
+              <i class="icon-caret-bottom bottom"></i>
+            </span>
+            </div>
           </th>
           <th
           v-if="showGutter"

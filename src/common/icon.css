@@ -1,4 +1,4 @@
-.eye {
+.icon-eye {
   box-sizing: border-box;
   position: relative;
   width: 16px;
@@ -6,7 +6,7 @@
   background-color: #909399;
   border-radius: 50%;
 }
-.eye:before {
+.icon-eye:before {
   content: "";
   position: absolute;
   top: 0;
@@ -19,7 +19,7 @@
   background-color: #fff;
   border-radius: 50%;
 }
-.eye:after {
+.icon-eye:after {
 	content: "";
   position: absolute;
   top: 0;
@@ -32,4 +32,58 @@
   background-color: #fff;
   border: 1px solid #909399;
   border-radius: 50%;
+}
+
+.icon-caret-top {
+  width: 0;
+  height: 0;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-bottom: 5px solid #909399;
+}
+
+.icon-caret-bottom {
+  width: 0;
+  height: 0;
+  border-left: 3px solid transparent;
+  border-right: 3px solid transparent;
+  border-top: 5px solid #909399;
+}
+
+.icon-caret-left {
+  width: 0;
+  height: 0;
+  border-bottom: 3px solid transparent;
+  border-right: 5px solid #909399;
+  border-top: 3px solid transparent;
+}
+
+.icon-caret-right {
+  width: 0;
+  height: 0;
+  border-bottom: 3px solid transparent;
+  border-left: 5px solid #909399;
+  border-top: 3px solid transparent;
+}
+
+.icon-triangle {
+  width: 0;
+  height: 0;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent transparent #515a6e;
+  position: absolute;
+  top: 11px;
+  right: 10px;
+  transition: all 0.3s;
+}
+.icon-triangle::after {
+  content: "";
+  border-width: 4px;
+  border-style: solid;
+  border-color: transparent transparent transparent #fff;
+  position: absolute;
+  top: -4px;
+  right: -2px;
+  transition: all 0.3s;
 }

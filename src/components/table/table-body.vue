@@ -37,7 +37,6 @@
               <div class="cell">
                 <i
                   class="icon-triangle"
-                  style="top: 3px; right:10px"
                   :class="{'open': hasRowExpand.indexOf(index) > -1}"
                   v-if="item.rowExpand"
                 ></i>

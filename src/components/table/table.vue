@@ -360,28 +360,22 @@ export default {
     text-overflow: ellipsis;
     white-space: nowrap;
     word-break: break-all;
+    height: 30px;
+    box-sizing: border-box;
+    span {
+      padding-right: 5px;
+      &>i {
+        position: absolute;
+      }
+      .top {
+        top: 9px;
+      }
+      .bottom {
+        bottom: 8px;
+      }
+    }
   }
-  .icon-triangle {
-    width: 0;
-    height: 0;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent transparent #515a6e;
-    position: absolute;
-    top: 12px;
-    right: 10px;
-    transition: all 0.3s;
-  }
-  .icon-triangle::after {
-    content: "";
-    border-width: 4px;
-    border-style: solid;
-    border-color: transparent transparent transparent #fff;
-    position: absolute;
-    top: -4px;
-    right: -2px;
-    transition: all 0.3s;
-  }
+  
   .open {
     transform: rotate(90deg);
   }
