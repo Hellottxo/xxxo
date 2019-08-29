@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <xo-input type="textarea"></xo-input>
+    <xo-input type="textarea" autoSize></xo-input>
     <xo-table height=300 :columns="columns" :data="data" :expand="true" :highlight-row="true">
       <!-- <template v-slot="scope">
         <button>{{scope.data.name}}</button>

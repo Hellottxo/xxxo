@@ -282,7 +282,7 @@ export default {
     this.setTableWidth()
     const that = this;
     window.onresize = function() {
-      that.debounce(that.setTableWidth, 500, that.timeout)
+      that.debounce(that.setTableWidth, 500)
     }
   }
 };

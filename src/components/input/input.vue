@@ -9,7 +9,7 @@
       <input
       v-if="type !== 'textarea'"
       :type="inputType"
-      v-model="select"
+      v-model="input"
       :class="{
         readonly: disabled,
         focus: isFocus
@@ -20,12 +20,14 @@
       @blur="setFocus(false)">
       <textarea
       ref="textarea"
+      v-model="input"
+      :style="textareaStyle"
       v-else
       :class="{focus: isFocus}"
       @focus="setFocus(true)"
       @blur="setFocus(false)"
       ></textarea>
-      <i v-if="clearable && select && isMouseenter" class="clear" @click="clearSelect">x</i>
+      <i v-if="clearable && input && isMouseenter" class="clear" @click="clearSelect">x</i>
       <i v-if="type === 'password' && isMouseenter" class="eye" @click="isPassword = !isPassword"></i>
     </div>
   </div>
@@ -52,21 +54,31 @@ export default {
     type: {
       type: String,
       default: 'text'
+    },
+    autoSize: {
+      type: [Boolean, Object],
+      default: false
     }
   },
   data() {
     return {
-      select: 123,
+      input: 123,
       isFocus: false,
       isMouseenter: false,
       isPassword: false,
       inputType: 'text',
-      inputWrapWidth: 0
+      inputWrapWidth: 0,
+      textareaStyle: {}
     }
   },
   watch: {
     isPassword() {
       this.inputType = this.isPassword ? 'password' : 'text';
+    },
+    input() {
+      if(this.type === 'textarea') {
+        this.$nextTick(this.resizeTextarea)
+      }
     }
   },
   methods: {
@@ -76,15 +88,23 @@ export default {
       }
     },
     clearSelect() {
-      this.select = "";
+      this.input = "";
     },
     setInputType() {
       this.inputType = this.type;
       if(this.inputType === 'password') this.isPassword = true;
+    },
+    resizeTextarea() {
+      const textarea = document.getElementsByTagName('textarea');
+      let style = {};
+      style.height = `${textarea[0].scrollHeight}px`;
+      // this.textareaStyle = style;
+      console.log(style.height)
     }
   },
   mounted() {
     this.setInputType();
+    this.resizeTextarea();
   }
 }
 </script>

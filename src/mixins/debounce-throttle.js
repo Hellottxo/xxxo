@@ -35,6 +35,7 @@ export const debounceThrottle = {
     throttle(func, wait) {
       const now = Date.now();
       const that = this;
+      const args = arguments;
       if (now - that.time > wait) {
         that.time = now;
         func.apply(that, args);
