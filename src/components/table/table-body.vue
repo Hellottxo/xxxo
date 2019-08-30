@@ -36,7 +36,7 @@
             v-if="expand">
               <div class="cell">
                 <i
-                  class="icon-triangle"
+                  class="icon-triangle-right icon"
                   :class="{'open': hasRowExpand.indexOf(index) > -1}"
                   v-if="item.rowExpand"
                 ></i>
@@ -62,7 +62,7 @@
                 <div class="cell">
                   <span :title="item[config.key]">{{ item[config.key] }}</span>
                   <i
-                    class="icon-triangle"
+                    class="icon-triangle-right icon"
                     v-if="item.children && (item.arrowPosition ? item.arrowPosition === config.key : i === 0)"
                     :class="{'open': hasChildOpen.indexOf(index) > -1}"
                   ></i>

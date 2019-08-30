@@ -366,15 +366,11 @@ export default {
     box-sizing: border-box;
     span {
       padding-right: 5px;
-      &>i {
-        position: absolute;
-      }
-      .top {
-        top: 9px;
-      }
-      .bottom {
-        bottom: 8px;
-      }
+    }
+    i {
+      position: absolute;
+      top: 11px;
+      right: 10px;
     }
   }  
   .open {

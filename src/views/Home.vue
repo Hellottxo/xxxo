@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <xo-input type="textarea" :maxlength="100" wordLimit autoSize></xo-input>
+    <xo-input :maxlength="100" type="password"></xo-input>
+    <xo-select></xo-select>
     <xo-table height=300 :columns="columns" :data="data" :expand="true" :highlight-row="true">
       <!-- <template v-slot="scope">
         <button>{{scope.data.name}}</button>
@@ -17,7 +18,8 @@
 <script>
 // @ is an alias to /src
 import xoTable from "../components/table/table";
-import xoInput from "../components/input/input"
+import xoInput from "../components/input/input";
+import xoSelect from "../components/select/select";
 
 const columns = [
   { label: "姓名", key: "name", width: 200 , fixed: "end"},
@@ -50,7 +52,8 @@ export default {
   name: 'home',
   components: {
     xoTable,
-    xoInput
+    xoInput,
+    xoSelect
   },
   data() {
     return {

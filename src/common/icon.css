@@ -66,24 +66,82 @@
   border-top: 3px solid transparent;
 }
 
-.icon-triangle {
+.icon-triangle-right {
   width: 0;
   height: 0;
   border-width: 5px;
   border-style: solid;
   border-color: transparent transparent transparent #515a6e;
   position: absolute;
-  top: 11px;
-  right: 10px;
   transition: all 0.3s;
 }
-.icon-triangle::after {
+.icon-triangle-right::after {
   content: "";
   border-width: 4px;
   border-style: solid;
   border-color: transparent transparent transparent #fff;
   position: absolute;
   top: -4px;
-  right: -2px;
+  right: -3px;
+  transition: all 0.3s;
+}
+
+.icon-triangle-up {
+  width: 0;
+  height: 0;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #515a6e transparent;
+  position: absolute;
+  transition: all 0.3s;
+}
+.icon-triangle-up::after {
+  content: "";
+  border-width: 4px;
+  border-style: solid;
+  border-color: transparent transparent #fff transparent;
+  position: absolute;
+  top: -3px;
+  right: -4px;
+  transition: all 0.3s;
+}
+
+.icon-triangle-down {
+  width: 0;
+  height: 0;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent #515a6e transparent;
+  position: absolute;
+  transition: all 0.3s;
+}
+.icon-triangle-down::after {
+  content: "";
+  border-width: 4px;
+  border-style: solid;
+  border-color: transparent transparent #fff transparent;
+  position: absolute;
+  top: -3px;
+  right: -4px;
+  transition: all 0.3s;
+}
+
+.icon-option {
+  width: 0;
+  height: 0;
+  border-width: 6px;
+  border-style: solid;
+  border-color: transparent transparent #e8eaec transparent;
+  position: absolute;
+  transition: all 0.3s;
+}
+.icon-option::after {
+  content: "";
+  border-width: 7px;
+  border-style: solid;
+  border-color: transparent transparent #fff transparent;
+  position: absolute;
+  top: -5px;
+  right: -7px;
   transition: all 0.3s;
 }

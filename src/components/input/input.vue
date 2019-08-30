@@ -1,5 +1,8 @@
 <template>
-  <div class="xo-input">
+  <div
+  class="xo-input"
+  @click="inputClick"
+  >
     <div
     class="xo-input_wrap"
     :class="{readonly: disabled}"
@@ -13,13 +16,14 @@
       v-model="input"
       :class="{
         readonly: disabled,
-        focus: isFocus
+        focus: isFocus,
+        select: select
       }"
       :style="{width: `${width}px`}"
-      :readonly="disabled"
+      :readonly="disabled || select"
       :placeholder="placeholder"
-      @focus="setFocus(true)"
-      @blur="setFocus(false)">
+      @blur="setFocus(false)"
+      >
       <textarea
       ref="textarea"
       v-model="input"
@@ -29,10 +33,10 @@
       v-else
       :maxlength="wordLimit ? maxlength : ''"
       :class="{focus: isFocus}"
-      @focus="setFocus(true)"
       @blur="setFocus(false)"
       ></textarea>
       <span v-if="wordLimit">{{`${input.length}/${maxlength}`}}</span>
+      <slot name="suffix"></slot>
       <i v-if="clearable && input && isMouseenter" class="clear" @click="clearSelect">x</i>
       <i v-if="type === 'password' && isMouseenter" class="icon-eye" @click="isPassword = !isPassword"></i>
     </div>
@@ -77,6 +81,10 @@ export default {
     maxlength: {
       type: Number,
       default: 10
+    },
+    select: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -103,8 +111,10 @@ export default {
   },
   methods: {
     setFocus(val) {
-      if(!this.disabled) {
+      if(!this.disabled && val) {
         this.isFocus = val;
+      }else {
+        this.isFocus = this.isMouseenter ? true : false;
       }
     },
     clearSelect() {
@@ -116,11 +126,15 @@ export default {
     },
     resizeTextarea() {
       this.textareaHeight = calctetxtareaHeight(this.$refs.textarea, this.input);
+    },
+    inputClick() {
+      this.setFocus();
+      this.$emit('click', this.isFocus)
     }
   },
   mounted() {
     this.setInputType();
-    this.resizeTextarea();
+    if(this.type === 'textarea') this.resizeTextarea();
   }
 }
 </script>
@@ -190,6 +204,9 @@ export default {
     background-color: #f5f7fa;
     color: #c0c4cc;
     cursor: not-allowed;
+  }
+  .select {
+    cursor: pointer;
   }
 }
 </style>
