@@ -40,7 +40,7 @@ export default function calctextareaHeight(ele, value) {
     height = `${copyHeight - getPx(paddingTop) - getPx(paddingBottom)}px`;
   }
   if (boxSizing === 'border-box') {
-    height = `${copyHeight - getPx(paddingTop) - getPx(paddingBottom)}px`;
+    height = `${copyHeight + getPx(borderWidth) + getPx(borderWidth)}px`;
   }
   document.body.removeChild(copyTextarea);
   copyTextarea = null;
