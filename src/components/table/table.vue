@@ -52,12 +52,13 @@
     </div>
     <div
       :style="{
-      height: `${height - 10}px`,
-      width: `${endFixedWidth}px`,
+      height: `${widthGutter ? height - 10 : height}px`,
+      width: `${endFixedWidth - 10}px`,
       right: this.showGutter ? `10px` : 0
       }"
+      :class="{end: widthGutter}"
       @mousewheel="fixedMousewheel"
-      class="xo-table-endFixed"
+      class="xo-table-endFixed xo-table-fixed"
       v-if="this.endFixed">
       <div
       class="xo-table-fixed_header"
@@ -99,11 +100,12 @@
     </div>
     <div
       :style="{
-      height: `${height - 10}px`,
+      height: `${widthGutter ? height - 10 : height}px`,
       width: `${startFixedWidth}px`,
       }"
       @mousewheel="fixedMousewheel"
-      class="xo-table-startFixed"
+      class="xo-table-fixed"
+      :class="{start: widthGutter}"
       v-if="this.startFixed">
       <div
       class="xo-table-fixed_header"
@@ -177,6 +179,7 @@ export default {
       hasSelect: [],
       scrollWidth: 0,
       showGutter: false,
+      widthGutter: false,
       scrollTopWidth: 0,
       canScrollHeight: 0,
       lastColumnsWidth: 0,
@@ -263,15 +266,16 @@ export default {
     isShowGutter() {
       const displayHeight = this.$refs.displayTableBody.clientHeight;
       const scrollHeight = this.$refs.scrollTableBody.$el.clientHeight;
+      const displayWidth = this.$refs.displayTableBody.clientWidth;
+      const scrollWidth = this.$refs.scrollTableBody.$refs.table.clientWidth;
+      console.log(this.$refs.displayTableBody, this.$refs.scrollTableBody.$refs.table)
       this.canScrollHeight = scrollHeight - displayHeight;
-      if(displayHeight < scrollHeight) {
-        this.showGutter = true;
-      }else {
-        this.showGutter = false;
-      }
+      this.showGutter = displayHeight < scrollHeight ? true : false;
+      this.widthGutter = displayWidth < scrollWidth ? true : false;
     },
     setTableWidth() {
       this.tableWidth = `${this.$refs.xoTable.clientWidth}`;
+      this.isShowGutter();
     }
   },
   created() {
@@ -301,21 +305,20 @@ export default {
     overflow: auto;
     flex: 1;
   }
-  .xo-table-endFixed {
+  .xo-table-fixed {
     position: absolute;
     display: flex;
     flex: 1;
     flex-direction: column;
+  }
+  .end {
+    box-shadow: -2px 0 6px -2px rgba(0,0,0,.2);
+  }
+  .start {
+    box-shadow: 2px 0 6px -2px rgba(0,0,0,.2);
   }
   .xo-table-fixed_body {
     overflow: hidden;
-  }
-  .xo-table-startFixed {
-    position: absolute;
-    left: 0;
-    display: flex;
-    flex: 1;
-    flex-direction: column;
   }
   .xo-table-body::-webkit-scrollbar {/*滚动条整体样式*/
     width: 10px;     /*高宽分别对应横竖滚动条的尺寸*/

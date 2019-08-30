@@ -126,6 +126,7 @@ export default {
           }
           count--;
         }
+      if(this.expand && str === 'start') width += th[0].clientWidth; 
       return width;
     },
     setFixedWidth() {
@@ -133,11 +134,11 @@ export default {
       if(this.endFixed) {
         this.endFixedWidth = this.getFixedWidth('end');
         this.chgEndFixedWidth(this.endFixedWidth);
-        this.leftWidth = this.endFixedWidth - width + 11;
+        this.leftWidth = this.endFixedWidth - width + 1;
         this.chgEndLeftWidth(this.leftWidth)
       }
       if(this.startFixed) {
-        this.startFixedwidth = this.expand ? this.getFixedWidth('start') + 40 : this.getFixedWidth('start');
+        this.startFixedwidth = this.getFixedWidth('start');
         this.chgStartFixedWidth(this.startFixedwidth);
       }
     }
