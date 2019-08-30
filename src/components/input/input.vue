@@ -3,6 +3,7 @@
     <div
     class="xo-input_wrap"
     :class="{readonly: disabled}"
+    :style="{width: `${width}px`}"
     @mouseenter="isMouseenter=true"
     @mouseleave="isMouseenter=false"
     >
@@ -14,6 +15,7 @@
         readonly: disabled,
         focus: isFocus
       }"
+      :style="{width: `${width}px`}"
       :readonly="disabled"
       :placeholder="placeholder"
       @focus="setFocus(true)"
@@ -21,12 +23,16 @@
       <textarea
       ref="textarea"
       v-model="input"
-      :style="{height: textareaHeight}"
+      :style="{
+        height: textareaHeight,
+        width: `${width}px`}"
       v-else
+      :maxlength="wordLimit ? maxLength : ''"
       :class="{focus: isFocus}"
       @focus="setFocus(true)"
       @blur="setFocus(false)"
       ></textarea>
+      <span v-if="wordLimit">{{`${input.length}/${maxLength}`}}</span>
       <i v-if="clearable && input && isMouseenter" class="clear" @click="clearSelect">x</i>
       <i v-if="type === 'password' && isMouseenter" class="icon-eye" @click="isPassword = !isPassword"></i>
     </div>
@@ -40,6 +46,10 @@ import calctetxtareaHeight from './calctextareaHeight.js'
 export default {
   name: "xoInput",
   props: {
+    width: {
+      type: String,
+      default: `200`
+    },
     disabled: {
       type: Boolean,
       default: false
@@ -59,17 +69,26 @@ export default {
     autoSize: {
       type: [Boolean, Object],
       default: false
+    },
+    wordLimit: {
+      type: Boolean,
+      default: false
+    },
+    maxLength: {
+      type: Number,
+      default: 10
     }
   },
   data() {
     return {
-      input: 123,
+      input: '',
       isFocus: false,
       isMouseenter: false,
       isPassword: false,
       inputType: 'text',
       inputWrapWidth: 0,
-      textareaHeight: ''
+      textareaHeight: '',
+      count: 0,
     }
   },
   watch: {
@@ -109,32 +128,31 @@ export default {
 <style lang="less" scoped>
 .xo-input {
   padding: 10px 0;
-  // width: 180px;
   .xo-input_wrap {
-    width: 220px;
     border-radius: 4px;
     position: relative;
     input {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    width: 148px;
-    height: 30px;
-    line-height: 30px;
-    border: 1px solid #dcdfe6;
-    border-radius: 4px;
-    padding: 0 15px;
-    transition: all 0.5s;
+      box-sizing: border-box;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      height: 30px;
+      line-height: 30px;
+      border: 1px solid #dcdfe6;
+      border-radius: 4px;
+      padding: 0 15px;
+      transition: all 0.5s;
     }
     input:focus {
       outline: none;
     }
     textarea {
+      box-sizing: border-box;
       padding: 10px 15px;
-      min-height: 32px;
-      min-width: 150px;
+      min-height: 50px;
       border-color: #dcdfe6;
       border-radius: 4px;
       transition: border-color 0.5s;
+      resize: vertical;
     }
     textarea:focus {
       outline: none;
@@ -158,11 +176,11 @@ export default {
       line-height: 14px;
       font-style: inherit;
     }
-    .count {
-      position: absolute;
-      bottom: 5px;
-      right: 0;
+    span {
       font-size: 12px;
+      position: absolute;
+      bottom: 6px;
+      right: 9px;
     }
   }
   .focus {
