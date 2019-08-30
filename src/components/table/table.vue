@@ -268,7 +268,6 @@ export default {
       const scrollHeight = this.$refs.scrollTableBody.$el.clientHeight;
       const displayWidth = this.$refs.displayTableBody.clientWidth;
       const scrollWidth = this.$refs.scrollTableBody.$refs.table.clientWidth;
-      console.log(this.$refs.displayTableBody, this.$refs.scrollTableBody.$refs.table)
       this.canScrollHeight = scrollHeight - displayHeight;
       this.showGutter = displayHeight < scrollHeight ? true : false;
       this.widthGutter = displayWidth < scrollWidth ? true : false;
@@ -285,9 +284,9 @@ export default {
     this.isShowGutter();
     this.setTableWidth()
     const that = this;
-    window.onresize = function() {
-      that.debounce(that.setTableWidth, 500)
-    }
+    window.onresize = function () {
+      that.debounce(that.setTableWidth, 500);
+    };
   }
 };
 </script>
@@ -377,8 +376,7 @@ export default {
         bottom: 8px;
       }
     }
-  }
-  
+  }  
   .open {
     transform: rotate(90deg);
   }

@@ -96,21 +96,6 @@ export default {
       if(this.inputType === 'password') this.isPassword = true;
     },
     resizeTextarea() {
-      // const textarea = document.getElementsByTagName('textarea');
-      // const style = window.getComputedStyle(this.$refs.textarea, null);
-      // const boxSizing = style.boxSizing;
-      // const paddingTop = this.getPx(style.paddingTop);
-      // const paddingBottom = this.getPx(style.paddingBottom);
-      // const borderTopWidth = this.getPx(style.borderTopWidth);
-      // const borderBottomWidth = this.getPx(style.borderBottomWidth);
-      // this.textareaHeight = 'auto';
-      // setTimeout(() => {
-      //   if(boxSizing === 'content-box') {
-      //     this.textareaHeight = `${textarea[0].scrollHeight - paddingTop - paddingBottom}px`;
-      //   }else if(boxSizing === 'border-box') {
-      //     this.textareaHeight = `${textarea[0].scrollHeight + borderTopWidth + borderBottomWidth}px`;
-      //   }
-      // },0)
       this.textareaHeight = calctetxtareaHeight(this.$refs.textarea, this.input);
     }
   },
