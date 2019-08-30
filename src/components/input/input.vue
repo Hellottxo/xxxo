@@ -27,12 +27,12 @@
         height: textareaHeight,
         width: `${width}px`}"
       v-else
-      :maxlength="wordLimit ? maxLength : ''"
+      :maxlength="wordLimit ? maxlength : ''"
       :class="{focus: isFocus}"
       @focus="setFocus(true)"
       @blur="setFocus(false)"
       ></textarea>
-      <span v-if="wordLimit">{{`${input.length}/${maxLength}`}}</span>
+      <span v-if="wordLimit">{{`${input.length}/${maxlength}`}}</span>
       <i v-if="clearable && input && isMouseenter" class="clear" @click="clearSelect">x</i>
       <i v-if="type === 'password' && isMouseenter" class="icon-eye" @click="isPassword = !isPassword"></i>
     </div>
@@ -74,7 +74,7 @@ export default {
       type: Boolean,
       default: false
     },
-    maxLength: {
+    maxlength: {
       type: Number,
       default: 10
     }
