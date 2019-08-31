@@ -1,7 +1,7 @@
 <template>
   <div
   class="xo-input"
-  @click="inputClick"
+  @click="setFocus"
   >
     <div
     class="xo-input_wrap"
@@ -38,54 +38,59 @@
       <span v-if="wordLimit">{{`${input.length}/${maxlength}`}}</span>
       <slot name="suffix"></slot>
       <i v-if="clearable && input && isMouseenter" class="clear" @click="clearSelect">x</i>
-      <i v-if="type === 'password' && isMouseenter" class="icon-eye" @click="isPassword = !isPassword"></i>
+      <i
+      v-if="type === 'password'
+      && isMouseenter" class="icon-eye"
+      @click="isPassword = !isPassword"
+      ></i>
     </div>
   </div>
 </template>
 
 <script>
-import '../../common/icon.css'
-import calctetxtareaHeight from './calctextareaHeight.js'
+import '@/common/icon.less';
+import calctetxtareaHeight from './calctextareaHeight';
 
 export default {
-  name: "xoInput",
+  name: 'xoInput',
   props: {
     width: {
       type: String,
-      default: `200`
+      default: '200',
     },
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     clearable: {
       type: Boolean,
-      default: false
+      default: false,
     },
     placeholder: {
       type: String,
-      default: '请输入内容'
+      default: '请输入内容',
     },
     type: {
       type: String,
-      default: 'text'
+      default: 'text',
     },
     autoSize: {
       type: [Boolean, Object],
-      default: false
+      default: false,
     },
     wordLimit: {
       type: Boolean,
-      default: false
+      default: false,
     },
     maxlength: {
       type: Number,
-      default: 10
+      default: 10,
     },
     select: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
+    selectInput: String
   },
   data() {
     return {
@@ -97,46 +102,50 @@ export default {
       inputWrapWidth: 0,
       textareaHeight: '',
       count: 0,
-    }
+    };
   },
   watch: {
     isPassword() {
       this.inputType = this.isPassword ? 'password' : 'text';
     },
     input() {
-      if(this.type === 'textarea') {
-        this.$nextTick(this.resizeTextarea)
+      if (this.type === 'textarea') {
+        this.$nextTick(this.resizeTextarea);
       }
+    },
+    selectInput() {
+      this.$nextTick(() => {
+        if(this.select) {
+          this.input = this.selectInput;
+        }
+      })
     }
   },
   methods: {
     setFocus(val) {
-      if(!this.disabled && val) {
+      if (!this.disabled && val) {
         this.isFocus = val;
-      }else {
-        this.isFocus = this.isMouseenter ? true : false;
+      } else {
+        this.isFocus = !!this.isMouseenter;
       }
+      this.$emit('inputClick', this.isFocus);
     },
     clearSelect() {
-      this.input = "";
+      this.input = '';
     },
     setInputType() {
       this.inputType = this.type;
-      if(this.inputType === 'password') this.isPassword = true;
+      if (this.inputType === 'password') this.isPassword = true;
     },
     resizeTextarea() {
       this.textareaHeight = calctetxtareaHeight(this.$refs.textarea, this.input);
     },
-    inputClick() {
-      this.setFocus();
-      this.$emit('click', this.isFocus)
-    }
   },
   mounted() {
     this.setInputType();
-    if(this.type === 'textarea') this.resizeTextarea();
-  }
-}
+    if (this.type === 'textarea') this.resizeTextarea();
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -179,7 +188,7 @@ export default {
     }
     i.clear {
       top: 8px;
-      background-color: #c0c4cc; 
+      background-color: #c0c4cc;
       display: inline-block;
       font-size: 10px;
       color: #909399;

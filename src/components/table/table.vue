@@ -159,13 +159,13 @@
 </template>
 
 <script>
-import tableHeader from "./table-header";
-import tableBody from "./table-body";
 import { mapState, mapMutations } from 'vuex';
-import { debounceThrottle } from '../../mixins/debounce-throttle.js';
+import tableHeader from './table-header';
+import tableBody from './table-body';
+import { debounceThrottle } from '@/mixins/debounce-throttle.js';
 
 export default {
-  name: "xoTable",
+  name: 'xoTable',
   mixins: [debounceThrottle],
   components: {
     tableHeader,
@@ -185,7 +185,7 @@ export default {
       lastColumnsWidth: 0,
       endFixed: false,
       startFixed: false,
-      tableWidth: ""
+      tableWidth: '',
     };
   },
   props: {
@@ -210,7 +210,7 @@ export default {
     },
     stripeColor: {
       type: String,
-      default: "",
+      default: '',
     },
     highlightRow: {
       type: Boolean,
@@ -227,41 +227,41 @@ export default {
     height: {
       type: String,
       default: '100%',
-    }
+    },
   },
   computed: {
-    ...mapState('tableModuel', ['endFixedWidth', 'startFixedWidth'])
+    ...mapState('tableModuel', ['endFixedWidth', 'startFixedWidth']),
   },
   methods: {
     ...mapMutations('tableModuel', ['chgTableColumns']),
     rowClick(row, column) {
-      this.$emit("row-click", row, column);
+      this.$emit('row-click', row, column);
     },
     tableScroll(e) {
       this.scrollWidth = -e.target.scrollLeft;
       this.scrollTopWidth = -e.target.scrollTop;
     },
     fixedMousewheel(e) {
-      if(this.canScrollHeight > 0) {
-        this.$refs.displayTableBody.scrollTop += e.deltaY
+      if (this.canScrollHeight > 0) {
+        this.$refs.displayTableBody.scrollTop += e.deltaY;
       }
     },
     getTableColumns() {
-      let temp = [],
-      startTemp = [],
-      endTemp = [];
-      this.columns.forEach(e => {
-        if(e.fixed === 'start') {
+      const temp = [];
+      const startTemp = [];
+      const endTemp = [];
+      this.columns.forEach((e) => {
+        if (e.fixed === 'start') {
           startTemp.push(e);
-        }else if(e.fixed === 'end') {
+        } else if (e.fixed === 'end') {
           endTemp.push(e);
-        }else {
+        } else {
           temp.push(e);
         }
-        this.endFixed = endTemp.length > 0 ? true : false;
-        this.startFixed = startTemp.length > 0 ? true : false;
+        this.endFixed = endTemp.length > 0;
+        this.startFixed = startTemp.length > 0;
         this.chgTableColumns(startTemp.concat(temp).concat(endTemp));
-      })
+      });
     },
     isShowGutter() {
       const displayHeight = this.$refs.displayTableBody.clientHeight;
@@ -269,25 +269,25 @@ export default {
       const displayWidth = this.$refs.displayTableBody.clientWidth;
       const scrollWidth = this.$refs.scrollTableBody.$refs.table.clientWidth;
       this.canScrollHeight = scrollHeight - displayHeight;
-      this.showGutter = displayHeight < scrollHeight ? true : false;
-      this.widthGutter = displayWidth < scrollWidth ? true : false;
+      this.showGutter = displayHeight < scrollHeight;
+      this.widthGutter = displayWidth < scrollWidth;
     },
     setTableWidth() {
       this.tableWidth = `${this.$refs.xoTable.clientWidth}`;
       this.isShowGutter();
-    }
+    },
   },
   created() {
     this.getTableColumns();
   },
   mounted() {
     this.isShowGutter();
-    this.setTableWidth()
+    this.setTableWidth();
     const that = this;
     window.onresize = function () {
       that.debounce(that.setTableWidth, 500);
     };
-  }
+  },
 };
 </script>
 
@@ -372,7 +372,7 @@ export default {
       top: 11px;
       right: 10px;
     }
-  }  
+  }
   .open {
     transform: rotate(90deg);
   }

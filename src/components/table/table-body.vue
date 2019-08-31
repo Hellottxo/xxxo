@@ -1,6 +1,6 @@
 <template>
   <div class="table-body">
-    <table 
+    <table
       ref="table"
       :style="{
       marginLeft: `${leftWidth}px`,
@@ -36,7 +36,7 @@
             v-if="expand">
               <div class="cell">
                 <i
-                  class="icon-triangle-right icon"
+                  class="icon-triangle"
                   :class="{'open': hasRowExpand.indexOf(index) > -1}"
                   v-if="item.rowExpand"
                 ></i>
@@ -62,7 +62,7 @@
                 <div class="cell">
                   <span :title="item[config.key]">{{ item[config.key] }}</span>
                   <i
-                    class="icon-triangle-right icon"
+                    class="icon-triangle"
                     v-if="item.children && (item.arrowPosition ? item.arrowPosition === config.key : i === 0)"
                     :class="{'open': hasChildOpen.indexOf(index) > -1}"
                   ></i>
@@ -107,7 +107,7 @@ export default {
     return {
       highlightIndex: -1,
       hasSelect: [],
-      leftWidth: 0
+      leftWidth: 0,
     };
   },
   props: {
@@ -115,48 +115,48 @@ export default {
     data: Array,
     border: {
       type: Boolean,
-      default: true
+      default: true,
     },
     verticalLine: {
       type: Boolean,
-      default: false
+      default: false,
     },
     stripe: {
       type: Boolean,
-      default: false
+      default: false,
     },
     stripeColor: {
       type: String,
-      default: ""
+      default: '',
     },
     highlightRow: {
       type: Boolean,
-      default: false
+      default: false,
     },
     expand: {
       type: Boolean,
-      default: false
+      default: false,
     },
     endFixed: {
       type: Boolean,
-      default: false
+      default: false,
     },
     startFixed: {
       type: Boolean,
-      default: false
+      default: false,
     },
     width: {
       type: String,
-      default: ''
+      default: '',
     },
     height: {
       type: String,
-      default: ''
+      default: '',
     },
     scrollTopWidth: {
       type: Number,
-      default: 0
-    }
+      default: 0,
+    },
   },
   computed: {
     ...mapState('tableModuel', ['clickRow', 'hasChildOpen', 'hasRowExpand', 'tableColumns', 'endFixedWidth', 'endLeftWidth', 'hoverIndex']),
@@ -170,16 +170,16 @@ export default {
     width() {
       this.$nextTick(() => {
         this.setLeftWidth();
-      })
-    }
+      });
+    },
   },
   methods: {
     ...mapMutations('tableModuel', ['chgClickRow', 'chgChildOpen', 'chgRowExpand', 'chgHoverIndex']),
     rowClick(row, column) {
       this.chgClickRow(row);
-      this.$emit("row-click", row, column);
+      this.$emit('row-click', row, column);
       if (this.data[this.clickRow].children) {
-        let temp = this.hasChildOpen;
+        const temp = this.hasChildOpen;
         const flag = temp.indexOf(this.clickRow);
         if (flag > -1) {
           temp.splice(flag, 1);
@@ -193,7 +193,7 @@ export default {
       this.chgHoverIndex(index);
     },
     showExpand(index) {
-      let temp = this.hasRowExpand;
+      const temp = this.hasRowExpand;
       const flag = temp.indexOf(index);
       if (flag > -1) {
         temp.splice(flag, 1);
@@ -203,26 +203,25 @@ export default {
       this.chgRowExpand(temp);
     },
     isHidden(val) {
-      if(this.endFixed) {
-        return val === 'end' ? false : true;
-      }else if(this.startFixed){
-        return val === 'start' ? false : true;
-      }else {
-        return false;
+      if (this.endFixed) {
+        return val !== 'end';
+      } if (this.startFixed) {
+        return val !== 'start';
       }
+      return false;
     },
     setLeftWidth() {
       const tableWidth = this.$refs.table.clientWidth;
-      if(this.endFixed) {
-        if(this.$parent.$refs.displayTableBody.clientWidth < tableWidth) {
+      if (this.endFixed) {
+        if (this.$parent.$refs.displayTableBody.clientWidth < tableWidth) {
           this.leftWidth = this.endLeftWidth;
         }
       }
-    }
+    },
   },
   mounted() {
     this.setLeftWidth();
-  }
+  },
 };
 </script>
 
@@ -233,4 +232,3 @@ export default {
   }
 }
 </style>
-
