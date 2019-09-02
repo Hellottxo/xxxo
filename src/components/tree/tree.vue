@@ -6,15 +6,15 @@
     :key="index">
       <div
       class="icon-collapse"
-      v-if="item.children && !isCollapse"
-      @click="isCollapse=true"
+      v-if="item.children && collapseArr.indexOf(index)===-1"
+      @click="collapse(index)"
       >+</div>
       <div
       class="icon-collapse icon-nocollapse"
-      v-if="item.children && isCollapse"
-      @click="isCollapse=false">-</div>
+      v-if="item.children && collapseArr.indexOf(index)>-1"
+      @click="collapse(index)">-</div>
       <div class="content-label">{{item.label}}</div>
-      <template v-if="item.children">
+      <template v-if="item.children && collapseArr.indexOf(index)>-1">
         <tree-node :data="item.children"></tree-node>
       </template>
     </div>
@@ -26,7 +26,7 @@ export default {
   name: 'tree-node',
   data() {
     return {
-      isCollapse: false,
+      collapseArr: []
     }
   },
   props: {
@@ -34,6 +34,16 @@ export default {
       type: Array,
       default: function() {
         return []
+      }
+    }
+  },
+  methods: {
+    collapse(index) {
+      const flag = this.collapseArr.indexOf(index);
+      if(flag > -1) {
+        this.collapseArr.splice(index, 1);
+      }else {
+        this.collapseArr.push(index);
       }
     }
   }
