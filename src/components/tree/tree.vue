@@ -88,9 +88,10 @@ export default {
 <style lang="less" scoped>
 .tree {
   .tree-content {
+    font-size: 14px;
     display: flex;
     position: relative;
-    margin-bottom: 5px;
+    padding: 5px 0;
     cursor: pointer;
     .icon-collapse {
       font-size: 14px;
