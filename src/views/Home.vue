@@ -2,6 +2,7 @@
   <div class="home">
     <xo-input type="textarea" autoSize></xo-input>
     <xo-select :options="options"></xo-select>
+    <xo-tree :data="tree" :defaultExpandNode="defaultExpandNode"></xo-tree>
     <xo-table height=300 :columns="columns" :data="data" :expand="true" :highlight-row="true">
       <!-- <template v-slot="scope">
         <button>{{scope.data.name}}</button>
@@ -20,6 +21,7 @@
 import xoTable from '../components/table/table';
 import xoInput from '../components/input/input';
 import xoSelect from '../components/select/select';
+import xoTree from '../components/tree/tree';
 
 const columns = [
   {
@@ -96,18 +98,58 @@ const options = [
   { value: '选项5', label: '北京烤鸭' },
 ];
 
+const tree = [{
+  label: '一级 1',
+  children: [{
+    label: '二级 1-1',
+    children: [{
+      label: '三级 1-1-1'
+    }]
+  }]
+}, {
+  label: '一级 2',
+  children: [{
+    label: '二级 2-1',
+    children: [{
+      label: '三级 2-1-1'
+    }]
+  }, {
+    label: '二级 2-2',
+    children: [{
+      label: '三级 2-2-1'
+    }]
+  }]
+}, {
+  label: '一级 3',
+  children: [{
+    label: '二级 3-1',
+    children: [{
+      label: '三级 3-1-1'
+    }]
+  }, {
+    label: '二级 3-2',
+    children: [{
+      label: '三级 3-2-1'
+    }]
+  }]
+}]
+
+
 export default {
   name: 'home',
   components: {
     xoTable,
     xoInput,
     xoSelect,
+    xoTree,
   },
   data() {
     return {
       columns,
       data,
       options,
+      tree,
+      defaultExpandNode: '0-0-0'
     };
   },
 };

@@ -24,7 +24,9 @@
         <div class="content-label">{{item.label}}</div>
       </div>
       <div class="child-node" v-show="item.children && collapseArr.indexOf(index)>-1">
-        <xo-tree :data="item.children" :parentNode="getNode(index)"></xo-tree>
+        <xo-tree :data="item.children"
+        :parentNode="getNode(index)"
+        :defaultExpandNode="getChildDefaultNode"></xo-tree>
       </div>
     </div>
   </div>
@@ -38,6 +40,7 @@ export default {
     return {
       collapseArr: [],
       hover: -1,
+      childDefaultExpandNode: ''
     }
   },
   props: {
@@ -50,6 +53,10 @@ export default {
     parentNode: {
       type: String,
       default: ''
+    },
+    defaultExpandNode: {
+      type: String,
+      default: ''
     }
   },
   computed: {
@@ -60,6 +67,18 @@ export default {
       return `${(len + 1)*16}px`;
     }
   },
+  watch: {
+    defaultExpandNode() {
+      const temp = this.defaultExpandNode.split('-');
+      if(temp[0]) {
+        this.collapseArr.push(Number(temp[0]));
+        if(temp[1]) {
+          const child = temp.slice(1);
+          this.childDefaultExpandNode = child.join('-');
+        }
+      }
+    }
+  },
   methods: {
     ...mapMutations('treeModuel', ['chgHighlightRow']),
     getNode(index) {
@@ -68,7 +87,7 @@ export default {
     collapse(index) {
       const flag = this.collapseArr.indexOf(index);
       if(flag > -1) {
-        this.collapseArr.splice(index, 1);
+        this.collapseArr.splice(flag, 1);
       }else {
         this.collapseArr.push(index);
       }
@@ -80,7 +99,16 @@ export default {
       const temp = this.getNode(index);
       return this.highlightRow === temp;
     },
-    
+    getChildDefaultNode() {
+      const temp = this.defaultExpandNode.split('-');
+      if(temp[0]) {
+        this.collapseArr.push(Number(temp[0]));
+        if(temp[1]) {
+          const child = temp.slice(1);
+          this.childDefaultExpandNode = child.join('-');
+        }
+      }
+    }
   }
 }
 </script>
@@ -101,7 +129,7 @@ export default {
       line-height: 10px;
       color: #409eff;
       position: relative;
-      top: 6px;
+      top: 4px;
     }
     .icon-nocollapse {
       padding: 0 3px;
