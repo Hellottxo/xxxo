@@ -26,7 +26,7 @@
       <div class="child-node" v-show="item.children && collapseArr.indexOf(index)>-1">
         <xo-tree :data="item.children"
         :parentNode="getNode(index)"
-        :defaultExpandNode="getChildDefaultNode"></xo-tree>
+        :defaultExpandNode="childdefaultExpandNode"></xo-tree>
       </div>
     </div>
   </div>
@@ -40,7 +40,7 @@ export default {
     return {
       collapseArr: [],
       hover: -1,
-      childDefaultExpandNode: ''
+      childdefaultExpandNode: []
     }
   },
   props: {
@@ -54,10 +54,7 @@ export default {
       type: String,
       default: ''
     },
-    defaultExpandNode: {
-      type: String,
-      default: ''
-    }
+    defaultExpandNode: Array,
   },
   computed: {
     ...mapState('treeModuel', ['highlightRow']),
@@ -65,18 +62,6 @@ export default {
       const temp = this.parentNode.split('-');
       const len = this.parentNode ? temp.length : 0;
       return `${(len + 1)*16}px`;
-    }
-  },
-  watch: {
-    defaultExpandNode() {
-      const temp = this.defaultExpandNode.split('-');
-      if(temp[0]) {
-        this.collapseArr.push(Number(temp[0]));
-        if(temp[1]) {
-          const child = temp.slice(1);
-          this.childDefaultExpandNode = child.join('-');
-        }
-      }
     }
   },
   methods: {
@@ -108,7 +93,18 @@ export default {
           this.childDefaultExpandNode = child.join('-');
         }
       }
+    },
+    getchildExpandNode() {
+      if(this.defaultExpandNode) {
+        this.collapseArr.push(this.defaultExpandNode[0]);
+        if(this.defaultExpandNode.length > 1) {
+          this.childdefaultExpandNode = this.defaultExpandNode.slice(1);
+        }
+      }
     }
+  },
+  created() {
+    this.getchildExpandNode();
   }
 }
 </script>
