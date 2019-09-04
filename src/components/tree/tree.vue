@@ -24,9 +24,11 @@
         <div class="content-label">{{item.label}}</div>
       </div>
       <div class="child-node" v-show="item.children && collapseArr.indexOf(index)>-1">
-        <xo-tree :data="item.children"
-        :parentNode="getNode(index)"
-        :defaultExpandNode="childdefaultExpandNode"></xo-tree>
+        <xo-tree
+        :data="item.children"
+        :parent-node="getNode(index)"
+        :default-expand-node="childdefaultExpandNode"
+        :node-key="nodeKey"></xo-tree>
       </div>
     </div>
   </div>
@@ -55,6 +57,8 @@ export default {
       default: ''
     },
     defaultExpandNode: Array,
+    defaultHighligthNode: Number,
+    nodeKey: String
   },
   computed: {
     ...mapState('treeModuel', ['highlightRow']),
@@ -76,22 +80,20 @@ export default {
       }else {
         this.collapseArr.push(index);
       }
-      const temp = this.getNode(index);
+      let temp;
+      if(this.nodeKey) {
+        temp = this.data[index][this.nodeKey];
+      }else {
+        temp = this.getNode(index);
+      }
       this.chgHighlightRow(temp);
-      this.$emit('click', temp);
     },
     setHighlightRow(index) {
-      const temp = this.getNode(index);
-      return this.highlightRow === temp;
-    },
-    getChildDefaultNode() {
-      const temp = this.defaultExpandNode.split('-');
-      if(temp[0]) {
-        this.collapseArr.push(Number(temp[0]));
-        if(temp[1]) {
-          const child = temp.slice(1);
-          this.childDefaultExpandNode = child.join('-');
-        }
+      if(this.nodeKey) {
+        const temp = this.data[index][this.nodeKey];
+        return this.highlightRow == temp;
+      }else {
+        return this.highlightRow === temp;
       }
     },
     getchildExpandNode() {
@@ -101,10 +103,16 @@ export default {
           this.childdefaultExpandNode = this.defaultExpandNode.slice(1);
         }
       }
+    },
+    setdefaultHighlight() {
+      if(this.nodeKey && this.defaultHighligthNode) {
+        this.chgHighlightRow(this.defaultHighligthNode);
+      }
     }
   },
   created() {
     this.getchildExpandNode();
+    this.setdefaultHighlight();
   }
 }
 </script>

@@ -1,7 +1,7 @@
 /**
  * 树形控件
- * 点击事件: click(index)
- * index: '0-1-2'
+ * default-expand-node: 展开node的序号，如[0,0,0]
+ * default-highlight-node: 默认高亮行，需指定nodeKey
  */
 
 import xoTree from './tree.vue';
