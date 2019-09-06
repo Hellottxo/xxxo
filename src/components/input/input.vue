@@ -1,8 +1,5 @@
 <template>
-  <div
-  class="xo-input"
-  @click="setFocus"
-  >
+  <div class="xo-input">
     <div
     class="xo-input_wrap"
     :class="{readonly: disabled}"
@@ -16,14 +13,13 @@
       v-model="input"
       :class="{
         readonly: disabled,
-        focus: isFocus,
-        select: select
+        focus: isFocus
       }"
       :style="{width: `${width}px`}"
-      :readonly="disabled || select"
+      :readonly="disabled"
       :placeholder="placeholder"
-      @blur="setFocus(false)"
-      >
+      @focus="setFocus(true)"
+      @blur="setFocus(false)">
       <textarea
       ref="textarea"
       v-model="input"
@@ -33,10 +29,10 @@
       v-else
       :maxlength="wordLimit ? maxlength : ''"
       :class="{focus: isFocus}"
+      @focus="setFocus(true)"
       @blur="setFocus(false)"
       ></textarea>
       <span v-if="wordLimit">{{`${input.length}/${maxlength}`}}</span>
-      <slot name="suffix"></slot>
       <i v-if="clearable && input && isMouseenter" class="clear" @click="clearSelect">x</i>
       <i
       v-if="type === 'password'
@@ -84,13 +80,8 @@ export default {
     },
     maxlength: {
       type: Number,
-      default: 10,
-    },
-    select: {
-      type: Boolean,
-      default: false,
-    },
-    selectInput: String
+      default: 10
+    }
   },
   data() {
     return {
@@ -123,10 +114,8 @@ export default {
   },
   methods: {
     setFocus(val) {
-      if (!this.disabled && val) {
+      if(!this.disabled) {
         this.isFocus = val;
-      } else {
-        this.isFocus = !!this.isMouseenter;
       }
       this.$emit('inputClick', this.isFocus);
     },
@@ -139,13 +128,13 @@ export default {
     },
     resizeTextarea() {
       this.textareaHeight = calctetxtareaHeight(this.$refs.textarea, this.input);
-    },
+    }
   },
   mounted() {
     this.setInputType();
-    if (this.type === 'textarea') this.resizeTextarea();
-  },
-};
+    this.resizeTextarea();
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -213,9 +202,6 @@ export default {
     background-color: #f5f7fa;
     color: #c0c4cc;
     cursor: not-allowed;
-  }
-  .select {
-    cursor: pointer;
   }
 }
 </style>

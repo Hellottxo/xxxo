@@ -117,7 +117,7 @@ export default {
   }
   .xo-select-option {
     position: absolute;
-    top: 58px;
+    top: 45px;
     z-index: 222;
     &>i {
       top: -11px;
