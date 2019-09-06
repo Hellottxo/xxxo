@@ -25,6 +25,7 @@
       </div>
       <div class="child-node" v-show="item.children && collapseArr.indexOf(index)>-1">
         <xo-tree
+        @node-click="nodeClick"
         :data="item.children"
         :parent-node="getNode(index)"
         :default-expand-node="childdefaultExpandNode"
@@ -58,7 +59,11 @@ export default {
     },
     defaultExpandNode: Array,
     defaultHighligthNode: Number,
-    nodeKey: String
+    nodeKey: String,
+    defaultAllExpand: {
+      type: Boolean,
+      default: true
+    }
   },
   computed: {
     ...mapState('treeModuel', ['highlightRow']),
@@ -87,6 +92,7 @@ export default {
         temp = this.getNode(index);
       }
       this.chgHighlightRow(temp);
+      this.$emit('node-click', this.data[index], index, this);
     },
     setHighlightRow(index) {
       if(this.nodeKey) {
@@ -108,11 +114,22 @@ export default {
       if(this.nodeKey && this.defaultHighligthNode) {
         this.chgHighlightRow(this.defaultHighligthNode);
       }
+    },
+    setAllExpand() {
+      if(this.defaultAllExpand) {
+        for(let i = 0; i < this.data.length; i++) {
+          this.collapseArr.push(i);
+        }
+      }
+    },
+    nodeClick(obj, node, components) {
+      this.$emit('node-click', obj, node, components);
     }
   },
   created() {
     this.getchildExpandNode();
     this.setdefaultHighlight();
+    this.setAllExpand();
   }
 }
 </script>

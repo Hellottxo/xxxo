@@ -12,4 +12,8 @@
 
 import xoTable from './table.vue';
 
+xoTable.install = function (Vue) {
+  Vue.component(xoTable.name, xoTable);
+};
+
 export default xoTable;
