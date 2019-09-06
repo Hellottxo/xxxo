@@ -177,15 +177,16 @@ export default {
     }
     i.clear {
       top: 8px;
-      background-color: #c0c4cc;
+      color: #909399;
+      font-weight: 1800;
+      background-color: #fff;
       display: inline-block;
       font-size: 10px;
-      color: #909399;
       border-color: #909399;
       width: 14px;
       height: 14px;
       border-radius: 50%;
-      line-height: 14px;
+      line-height: 13px;
       font-style: inherit;
     }
     span {
