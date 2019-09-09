@@ -15,7 +15,11 @@
         readonly: disabled,
         focus: isFocus
       }"
-      :style="{width: `${width}px`}"
+      :style="{
+        width: `${width}px`,
+        paddingLeft: $scopedSlots.prefix ? `30px` : `15px`,
+        paddingRight: $scopedSlots.suffix ? `30px` : `15px`,
+      }"
       :readonly="disabled"
       :placeholder="placeholder"
       @focus="setFocus(true)"
@@ -39,6 +43,12 @@
       && isMouseenter" class="icon-eye"
       @click="isPassword = !isPassword"
       ></i>
+      <span class="icon-prefix" v-if="$scopedSlots.prefix">
+        <slot name="prefix"></slot>
+      </span>
+      <span class="icon-suffix" v-if="$scopedSlots.suffix">
+        <slot name="suffix"></slot>
+      </span>
     </div>
   </div>
 </template>
@@ -110,6 +120,11 @@ export default {
           this.input = this.selectInput;
         }
       })
+    },
+    type() {
+      if(this.type === 'textarea') {
+        this.resizeTextarea();
+      }
     }
   },
   methods: {
@@ -117,7 +132,7 @@ export default {
       if(!this.disabled) {
         this.isFocus = val;
       }
-      this.$emit('inputClick', this.isFocus);
+      this.$emit('input-click', this.isFocus);
     },
     clearSelect() {
       this.input = '';
@@ -132,7 +147,6 @@ export default {
   },
   mounted() {
     this.setInputType();
-    this.resizeTextarea();
   }
 }
 </script>
@@ -177,23 +191,49 @@ export default {
     }
     i.clear {
       top: 8px;
-      color: #909399;
+      color: #fff;
       font-weight: 1800;
-      background-color: #fff;
+      font-family: 'Courier New', Courier, monospace;
       display: inline-block;
       font-size: 10px;
-      border-color: #909399;
+      background-color: #909399;
       width: 14px;
       height: 14px;
       border-radius: 50%;
       line-height: 13px;
       font-style: inherit;
+      -webkit-transform:scale(0.8);
     }
     span {
       font-size: 12px;
       position: absolute;
       bottom: 6px;
       right: 9px;
+    }
+    .icon-suffix {
+      position: absolute;
+      font-size: 10px;
+      line-height: 30px;
+      right: 10px;
+      top: 0;
+      &>i {
+        position: relative;
+        top: 0;
+        right: 0;
+      }
+    }
+    .icon-preffix {
+      position: absolute;
+      font-size: 10px;
+      line-height: 30px;
+      left: 10px;
+      top: 0;
+      width: 30px;
+      &>i {
+        position: relative;
+        top: 0;
+        right: 0;
+      }
     }
   }
   .focus {
