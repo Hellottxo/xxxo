@@ -1,8 +1,17 @@
 <template>
   <div class="home">
-    <xo-input type="textarea" autoSize></xo-input>
+    <xo-input autoSize type="textarea">
+      <template v-slot:suffix>
+        <i class="">123534</i>
+      </template>
+    </xo-input>
     <xo-select :options="options"></xo-select>
-    <xo-tree :data="tree" :defaultExpandNode="defaultExpandNode"></xo-tree>
+    <xo-tree
+    :data="tree"
+    :default-expand-node="defaultExpandNode"
+    :node-key="nodeKey"
+    :default-highligth-node="defaultHighlightNode"
+    @node-click="nodeClick"></xo-tree>
     <xo-table height=300 :columns="columns" :data="data" :expand="true" :highlight-row="true">
       <!-- <template v-slot="scope">
         <button>{{scope.data.name}}</button>
@@ -18,10 +27,10 @@
 
 <script>
 // @ is an alias to /src
-import xoTable from '../components/table/table';
-import xoInput from '../components/input/input';
-import xoSelect from '../components/select/select';
-import xoTree from '../components/tree/tree';
+import xoTable from '@/components/table/table';
+import xoInput from '@/components/input/input';
+import xoSelect from '@/components/select/select';
+import xoTree from '@/components/tree/tree';
 
 const columns = [
   {
@@ -99,37 +108,25 @@ const options = [
 ];
 
 const tree = [{
+  id: 0,
   label: '一级 1',
   children: [{
+    id: 4,
     label: '二级 1-1',
     children: [{
+      id: 7,
       label: '三级 1-1-1'
     }]
   }]
 }, {
+  id: 1,
   label: '一级 2',
   children: [{
+    id: 3,
     label: '二级 2-1',
     children: [{
+      id:5,
       label: '三级 2-1-1'
-    }]
-  }, {
-    label: '二级 2-2',
-    children: [{
-      label: '三级 2-2-1'
-    }]
-  }]
-}, {
-  label: '一级 3',
-  children: [{
-    label: '二级 3-1',
-    children: [{
-      label: '三级 3-1-1'
-    }]
-  }, {
-    label: '二级 3-2',
-    children: [{
-      label: '三级 3-2-1'
     }]
   }]
 }]
@@ -149,8 +146,21 @@ export default {
       data,
       options,
       tree,
-      defaultExpandNode: '0-0-0'
+      defaultExpandNode: [0,0,0],
+      defaultHighlightNode: 7,
+      nodeKey: 'id',
+      input: '123'
     };
   },
+  watch: {
+    input() {
+      console.log(this.input)
+    }
+  },
+  methods: {
+    nodeClick(obj) {
+      console.log(obj.id);
+    }
+  }
 };
 </script>

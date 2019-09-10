@@ -1,15 +1,19 @@
 <template>
   <div class="xo-select">
     <xo-input
+    v-model="select"
     :placeholder="placeholder"
+    @mouseenter="ismouseenter=true"
+    @mouseleave="ismouseenter=false"
     @input-click="inputClick">
-      <template v-slot:suffix>
-        <i v-if="showOptions" class="icon-triangle-down select-down"></i>
-        <i v-else class="icon-triangle-up select-up"></i>
+      <template v-slot:suffix :class="{transform: showOptions}">
+          <i
+          :class="{transform: showOptions}"
+          class="icon-triangle-down select-down"></i>
       </template>
     </xo-input>
-    <div v-if="showOptions">
-      <xo-options :options="options"></xo-options>
+    <div>
+      <xo-options :options="options" @click="optionsClick"></xo-options>
     </div>
   </div>
 </template>
@@ -21,6 +25,8 @@ export default {
   data() {
     return {
       showOptions: false,
+      select: '',
+      ismouseenter: false
     }
   },
   props: {
@@ -42,6 +48,9 @@ export default {
   methods: {
     inputClick(val) {
       this.showOptions = val;
+    },
+    optionsClick(val) {
+      this.select = val;
     }
   }
 }
@@ -53,10 +62,11 @@ export default {
     cursor: pointer;
   }
   .select-down {
-    top: 10px !important;
+    top: 3px !important;
   }
-  .select-up {
-    top: -10px !important;
+  .transform {
+    transform: rotate(180deg);
+    top: -1px !important;
   }
 }
 </style>

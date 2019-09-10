@@ -6,6 +6,7 @@
       :key="item.value"
       :value="item.value"
       :label="item.label"
+      @click="getli(item.value)"
       >{{item.label}}</li>
     </ul>
   </div>
@@ -19,6 +20,11 @@ export default {
       default: () => {
         return [];
       }
+    }
+  },
+  methods: {
+    getli(val) {
+      this.$emit('click', val);
     }
   }
 }
@@ -37,10 +43,16 @@ export default {
   ul {
     list-style: none;
     margin: 0;
-    padding: 10px 15px;
+    padding: 10px 0;
     li {
-      padding: 5px 10px;
+      padding: 0 15px;
+      height: 30px;
+      line-height: 30px;
       text-align: start;
+      cursor: pointer;
+    }
+    li:hover {
+      background-color: #f5f7fa;
     }
   }
   ul::before {
