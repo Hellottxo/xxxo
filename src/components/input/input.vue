@@ -60,6 +60,7 @@ import calctetxtareaHeight from './calctextareaHeight';
 export default {
   name: 'xoInput',
   props: {
+    value: [Number, String],
     width: {
       type: String,
       default: '200',
@@ -95,7 +96,7 @@ export default {
   },
   data() {
     return {
-      input: '',
+      input: this.value,
       isFocus: false,
       isMouseenter: false,
       isPassword: false,
@@ -110,21 +111,13 @@ export default {
       this.inputType = this.isPassword ? 'password' : 'text';
     },
     input() {
-      if (this.type === 'textarea') {
-        this.$nextTick(this.resizeTextarea);
-      }
-    },
-    selectInput() {
-      this.$nextTick(() => {
-        if(this.select) {
-          this.input = this.selectInput;
-        }
-      })
-    },
-    type() {
+      this.$emit('input', this.input);
       if(this.type === 'textarea') {
         this.resizeTextarea();
       }
+    },
+    value() {
+      this.input = this.value;
     }
   },
   methods: {
@@ -135,7 +128,7 @@ export default {
       this.$emit('input-click', this.isFocus);
     },
     clearSelect() {
-      this.input = '';
+      this.$emit('input', this.input);
     },
     setInputType() {
       this.inputType = this.type;
@@ -154,10 +147,12 @@ export default {
 <style lang="less" scoped>
 .xo-input {
   padding: 10px 0;
+  cursor: pointer;
   .xo-input_wrap {
     border-radius: 4px;
     position: relative;
     input {
+      cursor: pointer;
       box-sizing: border-box;
       -webkit-appearance: none;
       -moz-appearance: none;
