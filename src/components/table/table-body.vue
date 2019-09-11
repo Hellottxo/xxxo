@@ -63,7 +63,7 @@
                   <span :title="item[config.key]">{{ item[config.key] }}</span>
                   <i
                     class="icon-triangle-right"
-                    v-if="item.children && (item.arrowPosition ? item.arrowPosition === config.key : i === 0)"
+                    v-if="item.children && (item.arrowPosition ? item.arrowPosition === config.key : (expand ? i === 1 : i === 0))"
                     :class="{'open': hasChildOpen.indexOf(index) > -1}"
                   ></i>
                 </div>
