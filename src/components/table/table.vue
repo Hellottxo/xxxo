@@ -51,15 +51,15 @@
       </table-body>
     </div>
     <div
-      :style="{
-      height: `${widthGutter ? height - 10 : height}px`,
-      width: `${endFixedWidth - 10}px`,
-      right: this.showGutter ? `10px` : 0
-      }"
-      :class="{end: widthGutter}"
-      @mousewheel="fixedMousewheel"
-      class="xo-table-endFixed xo-table-fixed"
-      v-if="this.endFixed">
+    :style="{
+    height: `${widthGutter ? height - 10 : height}px`,
+    width: `${endFixedWidth - 10}px`,
+    right: this.showGutter ? `10px` : 0
+    }"
+    :class="{end: widthGutter}"
+    @mousewheel="fixedMousewheel"
+    class="xo-table-endFixed xo-table-fixed"
+    v-if="this.endFixed">
       <div
       class="xo-table-fixed_header"
       v-if="showHeader">
@@ -72,8 +72,7 @@
           :width="tableWidth"
         ></table-header>
       </div>
-      <div
-      class="xo-table-fixed_body">
+      <div class="xo-table-fixed_body">
         <table-body
           :childcolumns="childcolumns"
           :data="data"
@@ -99,14 +98,14 @@
       </div>
     </div>
     <div
-      :style="{
-      height: `${widthGutter ? height - 10 : height}px`,
-      width: `${startFixedWidth}px`,
-      }"
-      @mousewheel="fixedMousewheel"
-      class="xo-table-fixed"
-      :class="{start: widthGutter}"
-      v-if="this.startFixed">
+    :style="{
+    height: `${widthGutter ? height - 10 : height}px`,
+    width: `${startFixedWidth}px`,
+    }"
+    @mousewheel="fixedMousewheel"
+    class="xo-table-fixed"
+    :class="{start: widthGutter}"
+    v-if="this.startFixed">
       <div
       class="xo-table-fixed_header"
       v-if="showHeader">
