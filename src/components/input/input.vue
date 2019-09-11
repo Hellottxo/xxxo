@@ -122,10 +122,14 @@ export default {
   },
   methods: {
     setFocus(val) {
+      if(val) {
+        this.$emit('focus');
+      }else {
+        this.$emit('blur');
+      }
       if(!this.disabled) {
         this.isFocus = val;
       }
-      this.$emit('input-click', this.isFocus);
     },
     clearSelect() {
       this.$emit('input', this.input);
@@ -146,7 +150,6 @@ export default {
 
 <style lang="less" scoped>
 .xo-input {
-  padding: 10px 0;
   cursor: pointer;
   .xo-input_wrap {
     border-radius: 4px;

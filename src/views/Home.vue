@@ -34,17 +34,17 @@ import xoTree from '@/components/tree/tree';
 
 const columns = [
   {
-    label: '姓名', key: 'name', width: 200, fixed: 'end',
+    label: '姓名', key: 'name', width: 200
   },
   {
-    label: '年龄', key: 'age', width: 200, fixed: 'start',
+    label: '年龄', key: 'age', width: 200, arrowPosition: true
   },
   { label: '详细', key: 'detail', width: 200 },
   { label: 'a', key: 'a', width: 200 },
   { label: 'b', key: 'b', width: 200 },
   { label: 'c', key: 'c', width: 200 },
   {
-    label: '地址', key: 'address', width: 200, fixed: 'end',
+    label: '地址', key: 'address', width: 200
   },
 ];
 

@@ -1,19 +1,29 @@
 <template>
   <div class="xo-select">
-    <xo-input
-    v-model="select"
-    :placeholder="placeholder"
-    @mouseenter="ismouseenter=true"
-    @mouseleave="ismouseenter=false"
-    @input-click="inputClick">
-      <template v-slot:suffix :class="{transform: showOptions}">
-          <i
-          :class="{transform: showOptions}"
-          class="icon-triangle-down select-down"></i>
-      </template>
-    </xo-input>
+    <div
+    class="xo-select_wrap"
+    :class="{isFocus: isFocus}"
+    
+    @click="inputWrapClick">
+      <xo-input
+      ref="input"
+      v-model="select"
+      :placeholder="placeholder"
+      @focus="setFocus(true)"
+      @blur="setFocus(false)"
+      >
+        <template v-slot:suffix :class="{transform: visible}">
+            <i
+            :class="{transform: visible}"
+            class="icon-triangle-down select-down"></i>
+        </template>
+      </xo-input>
+    </div>
     <div>
-      <xo-options :options="options" @click="optionsClick"></xo-options>
+      <xo-options
+      v-if="visible"
+      :options="options"
+      @click="optionsClick"></xo-options>
     </div>
   </div>
 </template>
@@ -21,12 +31,13 @@
 <script>
 import xoInput from '@/components/input/index.js';
 import xoOptions from './options';
+import { setTimeout } from 'timers';
 export default {
   data() {
     return {
-      showOptions: false,
+      visible: false,
       select: '',
-      ismouseenter: false
+      isFocus: false,
     }
   },
   props: {
@@ -45,12 +56,22 @@ export default {
     xoInput,
     xoOptions
   },
+  watch: {
+    select() {
+      this.$emit('change', this.select);
+    }
+  },
   methods: {
-    inputClick(val) {
-      this.showOptions = val;
+    setFocus(val) {
+      this.isFocus = val;
+    },
+    inputWrapClick() {
+      this.visible = !this.visible;
     },
     optionsClick(val) {
       this.select = val;
+      this.visible = false;
+      this.isFocus = true;        
     }
   }
 }
@@ -58,15 +79,31 @@ export default {
 
 <style lang="less" scoped>
 .xo-select {
-  .xo-input {
-    cursor: pointer;
+  .xo-select_wrap {
+    outline: none;
+    .xo-input {
+      cursor: pointer;
+    }
+    .select-down {
+      top: 3px !important;
+    }
+    .transform {
+      transform: rotate(180deg);
+      top: -1px !important;
+    }
   }
-  .select-down {
-    top: 3px !important;
-  }
-  .transform {
-    transform: rotate(180deg);
-    top: -1px !important;
+  
+}
+</style>
+
+<style lang="less">
+.isFocus {
+  & > div {
+    & > .xo-input_wrap {
+      & > input {
+        border-color: #409EFF !important;
+      }
+    }
   }
 }
 </style>
