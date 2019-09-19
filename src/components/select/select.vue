@@ -3,9 +3,13 @@
     <div
     class="xo-select_wrap"
     :class="{isFocus: isFocus}"
-    
-    @click="inputWrapClick">
+    @click="inputWrapClick"
+    v-clickoutside="clickOutside"
+    @mouseenter="isMouseenter=true"
+    @mouseleave="isMouseenter=false"
+    >
       <xo-input
+      :clearable="clearable"
       ref="input"
       v-model="select"
       :placeholder="placeholder"
@@ -13,33 +17,35 @@
       @blur="setFocus(false)"
       >
         <template v-slot:suffix :class="{transform: visible}">
-            <i
-            :class="{transform: visible}"
-            class="icon-triangle-down select-down"></i>
+            <i :class="{transform: visible}"
+            class="icon-triangle-down select-down" v-if="(clearable && (!isMouseenter || !select)) || !clearable"></i>
         </template>
       </xo-input>
     </div>
-    <div>
+    <template>
       <xo-options
       v-if="visible"
       :options="options"
       @click="optionsClick"></xo-options>
-    </div>
+    </template>
   </div>
 </template>
 
 <script>
 import xoInput from '@/components/input/index.js';
 import xoOptions from './options';
-import { setTimeout } from 'timers';
+import { constAnalysis } from '@/mixins/const-analysis.js';
+
 export default {
   data() {
     return {
       visible: false,
       select: '',
       isFocus: false,
+      isMouseenter: false
     }
   },
+  mixins: [constAnalysis],
   props: {
     placeholder: {
       type: String,
@@ -50,7 +56,8 @@ export default {
       default: () => {
         return [];
       }
-    }
+    },
+    clearable: Boolean
   },
   components: {
     xoInput,
@@ -69,9 +76,12 @@ export default {
       this.visible = !this.visible;
     },
     optionsClick(val) {
-      this.select = val;
+      this.select = this.getLabel(this.options, val);
       this.visible = false;
       this.isFocus = true;        
+    },
+    clickOutside() {
+      this.visible = false;
     }
   }
 }
@@ -85,14 +95,13 @@ export default {
       cursor: pointer;
     }
     .select-down {
-      top: 3px !important;
+      top: 4px !important;
     }
     .transform {
       transform: rotate(180deg);
       top: -1px !important;
     }
   }
-  
 }
 </style>
 

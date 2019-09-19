@@ -37,7 +37,9 @@
       @blur="setFocus(false)"
       ></textarea>
       <span v-if="wordLimit">{{`${input.length}/${maxlength}`}}</span>
-      <i v-if="clearable && input && isMouseenter" class="clear" @click="clearSelect">x</i>
+      <span class="icon-suffix">
+        <i v-if="clearable && input && isMouseenter" class="clear" @click="clearSelect">x</i>
+      </span>
       <i
       v-if="type === 'password'
       && isMouseenter" class="icon-eye"
@@ -132,6 +134,7 @@ export default {
       }
     },
     clearSelect() {
+      this.input = '';
       this.$emit('input', this.input);
     },
     setInputType() {
@@ -156,6 +159,7 @@ export default {
     position: relative;
     input {
       cursor: pointer;
+      color: #606266;
       box-sizing: border-box;
       -webkit-appearance: none;
       -moz-appearance: none;
@@ -188,19 +192,19 @@ export default {
       cursor: pointer;
     }
     i.clear {
-      top: 8px;
-      color: #fff;
+      color: #909399;
       font-weight: 1800;
-      font-family: 'Courier New', Courier, monospace;
       display: inline-block;
       font-size: 10px;
-      background-color: #909399;
+      background-color: #fff;
       width: 14px;
       height: 14px;
       border-radius: 50%;
+      border: 1px solid #909399;
       line-height: 13px;
       font-style: inherit;
-      -webkit-transform:scale(0.8);
+      -webkit-transform:scale(0.7);
+      z-index: 222;
     }
     span {
       font-size: 12px;

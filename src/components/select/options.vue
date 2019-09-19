@@ -7,7 +7,9 @@
       :value="item.value"
       :label="item.label"
       @click="getli(item.value)"
-      >{{item.label}}</li>
+      >
+      <span>{{item.label}}</span>
+      </li>
     </ul>
   </div>
 </template>
@@ -33,6 +35,8 @@ export default {
 <style lang="less" scoped>
 .xo-options {
   color: #606266;
+  font-size: 13px;
+  margin-top: 10px;
   position: absolute;
   z-index: 2222;
   background-color: #fff;
@@ -78,7 +82,7 @@ export default {
     border-top-color: transparent;
     border-bottom-color: #fff;
     position: absolute;
-    top: -12px;
+    top: -11px;
     left: 15px;
   }
 }
