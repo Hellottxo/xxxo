@@ -42,7 +42,8 @@ export default {
       visible: false,
       select: '',
       isFocus: false,
-      isMouseenter: false
+      isMouseenter: false,
+      isOptionsClick: false
     }
   },
   mixins: [constAnalysis],
@@ -77,11 +78,18 @@ export default {
     },
     optionsClick(val) {
       this.select = this.getLabel(this.options, val);
+      this.isOptionsClick = true;
       this.visible = false;
-      this.isFocus = true;        
+      this.isFocus = true;
     },
     clickOutside() {
-      this.visible = false;
+      if(this.isOptionsClick) {
+        this.isFocus = true;
+        this.isOptionsClick = false;
+      }else {
+        this.isFocus = false;
+        this.visible = false;
+      }
     }
   }
 }
