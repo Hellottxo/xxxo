@@ -91,6 +91,7 @@ export default {
 .xo-select {
   .xo-select_wrap {
     outline: none;
+    width: 200px;
     .xo-input {
       cursor: pointer;
     }
