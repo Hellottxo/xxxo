@@ -1,10 +1,11 @@
 <template>
-  <div class="xo-select">
+  <div class="xo-select"
+  :style="{width: `${width}px`}"
+  v-clickoutside="clickOutside">
     <div
     class="xo-select_wrap"
     :class="{isFocus: isFocus}"
     @click="inputWrapClick"
-    v-clickoutside="clickOutside"
     @mouseenter="isMouseenter=true"
     @mouseleave="isMouseenter=false"
     >
@@ -13,6 +14,7 @@
       ref="input"
       v-model="select"
       :placeholder="placeholder"
+      :width="width"
       @focus="setFocus(true)"
       @blur="setFocus(false)"
       >
@@ -37,6 +39,7 @@ import xoOptions from './options';
 import { constAnalysis } from '@/mixins/const-analysis.js';
 
 export default {
+  name: 'xo-select',
   data() {
     return {
       visible: false,
@@ -58,7 +61,11 @@ export default {
         return [];
       }
     },
-    clearable: Boolean
+    clearable: Boolean,
+    width: {
+      type: String,
+      default: '200'
+    }
   },
   components: {
     xoInput,
@@ -99,7 +106,6 @@ export default {
 .xo-select {
   .xo-select_wrap {
     outline: none;
-    width: 200px;
     .xo-input {
       cursor: pointer;
     }

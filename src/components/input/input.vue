@@ -60,7 +60,7 @@ import '@/common/icon.less';
 import calctetxtareaHeight from './calctextareaHeight';
 
 export default {
-  name: 'xoInput',
+  name: 'xo-input',
   props: {
     value: [Number, String],
     width: {
@@ -216,7 +216,6 @@ export default {
       position: absolute;
       font-size: 10px;
       line-height: 30px;
-      right: 10px;
       top: 0;
       &>i {
         position: relative;

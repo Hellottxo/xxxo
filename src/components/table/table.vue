@@ -164,7 +164,7 @@ import tableBody from './table-body';
 import { debounceThrottle } from '@/mixins/debounce-throttle.js';
 
 export default {
-  name: 'xoTable',
+  name: 'xo-table',
   mixins: [debounceThrottle],
   components: {
     tableHeader,
