@@ -1,11 +1,11 @@
 <template>
   <div class="home">
-    <xo-input autoSize type="textarea">
-      <template v-slot:suffix>
+    <xo-input autoSize>
+      <!-- <template v-slot:suffix>
         <i class="">123534</i>
-      </template>
+      </template> -->
     </xo-input>
-    <xo-select :options="options"></xo-select>
+    <xo-select multiple clearable :options="options" width="180"></xo-select>
     <xo-tree
     :data="tree"
     :default-expand-node="defaultExpandNode"
@@ -27,10 +27,6 @@
 
 <script>
 // @ is an alias to /src
-import xoTable from '@/components/table/table';
-import xoInput from '@/components/input/input';
-import xoSelect from '@/components/select/select';
-import xoTree from '@/components/tree/tree';
 
 const columns = [
   {
@@ -134,12 +130,6 @@ const tree = [{
 
 export default {
   name: 'home',
-  components: {
-    xoTable,
-    xoInput,
-    xoSelect,
-    xoTree,
-  },
   data() {
     return {
       columns,

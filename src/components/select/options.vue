@@ -6,7 +6,11 @@
       :key="item.value"
       :value="item.value"
       :label="item.label"
-      @click="getli(item.value)"
+      @click="getli(item)"
+      :class="{
+        focus: multiple ? select.indexOf(item) > -1 : select.value === item.value,
+        multiple: multiple && select.indexOf(item) > -1
+      }"
       >
       <span>{{item.label}}</span>
       </li>
@@ -16,9 +20,21 @@
 
 <script>
 export default {
+  data() {
+    return {
+      select: this.input
+    }
+  },
   props: {
     options: {
       type: Array,
+      default: () => {
+        return [];
+      }
+    },
+    multiple: Boolean,
+    input: {
+      type: [Object, Array],
       default: () => {
         return [];
       }
@@ -26,7 +42,18 @@ export default {
   },
   methods: {
     getli(val) {
-      this.$emit('click', val);
+      if(this.multiple) {
+        const flag = this.select.indexOf(val);
+        if(flag > -1) {
+          this.select.splice(flag, 1);
+        }else {
+          this.select.push(val);
+        }
+      }else {
+        this.select = val;
+      }
+      this.$emit('click', this.select);
+      this.$emit('input', this.select);
     }
   }
 }
@@ -57,6 +84,21 @@ export default {
     }
     li:hover {
       background-color: #f5f7fa;
+    }
+    .focus {
+      background-color: #f5f7fa;
+      color: #409eff;
+    }
+    .multiple::after {
+      display: inline-block;
+      font-family: Ionicons;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 30px;
+      float: right;
+      font-size: 12px;
+      content: '\2714';
+      color: rgba(51,153,255,.9);
     }
   }
   ul::before {

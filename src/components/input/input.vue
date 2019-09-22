@@ -62,7 +62,7 @@ import calctetxtareaHeight from './calctextareaHeight';
 export default {
   name: 'xo-input',
   props: {
-    value: [Number, String],
+    value: [Number, String, Array],
     width: {
       type: String,
       default: '200',

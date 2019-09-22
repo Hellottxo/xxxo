@@ -1,16 +1,19 @@
 <template>
   <div class="xo-select"
-  :style="{width: `${width}px`}"
   v-clickoutside="clickOutside">
     <div
     class="xo-select_wrap"
-    :class="{isFocus: isFocus}"
+    :class="{
+      isFocus: isFocus,
+      isNotFilter: !filter
+    }"
+    :style="{width: `${width}px`}"
     @click="inputWrapClick"
     @mouseenter="isMouseenter=true"
     @mouseleave="isMouseenter=false"
     >
       <xo-input
-      :clearable="clearable"
+      :clearable="!multiple && clearable"
       ref="input"
       v-model="select"
       :placeholder="placeholder"
@@ -20,16 +23,24 @@
       >
         <template v-slot:suffix :class="{transform: visible}">
             <i :class="{transform: visible}"
-            class="icon-triangle-down select-down" v-if="(clearable && (!isMouseenter || !select)) || !clearable"></i>
+            class="icon-triangle-down select-down" v-if="(clearable && (!isMouseenter || !select) || !clearable) || multiple"></i>
         </template>
       </xo-input>
     </div>
     <template>
       <xo-options
-      v-if="visible"
+      v-model="input"
+      v-show="visible"
+      :multiple="multiple"
       :options="options"
       @click="optionsClick"></xo-options>
     </template>
+    <div class="select-item_wrap" v-if="multiple">
+      <div v-for="(item, index) in input" :key="index">
+        <span>{{item.label}}</span>
+        <span @click="delSelect(item.value)">x</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -44,9 +55,9 @@ export default {
     return {
       visible: false,
       select: '',
+      input: [],
       isFocus: false,
       isMouseenter: false,
-      isOptionsClick: false
     }
   },
   mixins: [constAnalysis],
@@ -65,7 +76,9 @@ export default {
     width: {
       type: String,
       default: '200'
-    }
+    },
+    multiple: Boolean,
+    filter: Boolean
   },
   components: {
     xoInput,
@@ -84,18 +97,28 @@ export default {
       this.visible = !this.visible;
     },
     optionsClick(val) {
-      this.select = this.getLabel(this.options, val);
-      this.isOptionsClick = true;
-      this.visible = false;
+      this.input = val;
+      this.selectChg();
+      this.visible = this.multiple;
       this.isFocus = true;
     },
     clickOutside() {
-      if(this.isOptionsClick) {
-        this.isFocus = true;
-        this.isOptionsClick = false;
+      this.isFocus = false;
+      this.visible = false;
+    },
+    delSelect(val) {
+      const index = this.input.findIndex(e => e.value === val);
+      this.input.splice(index, 1);
+      this.selectChg();
+    },
+    selectChg() {
+      if(this.multiple) {
+        const that = this;
+        this.select = this.input.map(e => {
+          return e.label;
+        })
       }else {
-        this.isFocus = false;
-        this.visible = false;
+        this.select = this.input.label;
       }
     }
   }
@@ -128,6 +151,35 @@ export default {
         border-color: #409EFF !important;
       }
     }
+  }
+}
+.isNotFilter {
+  & > div {
+    & > .xo-input_wrap {
+      & > input {
+        color: transparent !important;
+        text-shadow: 0 0 0 #606266;
+      }
+    }
+  }
+}
+.select-item_wrap {
+  display: flex;
+  font-size: 10px;
+  &>div {
+    display: inline-block;
+    height: 22px;
+    line-height: 22px;
+    margin: 2px 4px 2px 0;
+    padding: 0 8px;
+    border: 1px solid #e3e8ee;
+    border-radius: 3px;
+    background: #f7f7f7;
+    font-size: 12px;
+    vertical-align: middle;
+    opacity: 1;
+    overflow: hidden;
+    cursor: pointer;
   }
 }
 </style>
