@@ -47,7 +47,11 @@
         v-show="visible"
         :multiple="multiple"
         :options="options"
-        @click="optionsClick"></xo-options>
+        @click="optionsClick">
+          <template v-slot="scope" v-if="$scopedSlots.default">
+            <slot :data="scope.data"></slot>
+          </template>
+        </xo-options>
       </template>
     </div>
     
@@ -95,7 +99,6 @@ export default {
       default: '200'
     },
     multiple: Boolean,
-    filter: Boolean,
     collapse: Boolean,
     tagline: Boolean
   },

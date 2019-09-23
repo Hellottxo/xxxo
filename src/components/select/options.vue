@@ -10,10 +10,14 @@
       :class="{
         focus: select.indexOf(item) > -1,
         multiple: multiple && select.indexOf(item) > -1,
-        disabled: item.disabled
+        disabled: item.disabled,
+        custom: $scopedSlots.default && multiple
       }"
       >
-      <span>{{item.label}}</span>
+      <template v-if="$scopedSlots.default">
+        <slot :data="item"></slot>
+      </template>
+      <span v-else>{{item.label}}</span>
       </li>
     </ul>
   </div>
@@ -86,13 +90,28 @@ export default {
       line-height: 30px;
       text-align: start;
       cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      
     }
     li:hover {
       background-color: #f5f7fa;
     }
     .disabled {
       cursor: not-allowed;
-      color: #c3cbd6;
+      span {
+        color: #c3cbd6 !important;
+      }
+    }
+    .custom {
+      padding: 0 25px 0 15px;
+    }
+    .custom::after {
+      position: absolute;
+      right: 8px;
+    }
+    .custom span:first-child {
+      color: #9ea7b4;
     }
     .focus {
       background-color: #f5f7fa;

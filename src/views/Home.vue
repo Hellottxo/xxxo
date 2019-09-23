@@ -5,7 +5,12 @@
         <i class="">123534</i>
       </template> -->
     </xo-input>
-    <xo-select multiple :options="options" width="180"></xo-select>
+    <xo-select multiple tagline :options="options" width="180">
+      <template v-slot="scope">
+        <span>{{scope.data.value}}</span>
+        <span>{{scope.data.label}}</span>
+      </template>
+    </xo-select>
     <xo-tree
     :data="tree"
     :default-expand-node="defaultExpandNode"
