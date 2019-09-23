@@ -8,8 +8,9 @@
       :label="item.label"
       @click="getli(item)"
       :class="{
-        focus: multiple ? select.indexOf(item) > -1 : select.value === item.value,
-        multiple: multiple && select.indexOf(item) > -1
+        focus: select.indexOf(item) > -1,
+        multiple: multiple && select.indexOf(item) > -1,
+        disabled: item.disabled
       }"
       >
       <span>{{item.label}}</span>
@@ -34,7 +35,7 @@ export default {
     },
     multiple: Boolean,
     input: {
-      type: [Object, Array],
+      type: [Array],
       default: () => {
         return [];
       }
@@ -42,18 +43,22 @@ export default {
   },
   methods: {
     getli(val) {
-      if(this.multiple) {
-        const flag = this.select.indexOf(val);
-        if(flag > -1) {
-          this.select.splice(flag, 1);
+      if(!val.disabled) {
+        if(this.multiple) {
+          const flag = this.select.indexOf(val);
+          if(flag > -1) {
+            this.select.splice(flag, 1);
+          }else {
+            this.select.push(val);
+          }
         }else {
+          this.select = [];
           this.select.push(val);
         }
-      }else {
-        this.select = val;
+        this.$emit('click', this.select);
+        this.$emit('input', this.select);
       }
-      this.$emit('click', this.select);
-      this.$emit('input', this.select);
+      
     }
   }
 }
@@ -84,6 +89,10 @@ export default {
     }
     li:hover {
       background-color: #f5f7fa;
+    }
+    .disabled {
+      cursor: not-allowed;
+      color: #c3cbd6;
     }
     .focus {
       background-color: #f5f7fa;

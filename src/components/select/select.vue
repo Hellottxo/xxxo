@@ -1,31 +1,45 @@
 <template>
-  <div class="xo-select"
-  v-clickoutside="clickOutside">
+  <div class="xo-select">
     <div
-    class="xo-select_wrap"
-    :class="{
-      isFocus: isFocus,
-      isNotFilter: !filter
-    }"
     :style="{width: `${width}px`}"
-    @click="inputWrapClick"
-    @mouseenter="isMouseenter=true"
-    @mouseleave="isMouseenter=false"
-    >
-      <xo-input
-      :clearable="!multiple && clearable"
-      ref="input"
-      v-model="select"
-      :placeholder="placeholder"
-      :width="width"
-      @focus="setFocus(true)"
-      @blur="setFocus(false)"
-      >
-        <template v-slot:suffix :class="{transform: visible}">
-            <i :class="{transform: visible}"
-            class="icon-triangle-down select-down" v-if="(clearable && (!isMouseenter || !select) || !clearable) || multiple"></i>
-        </template>
-      </xo-input>
+    v-clickoutside="clickOutside">
+      <div
+      class="xo-select_wrap"
+      :class="{isFocus: isFocus}"
+      @click.stop="inputWrapClick"
+      @mouseenter="isMouseenter=true"
+      @mouseleave="isMouseenter=false"
+      > 
+        <div class="select-item_wrap" v-if="multiple && !tagline && input.length > 0">
+          <template v-if="!collapse">
+            <div v-for="(item, index) in input" :key="index">
+              <span>{{item.label}}</span>
+              <span class="select-item_del" @click.stop="delSelect(item.value)">x</span>
+            </div>
+          </template>
+          <template v-else>
+              <div>
+                <span>{{input[0].label}}</span>
+                <span class="select-item_del" @click.stop="delSelect(input[0].value)">x</span>
+              </div>
+              <div v-show="input.length > 1">{{`+${input.length-1}`}}</div>
+          </template>
+        </div>
+        <div class="select-item_wrap" v-else-if="!multiple && !tagline && input.length > 0">{{input[0].label}}</div>
+        <div class="select-placeholder" v-else>
+          {{`${placeholder ? placeholder : '请选择'}`}}
+        </div>
+        <i
+        class="select-icon-clear select-icon"
+        v-if="clearable && input.length > 0 && !multiple && isMouseenter"
+        @click.stop="delSelect()"
+        ></i>
+        <i
+        v-else
+        class="select-icon-arrow select-icon"
+        :class="{transform: visible}"
+        ></i>
+      </div>
     </div>
     <template>
       <xo-options
@@ -35,11 +49,13 @@
       :options="options"
       @click="optionsClick"></xo-options>
     </template>
-    <div class="select-item_wrap" v-if="multiple">
-      <div v-for="(item, index) in input" :key="index">
-        <span>{{item.label}}</span>
-        <span @click="delSelect(item.value)">x</span>
-      </div>
+    <div class="select-item_wrap" v-if="tagline && multiple && input.length > 0">
+      <template v-if="!collapse">
+        <div v-for="(item, index) in input" :key="index">
+          <span>{{item.label}}</span>
+          <span class="select-item_del" @click.stop="delSelect(item.value)">x</span>
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -54,7 +70,6 @@ export default {
   data() {
     return {
       visible: false,
-      select: '',
       input: [],
       isFocus: false,
       isMouseenter: false,
@@ -78,15 +93,18 @@ export default {
       default: '200'
     },
     multiple: Boolean,
-    filter: Boolean
+    filter: Boolean,
+    collapse: Boolean,
+    tagline: Boolean
   },
   components: {
     xoInput,
     xoOptions
   },
   watch: {
-    select() {
-      this.$emit('change', this.select);
+    input(val) {
+      const arr = val.map(e => {return e.value});
+      this.$emit('change', arr);
     }
   },
   methods: {
@@ -94,11 +112,11 @@ export default {
       this.isFocus = val;
     },
     inputWrapClick() {
+      this.isFocus = true;
       this.visible = !this.visible;
     },
     optionsClick(val) {
       this.input = val;
-      this.selectChg();
       this.visible = this.multiple;
       this.isFocus = true;
     },
@@ -107,18 +125,12 @@ export default {
       this.visible = false;
     },
     delSelect(val) {
-      const index = this.input.findIndex(e => e.value === val);
-      this.input.splice(index, 1);
-      this.selectChg();
-    },
-    selectChg() {
+      this.isFocus = true;
       if(this.multiple) {
-        const that = this;
-        this.select = this.input.map(e => {
-          return e.label;
-        })
+        const index = this.input.findIndex(e => e.value === val);
+        this.input.splice(index, 1);
       }else {
-        this.select = this.input.label;
+        this.input = [];
       }
     }
   }
@@ -128,16 +140,86 @@ export default {
 <style lang="less" scoped>
 .xo-select {
   .xo-select_wrap {
-    outline: none;
-    .xo-input {
-      cursor: pointer;
+    border: 1px solid #dcdfe6;
+    border-radius: 4px;
+    position: relative;
+    padding: 0 20px 0 8px;
+    display: flex;
+    flex-wrap: wrap;
+    line-height: 30px;
+    min-height: 30px;
+    cursor: pointer;
+    .select-placeholder {
+      line-height: 30px;
+      display: flex;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      font-size: 10px;
+      color: #c3cbd6;
+    }
+    
+    .select-icon {
+      font-size: 10px;
+      color: #9ea7b4;
+      transition: all 0.2s ease-in-out;
+      position: absolute;
+      line-height: 30px;
+      right: 8px;
+      top: 0;
+    }
+    .select-icon-arrow {
+      font-size: 10px;
+      color: #9ea7b4;
+      transition: all 0.2s ease-in-out;
+      position: absolute;
+      line-height: 30px;
+      right: 8px;
+      top: 0;
+      transform: scaleY(0.6);
+    }
+    .select-icon-arrow::before {
+      content: "\25BC";
+    }
+    .select-icon-clear {
+      font-size: 10px;
+      color: #9ea7b4;
+      transition: all 0.2s ease-in-out;
+      position: absolute;
+      line-height: 30px;
+      right: 10px;
+    }
+    .select-icon-clear::before {
+      content: "\2716";
     }
     .select-down {
       top: 4px !important;
     }
     .transform {
-      transform: rotate(180deg);
-      top: -1px !important;
+      transform: rotate(180deg) scaleY(0.6);
+    }
+  }
+  .select-item_wrap {
+    display: flex;
+    font-size: 10px;
+    flex-wrap: wrap;
+    &>div {
+      display: inline-block;
+      height: 22px;
+      line-height: 22px;
+      margin: 3px 4px 3px 0;
+      padding: 0 8px;
+      border: 1px solid #e3e8ee;
+      border-radius: 3px;
+      background: #f7f7f7;
+      font-size: 12px;
+      vertical-align: middle;
+      opacity: 1;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .select-item_del {
+      padding-left: 10px;
     }
   }
 }
@@ -145,41 +227,6 @@ export default {
 
 <style lang="less">
 .isFocus {
-  & > div {
-    & > .xo-input_wrap {
-      & > input {
-        border-color: #409EFF !important;
-      }
-    }
-  }
-}
-.isNotFilter {
-  & > div {
-    & > .xo-input_wrap {
-      & > input {
-        color: transparent !important;
-        text-shadow: 0 0 0 #606266;
-      }
-    }
-  }
-}
-.select-item_wrap {
-  display: flex;
-  font-size: 10px;
-  &>div {
-    display: inline-block;
-    height: 22px;
-    line-height: 22px;
-    margin: 2px 4px 2px 0;
-    padding: 0 8px;
-    border: 1px solid #e3e8ee;
-    border-radius: 3px;
-    background: #f7f7f7;
-    font-size: 12px;
-    vertical-align: middle;
-    opacity: 1;
-    overflow: hidden;
-    cursor: pointer;
-  }
+  border-color: #409EFF !important;
 }
 </style>

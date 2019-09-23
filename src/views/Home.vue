@@ -5,14 +5,14 @@
         <i class="">123534</i>
       </template> -->
     </xo-input>
-    <xo-select multiple clearable :options="options" width="180"></xo-select>
+    <xo-select multiple :options="options" width="180"></xo-select>
     <xo-tree
     :data="tree"
     :default-expand-node="defaultExpandNode"
     :node-key="nodeKey"
     :default-highligth-node="defaultHighlightNode"
     @node-click="nodeClick"></xo-tree>
-    <xo-table height=300 :columns="columns" :data="data" :expand="true" :highlight-row="true">
+    <xo-table :columns="columns" :data="data" :expand="true" :highlight-row="true">
       <!-- <template v-slot="scope">
         <button>{{scope.data.name}}</button>
       </template> -->
@@ -96,7 +96,7 @@ const data = [
 ];
 
 const options = [
-  { value: '选项1', label: '黄金糕' },
+  { value: '选项1', label: '黄金糕', disabled:true },
   { value: '选项2', label: '双皮奶' },
   { value: '选项3', label: '蚵仔煎' },
   { value: '选项4', label: '龙须面' },
