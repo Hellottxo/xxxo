@@ -4,6 +4,7 @@
     :style="{width: `${width}px`}"
     v-clickoutside="clickOutside">
       <div
+      :style="{width: `${width}px`}"
       class="xo-select_wrap"
       :class="{isFocus: isFocus}"
       @click.stop="inputWrapClick"
@@ -40,15 +41,16 @@
         :class="{transform: visible}"
         ></i>
       </div>
+      <template>
+        <xo-options
+        v-model="input"
+        v-show="visible"
+        :multiple="multiple"
+        :options="options"
+        @click="optionsClick"></xo-options>
+      </template>
     </div>
-    <template>
-      <xo-options
-      v-model="input"
-      v-show="visible"
-      :multiple="multiple"
-      :options="options"
-      @click="optionsClick"></xo-options>
-    </template>
+    
     <div class="select-item_wrap" v-if="tagline && multiple && input.length > 0">
       <template v-if="!collapse">
         <div v-for="(item, index) in input" :key="index">
