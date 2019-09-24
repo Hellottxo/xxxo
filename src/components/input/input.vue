@@ -162,6 +162,7 @@ export default {
   .xo-input_wrap {
     border-radius: 4px;
     position: relative;
+    display: flex;
     input {
       cursor: pointer;
       color: #606266;

@@ -12,11 +12,11 @@
           focus: select.indexOf(item) > -1,
           multiple: multiple && select.indexOf(item) > -1,
           disabled: item.disabled,
-          custom: $scopedSlots.default && multiple
+          custom: $scopedSlots.item && multiple
         }"
         >
-        <template v-if="$scopedSlots.default">
-          <slot :data="item"></slot>
+        <template v-if="$scopedSlots.item">
+          <slot name="item" :data="item"></slot>
         </template>
         <span v-else>{{item.label}}</span>
         </li>

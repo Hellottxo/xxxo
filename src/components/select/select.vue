@@ -76,8 +76,8 @@
         :multiple="multiple"
         :options="selectOptions"
         @click="optionsClick">
-          <template v-slot="scope" v-if="$scopedSlots.default">
-            <slot :data="scope.data"></slot>
+          <template v-slot:item="scope" v-if="$scopedSlots.item">
+            <slot name="item" :data="scope.data"></slot>
           </template>
         </xo-options>
       </template>
