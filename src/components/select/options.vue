@@ -76,7 +76,7 @@ export default {
   position: absolute;
   z-index: 2222;
   background-color: #fff;
-  min-width: 180px;
+  min-width: 200px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   border: 1px solid #dcdfe6;
   border-radius: 4px;
@@ -84,6 +84,8 @@ export default {
     list-style: none;
     margin: 0;
     padding: 10px 0;
+    max-height: 250px;
+    overflow: auto;
     li {
       padding: 0 15px;
       height: 30px;
@@ -110,7 +112,7 @@ export default {
       position: absolute;
       right: 8px;
     }
-    .custom span:first-child {
+    .custom span:nth-child(2) {
       color: #9ea7b4;
     }
     .focus {
@@ -154,6 +156,17 @@ export default {
     position: absolute;
     top: -11px;
     left: 15px;
+  }
+  ul::-webkit-scrollbar {
+    height: 5px;
+    width: 5px;
+  }
+  ul::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #e8eaec;
+  }
+  ul::-webkit-scrollbar-track {
+    background: #fff;
   }
 }
 </style>

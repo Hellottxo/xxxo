@@ -6,7 +6,10 @@
       <div
       :style="{width: `${width}px`}"
       class="xo-select_wrap"
-      :class="{isFocus: isFocus}"
+      :class="{
+        isFocus: isFocus,
+        disabled: disabled
+      }"
       @click.stop="inputWrapClick"
       @mouseenter="isMouseenter=true"
       @mouseleave="isMouseenter=false"
@@ -100,7 +103,8 @@ export default {
     },
     multiple: Boolean,
     collapse: Boolean,
-    tagline: Boolean
+    tagline: Boolean,
+    disabled: Boolean
   },
   components: {
     xoInput,
@@ -114,22 +118,27 @@ export default {
   },
   methods: {
     setFocus(val) {
+      if(this.disabled) return;
       this.isFocus = val;
     },
     inputWrapClick() {
+      if(this.disabled) return;
       this.isFocus = true;
       this.visible = !this.visible;
     },
     optionsClick(val) {
+      if(this.disabled) return;
       this.input = val;
       this.visible = this.multiple;
       this.isFocus = true;
     },
     clickOutside() {
+      if(this.disabled) return;
       this.isFocus = false;
       this.visible = false;
     },
     delSelect(val) {
+      if(this.disabled) return;
       this.isFocus = true;
       if(this.multiple) {
         const index = this.input.findIndex(e => e.value === val);
@@ -226,6 +235,10 @@ export default {
     .select-item_del {
       padding-left: 10px;
     }
+  }
+  .disabled {
+    background-color: #f3f3f3;
+    cursor: not-allowed;
   }
 }
 </style>
