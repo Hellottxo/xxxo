@@ -14,25 +14,50 @@
       @mouseenter="isMouseenter=true"
       @mouseleave="isMouseenter=false"
       > 
-        <div class="select-item_wrap" v-if="multiple && !tagline && input.length > 0">
+        <template v-if="multiple && !tagline && input.length > 0">
           <template v-if="!collapse">
-            <div v-for="(item, index) in input" :key="index">
+            <div
+            class="select-item_tag"
+            v-for="(item, index) in input"
+            :key="index">
               <span>{{item.label}}</span>
-              <span class="select-item_del" @click.stop="delSelect(item.value)">x</span>
+              <span
+              class="select-item_del"
+              @click.stop="delSelect(item.value)">
+                x
+              </span>
             </div>
           </template>
           <template v-else>
               <div>
                 <span>{{input[0].label}}</span>
-                <span class="select-item_del" @click.stop="delSelect(input[0].value)">x</span>
+                <span
+                class="select-item_del"
+                @click.stop="delSelect(input[0].value)">
+                  x
+                </span>
               </div>
               <div v-show="input.length > 1">{{`+${input.length-1}`}}</div>
           </template>
+        </template>
+        <div
+        class="select-item_wrap"
+        v-else-if="!multiple && !tagline && input.length > 0"
+        >
+          {{input[0].label}}
         </div>
-        <div class="select-item_wrap" v-else-if="!multiple && !tagline && input.length > 0">{{input[0].label}}</div>
-        <div class="select-placeholder" v-else>
+        <div
+        class="select-placeholder" v-if="input.length === 0 && !filter">
           {{`${placeholder ? placeholder : '请选择'}`}}
         </div>
+        <template v-if="filter">
+          <xo-input
+          :width="'100%'"
+          :min-width="'60px'"
+          v-model="keyWords"
+          :placeholder="input.length > 0 ? '' : (placeholder ? placeholder : '请选择')">
+          </xo-input>
+        </template>
         <i
         class="select-icon-clear select-icon"
         v-if="clearable && input.length > 0 && !multiple && isMouseenter"
@@ -49,7 +74,7 @@
         v-model="input"
         v-show="visible"
         :multiple="multiple"
-        :options="options"
+        :options="selectOptions"
         @click="optionsClick">
           <template v-slot="scope" v-if="$scopedSlots.default">
             <slot :data="scope.data"></slot>
@@ -58,11 +83,18 @@
       </template>
     </div>
     
-    <div class="select-item_wrap" v-if="tagline && multiple && input.length > 0">
+    <div  v-if="tagline && multiple && input.length > 0">
       <template v-if="!collapse">
-        <div v-for="(item, index) in input" :key="index">
+        <div
+        class="select-item_tag"
+        v-for="(item, index) in input"
+        :key="index">
           <span>{{item.label}}</span>
-          <span class="select-item_del" @click.stop="delSelect(item.value)">x</span>
+          <span
+          class="select-item_del"
+          @click.stop="delSelect(item.value)">
+            x
+          </span>
         </div>
       </template>
     </div>
@@ -73,6 +105,7 @@
 import xoInput from '@/components/input/index.js';
 import xoOptions from './options';
 import { constAnalysis } from '@/mixins/const-analysis.js';
+import { debounceThrottle } from '@/mixins/debounce-throttle.js';
 
 export default {
   name: 'xo-select',
@@ -82,9 +115,11 @@ export default {
       input: [],
       isFocus: false,
       isMouseenter: false,
+      keyWords: '',
+      selectOptions: []
     }
   },
-  mixins: [constAnalysis],
+  mixins: [constAnalysis, debounceThrottle],
   props: {
     placeholder: {
       type: String,
@@ -104,7 +139,8 @@ export default {
     multiple: Boolean,
     collapse: Boolean,
     tagline: Boolean,
-    disabled: Boolean
+    disabled: Boolean,
+    filter: Boolean
   },
   components: {
     xoInput,
@@ -114,6 +150,9 @@ export default {
     input(val) {
       const arr = val.map(e => {return e.value});
       this.$emit('change', arr);
+    },
+    keyWords(val) {
+      this.debounce(this.filterMtheod,500);
     }
   },
   methods: {
@@ -137,6 +176,13 @@ export default {
       this.isFocus = false;
       this.visible = false;
     },
+    filterMtheod() {
+      if(this.keyWords) {
+        this.selectOptions = this.options.filter(e => e.label.search(this.keyWords) > -1);
+      }else {
+        this.selectOptions = this.options;
+      }
+    },
     delSelect(val) {
       if(this.disabled) return;
       this.isFocus = true;
@@ -147,6 +193,9 @@ export default {
         this.input = [];
       }
     }
+  },
+  created() {
+    this.selectOptions = this.options;
   }
 }
 </script>
@@ -163,6 +212,7 @@ export default {
     line-height: 30px;
     min-height: 30px;
     cursor: pointer;
+    transition: all 0.3s;
     .select-placeholder {
       line-height: 30px;
       display: flex;
@@ -172,7 +222,10 @@ export default {
       font-size: 10px;
       color: #c3cbd6;
     }
-    
+    .xo-input {
+      display: flex;
+      flex: 1;
+    }
     .select-icon {
       font-size: 10px;
       color: #9ea7b4;
@@ -213,25 +266,21 @@ export default {
       transform: rotate(180deg) scaleY(0.6);
     }
   }
-  .select-item_wrap {
-    display: flex;
+  .select-item_tag {
     font-size: 10px;
-    flex-wrap: wrap;
-    &>div {
-      display: inline-block;
-      height: 22px;
-      line-height: 22px;
-      margin: 3px 4px 3px 0;
-      padding: 0 8px;
-      border: 1px solid #e3e8ee;
-      border-radius: 3px;
-      background: #f7f7f7;
-      font-size: 12px;
-      vertical-align: middle;
-      opacity: 1;
-      overflow: hidden;
-      cursor: pointer;
-    }
+    display: flex;
+    height: 22px;
+    line-height: 22px;
+    margin: 3px 4px 3px 0;
+    padding: 0 8px;
+    border: 1px solid #e3e8ee;
+    border-radius: 3px;
+    background: #f7f7f7;
+    font-size: 12px;
+    vertical-align: middle;
+    opacity: 1;
+    overflow: hidden;
+    cursor: pointer;
     .select-item_del {
       padding-left: 10px;
     }
@@ -241,10 +290,16 @@ export default {
     cursor: not-allowed;
   }
 }
+.isFocus {
+  border-color: #409EFF !important;
+}
 </style>
 
 <style lang="less">
-.isFocus {
-  border-color: #409EFF !important;
+.xo-select {
+  .xo-input .xo-input_wrap input {
+    border: none !important;
+    padding: 0 !important;
+  }
 }
 </style>

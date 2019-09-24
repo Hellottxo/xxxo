@@ -3,7 +3,11 @@
     <div
     class="xo-input_wrap"
     :class="{readonly: disabled}"
-    :style="{width: `${width}px`}"
+    :style="{
+      width: width,
+      maxWidth: maxWidth,
+      minWidth: minWidth
+    }"
     @mouseenter="isMouseenter=true"
     @mouseleave="isMouseenter=false"
     >
@@ -16,7 +20,9 @@
         focus: isFocus
       }"
       :style="{
-        width: `${width}px`,
+        width: width,
+        maxWidth: maxWidth,
+        minWidth: minWidth,
         paddingLeft: $scopedSlots.prefix ? `30px` : `15px`,
         paddingRight: $scopedSlots.suffix ? `30px` : `15px`,
       }"
@@ -63,10 +69,9 @@ export default {
   name: 'xo-input',
   props: {
     value: [Number, String, Array],
-    width: {
-      type: String,
-      default: '200',
-    },
+    width: String,
+    minWidth: String,
+    maxWidth: String,
     disabled: {
       type: Boolean,
       default: false,

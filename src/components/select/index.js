@@ -8,6 +8,7 @@
  * @param {Boolean} collapse 多选tag合并展示
  * @param {Boolean} tagline 另起一行展示tag
  * @param {Boolean} disabled 禁用
+ * @param {Boolean} filter 搜索
  * 自定义展示下拉内容：v-slot="scope"
  */
 

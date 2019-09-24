@@ -1,24 +1,29 @@
 <template>
   <div class="xo-options">
     <ul>
-      <li
-      v-for="item in options"
-      :key="item.value"
-      :value="item.value"
-      :label="item.label"
-      @click="getli(item)"
-      :class="{
-        focus: select.indexOf(item) > -1,
-        multiple: multiple && select.indexOf(item) > -1,
-        disabled: item.disabled,
-        custom: $scopedSlots.default && multiple
-      }"
-      >
-      <template v-if="$scopedSlots.default">
-        <slot :data="item"></slot>
+      <template v-if="options.length > 0">
+        <li
+        v-for="item in options"
+        :key="item.value"
+        :value="item.value"
+        :label="item.label"
+        @click="getli(item)"
+        :class="{
+          focus: select.indexOf(item) > -1,
+          multiple: multiple && select.indexOf(item) > -1,
+          disabled: item.disabled,
+          custom: $scopedSlots.default && multiple
+        }"
+        >
+        <template v-if="$scopedSlots.default">
+          <slot :data="item"></slot>
+        </template>
+        <span v-else>{{item.label}}</span>
+        </li>
       </template>
-      <span v-else>{{item.label}}</span>
-      </li>
+      <template v-else>
+        <li>暂无数据</li>
+      </template>
     </ul>
   </div>
 </template>
