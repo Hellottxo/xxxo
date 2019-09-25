@@ -1,19 +1,19 @@
 <template>
   <div class="xo-rate">
-    <div @mouseleave="star=selectStar">
+    <div @mouseleave="move(false)">
       <div class="icon_wrap" v-for="(item, index) in list" :key="index">
         <template>
           <i
             :class="`icon-select-${mode}`"
             class="icon icon-select"
             @click="setRate(index)"
-            @mousemove="star=index"
+            @mousemove="move(index)"
             v-if="star !== -1 && index <= star"
           ></i>
           <i
             :class="`icon-${mode}`"
             class="icon"
-            @mousemove="star=index"
+            @mousemove="move(index)"
             @click="setRate(index)"
             v-else
           ></i>
@@ -36,8 +36,10 @@ export default {
     mode: {
       type: String,
       default: "star"
-    },
-    rate: String
+    }, 
+    defaultStar: Number,
+    rate: String,
+    readonly: Boolean
   },
   data() {
     return {
@@ -51,13 +53,24 @@ export default {
     getList() {
       const n = this.num;
       this.list = new Array(n);
+      if(this.defaultStar) {
+        const index = this.defaultStar - 1;
+        this.setRate(index, true);
+      }
     },
-    setRate(index) {
-      this.star = index;
-      this.selectStar = index;
-      this.text =
-        index === -1 ? "0.0" : Number(((index + 1) / this.num) * 5).toFixed(1);
-      this.$emit('input', this.text);
+    setRate(index, val) {
+      if(!this.readonly || val) {
+        this.star = index;
+        this.selectStar = index;
+        this.text =
+          index === -1 ? "0.0" : Number(((index + 1) / this.num) * 5).toFixed(1);
+        this.$emit('input', this.text);
+      }
+    },
+    move(index) {
+      if(!this.readonly) {
+        this.star = index ? index : selectStar;
+      }
     }
   },
   mounted() {
