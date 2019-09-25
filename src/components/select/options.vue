@@ -99,7 +99,7 @@ export default {
       cursor: pointer;
       display: flex;
       justify-content: space-between;
-      
+      position: relative;
     }
     li:hover {
       background-color: #f5f7fa;
