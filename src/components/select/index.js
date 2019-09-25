@@ -1,5 +1,5 @@
 /**
- * @desc 输入框
+ * @desc 选择器
  * @param {Array} options 下拉列表
  * @param {Boolean} clearable 开启清空按钮
  * @param {String} placeholder

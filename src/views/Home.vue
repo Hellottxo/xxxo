@@ -5,8 +5,9 @@
         <i class="">123534</i>
       </template> -->
     </xo-input>
-    <xo-select multiple tagline :options="options" width="180">
-      <template v-slot="scope">
+    <xo-rate mode="smile" v-model="index"></xo-rate>
+    <xo-select multiple selectall :options="options" width="180">
+      <template v-slot:item="scope">
         <span>{{scope.data.value}}</span>
         <span>{{scope.data.label}}</span>
       </template>
@@ -101,11 +102,21 @@ const data = [
 ];
 
 const options = [
-  { value: '选项1', label: '黄金糕', disabled:true },
-  { value: '选项2', label: '双皮奶' },
-  { value: '选项3', label: '蚵仔煎' },
-  { value: '选项4', label: '龙须面' },
-  { value: '选项5', label: '北京烤鸭' },
+  { value: '1', label: '黄金糕', disabled:true },
+  { value: '2', label: '双皮奶' },
+  { value: '3', label: '蚵仔煎' },
+  { value: '4', label: '龙须面' },
+  { value: '5', label: '北京烤鸭' },
+  { value: '6', label: '黄金糕', disabled:true },
+  { value: '7', label: '双皮奶' },
+  { value: '8', label: '蚵仔煎' },
+  { value: '9', label: '龙须面' },
+  { value: '10', label: '北京烤鸭' },
+  { value: '11', label: '黄金糕', disabled:true },
+  { value: '12', label: '双皮奶' },
+  { value: '13', label: '蚵仔煎' },
+  { value: '14', label: '龙须面' },
+  { value: '15', label: '北京烤鸭' },
 ];
 
 const tree = [{
@@ -144,7 +155,8 @@ export default {
       defaultExpandNode: [0,0,0],
       defaultHighlightNode: 7,
       nodeKey: 'id',
-      input: '123'
+      input: '123',
+      index: ''
     };
   },
   watch: {
@@ -159,3 +171,9 @@ export default {
   }
 };
 </script>
+
+<style lang="less" scoped>
+.xo-rate {
+  padding: 10px 0;
+}
+</style>

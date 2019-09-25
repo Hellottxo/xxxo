@@ -5,6 +5,7 @@ import store from './vuex';
 import clickOutside from './directive/clickoutside/index';
 import lazyload from './directive/lazylod/index';
 import components from './components/index';
+import './common/icon.less';
 
 Vue.use(components);
 Vue.use(clickOutside);
