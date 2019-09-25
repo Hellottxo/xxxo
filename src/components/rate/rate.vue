@@ -69,7 +69,7 @@ export default {
     },
     move(index) {
       if(!this.readonly) {
-        this.star = index ? index : selectStar;
+        this.star = index ? index : this.selectStar;
       }
     }
   },
@@ -82,20 +82,20 @@ export default {
 <style lang="less" scoped>
 .xo-rate {
   display: flex;
-  line-height: 16px;
+  line-height: 26px;
   & > div {
     display: flex;
-    font-size: 12px;
+    font-size: 14px;
     i {
       margin: 0 2px;
-      font-size: 16px;
+      font-size: 24px;
       cursor: pointer;
       transition: all 0.3s;
-      height: 18px;
-      width: 18px;
+      height: 26px;
+      width: 26px;
     }
     i:hover {
-      font-size: 17px;
+      font-size: 25px;
     }
     .icon-select {
       color: rgb(247, 186, 42);
