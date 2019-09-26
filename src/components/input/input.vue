@@ -130,9 +130,9 @@ export default {
   methods: {
     setFocus(val) {
       if(val) {
-        this.$emit('focus');
+        this.$emit('focus', val);
       }else {
-        this.$emit('blur');
+        this.$emit('blur', val);
       }
       if(!this.disabled) {
         this.isFocus = val;

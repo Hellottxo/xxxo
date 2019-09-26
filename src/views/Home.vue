@@ -5,13 +5,14 @@
         <i class="">123534</i>
       </template> -->
     </xo-input>
-    <xo-rate mode="smile" v-model="index"></xo-rate>
+    <xo-rate :default-star="1" notice mode="smile" v-model="index"></xo-rate>
     <xo-select multiple selectall :options="options" width="180">
       <template v-slot:item="scope">
         <span>{{scope.data.value}}</span>
         <span>{{scope.data.label}}</span>
       </template>
     </xo-select>
+    <xo-time-picker default-time="11:12:11"></xo-time-picker>
     <xo-tree
     :data="tree"
     :default-expand-node="defaultExpandNode"
