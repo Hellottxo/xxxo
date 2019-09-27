@@ -9,52 +9,58 @@
     </div>
     <div class="select_wrap" v-if="visible">
       <div class="time_wrap">
-        <ul
-        ref="hour"
-        @mouseenter="hourscroll=true"
-        @mouseleave="mouseLeave('hour')"
-        :class="{scroll: hourscroll}"
-        @scroll="mouseScroll('hour')"
-        >
-          <li
-          v-for="item in list"
-          :key="item"
-          :class="{select: hour==item}"
-          @click="setTimeStamp(item, 'hour')"
-          >{{item}}</li>
-        </ul>
+        <template>
+          <ul
+          ref="hour"
+          @mouseenter="hourscroll=true"
+          @mouseleave="mouseLeave('hour')"
+          :class="{scroll: hourscroll}"
+          @scroll="mouseScroll('hour')"
+          >
+            <li
+            v-for="item in hourList"
+            :key="item"
+            :class="{select: hour==item}"
+            @click="setTimeStamp(item, 'hour')"
+            >{{item}}</li>
+          </ul>
+        </template>
+        <template>
+          <ul
+          ref="min"
+          @mouseenter="minscroll=true"
+          @mouseleave="mouseLeave('min')"
+          :class="{scroll: minscroll}"
+          @scroll="mouseScroll('min')"
+          >
+            <li
+            v-for="item in minList"
+            :key="item"
+            :class="{select: min==item}"
+            @click="setTimeStamp(item, 'min')"
+            >{{item}}</li>
+          </ul>
+        </template>
+        <template>
+          <ul
+          ref="second"
+          @mouseenter="secondscroll=true"
+          @mouseleave="mouseLeave('second')"
+          :class="{scroll: secondscroll}"
+          @scroll="mouseScroll('second')"
+          >
+            <li
+            v-for="item in minList"
+            :key="item"
+            :class="{select: second==item}"
+            @click="setTimeStamp(item, 'second')"
+            >{{item}}</li>
+          </ul>
+        </template>
       </div>
-      <div class="time_wrap">
-        <ul
-        ref="min"
-        @mouseenter="minscroll=true"
-        @mouseleave="mouseLeave('min')"
-        :class="{scroll: minscroll}"
-        @scroll="mouseScroll('min')"
-        >
-          <li
-          v-for="item in list"
-          :key="item"
-          :class="{select: min==item}"
-          @click="setTimeStamp(item, 'min')"
-          >{{item}}</li>
-        </ul>
-      </div>
-      <div class="time_wrap">
-        <ul
-        ref="second"
-        @mouseenter="secondscroll=true"
-        @mouseleave="mouseLeave('second')"
-        :class="{scroll: secondscroll}"
-        @scroll="mouseScroll('second')"
-        >
-          <li
-          v-for="item in list"
-          :key="item"
-          :class="{select: second==item}"
-          @click="setTimeStamp(item, 'second')"
-          >{{item}}</li>
-        </ul>
+      <div class="button_wrap" v-if="confrim">
+        <span @click="cancel">取消</span>
+        <span @click="clickoutside">确定</span>
       </div>
     </div>
   </div>
@@ -70,11 +76,13 @@ export default {
     return {
       TIME_TYPE,
       visible: false,
-      list: [],
-      hour: '00',
-      min: '00',
-      second: '00',
+      hourList: [],
+      minList: [],
+      hour: '',
+      min: '',
+      second: '',
       time: '',
+      oldtime: [],
       hourscroll: false,
       minscroll: false,
       secondscroll: false,
@@ -83,7 +91,8 @@ export default {
   },
   props: {
     defaultTime: String,
-    clearable: Boolean
+    clearable: Boolean,
+    confrim: Boolean,
   },
   watch: {
     time(val) {
@@ -91,6 +100,11 @@ export default {
         this.reset();
       }
     },
+    visible(val) {
+      if(val) {
+        this.oldtime = [this.hour, this.min, this.second]
+      }
+    }
   },
   methods: {
     inputFocus(val) {
@@ -140,23 +154,33 @@ export default {
       this.setTimeStamp(min, 'min');
       this.setTimeStamp(second, 'second');
     },
+    cancel() {
+      this.visible = false;
+      this.$nextTick(() => {
+        this.hour = this.oldtime[0];
+        this.min = this.oldtime[1];
+        this.second = this.oldtime[2];
+      })
+      this.setTime(this.hour, this.min, this.second);
+    },
     reset() {
       this.hour = '';
       this.min = '';
       this.second = '';
       this.time = '';
     },
-    getList() {
+    getList(num) {
       let arr = [];
-      for(let i = 0; i <= 59; i++) {
+      for(let i = 0; i <= num; i++) {
         const time = i < 10 ? `0${i}` : i;
         arr.push(time);
       }
-      this.list = arr;
+      return arr;
     }
   },
   mounted() {
-    this.getList();  
+    this.hourList = this.getList(24);
+    this.minList = this.getList(59);
   }
 }
 </script>
@@ -167,10 +191,10 @@ export default {
   display: inline-block;
   .select_wrap {
     display: flex;
-    padding: 10px 5px;
+    flex-direction: column;
+    padding: 0 10px;
     margin-top: 8px;
-    height: 190px;
-    width: 180px;
+    width: 150px;
     position: absolute;
     z-index: 222;
     border: 1px solid #dcdfe6;
@@ -178,9 +202,10 @@ export default {
     background: #fff;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
     .time_wrap {
-      height: 100%;
       display: flex;
       flex: 1;
+      height: 200px;
+      margin-top: 10px;
       ul {
         list-style: none;
         margin: 0;
@@ -201,6 +226,10 @@ export default {
         .select {
           color: #000;
           font-weight: bold;
+        }
+        .disabled {
+          cursor: not-allowed;
+          color: #c0c4cc;
         }
       }
       ul::-webkit-scrollbar {
@@ -231,12 +260,26 @@ export default {
         background: #e8eaec;
       }
     }
+    .button_wrap {
+      font-size: 12px;
+      height: 30px;
+      line-height: 30px;
+      display: flex;
+      justify-content: flex-end;
+      span {
+        margin-left: 15px;
+        cursor: pointer;
+      }
+      span:nth-child(2) {
+        color: #409eff;
+      }
+    }
   }
   .select_wrap::before {
     content: '';
     height: 27px;
-    width: 140px;
-    margin: 0 10px 0 18px;
+    width: 120px;
+    left: 24px;
     position: absolute;
     border-bottom: 1px solid #c0c4cc;
     border-top: 1px solid #c0c4cc;
