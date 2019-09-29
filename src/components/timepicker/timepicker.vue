@@ -22,7 +22,7 @@
             :key="item"
             :class="{
               select: hour==item,
-              disabled: hourDisable.indexOf(parseFloat(item)) > -1
+              disabled: (parseInt(item) > maxArr[0]) || (parseInt(item) < minArr[0]) 
             }"
             @click="setTimeStamp(item, 'hour')"
             >{{item}}</li>
@@ -39,7 +39,10 @@
             <li
             v-for="item in minList"
             :key="item"
-            :class="{select: min==item}"
+            :class="{
+              select: min==item,
+              disabled: isMinDisabled(item)
+            }"
             @click="setTimeStamp(item, 'min')"
             >{{item}}</li>
           </ul>
@@ -55,7 +58,10 @@
             <li
             v-for="item in minList"
             :key="item"
-            :class="{select: second==item}"
+            :class="{
+              select: second==item,
+              disabled: isSecondDisabled(item)
+            }"
             @click="setTimeStamp(item, 'second')"
             >{{item}}</li>
           </ul>
@@ -90,9 +96,8 @@ export default {
       minscroll: false,
       secondscroll: false,
       isFirst: true,
-      hourDisable: [],
-      minDisable: [],
-      secondDisable: []
+      maxArr: [],
+      minArr: []
     }
   },
   props: {
@@ -130,7 +135,7 @@ export default {
     },
     clickoutside() {
       if(this.hour && this.min && this.second) {
-        this.time = `${this.hour}:${this.min}:${this.second}`;
+        this.time = this.timeValidate();
       }
       this.visible = false;
     },
@@ -165,17 +170,44 @@ export default {
     getDisabledTime() {
       const max = this.maxTime ? this.maxTime : '24:00:00';
       const min = this.minTime ? this.minTime : '00:00:00';
-      const maxArr = max.split(':').map(e => parseInt(e));
-      const minArr = min.split(':').map(e => parseInt(e));
-      this.hourDisable = this.arrayFilter(maxArr[0], minArr[0], this.hourList);
-      this.minDisable = this.arrayFilter(maxArr[1], minArr[1], this.minList);
-      this.secondDisable = this.arrayFilter(maxArr[2], minArr[2], this.minList);
+      this.maxArr = max.split(':').map(e => parseInt(e));
+      this.minArr = min.split(':').map(e => parseInt(e));
     },
-    arrayFilter(max, min, arr) {
-      return arr.filter(e => {
-        const num = parseInt(e);
-        return (num < min) || (num > max);
-      })
+    timeValidate() {
+      const date = '2009-10-1';
+      const val = `${this.hour}:${this.min}:${this.second}`;
+      const time = Date.parse(`${date} ${val}`);
+      const max = Date.parse(`${date} ${this.maxTime}`);
+      const min = Date.parse(`${date} ${this.minTime}`);
+      if(time > max) {
+        this.hour = this.maxTime.slice(0, 2);
+        this.min = this.maxTime.slice(3, 5);
+        this.second = this.maxTime.slice(6, 8);
+        return this.maxTime;
+      }
+      if(time < min) {
+        this.hour = this.minTime.slice(0, 2);
+        this.min = this.minTime.slice(3, 5);
+        this.second = this.minTime.slice(6, 8);
+        return this.minTime;
+      }
+      return val;
+    },
+    isMinDisabled(val) {
+      if(this.hour == this.maxArr[0]) {
+        return parseInt(val) > this.maxArr[1];
+      }
+      if(this.hour == this.minArr[0]) {
+        return parseInt(val) < this.minArr[1];
+      }
+    },
+    isSecondDisabled(val) {
+      if(this.hour == this.maxArr[0] && this.min == this.maxArr[1]) {
+        return parseInt(val) > this.maxArr[2];
+      }
+      if(this.hour == this.minArr[0] && this.min == this.minArr[1]) {
+        return parseInt(val) < this.minArr[2];
+      }
     },
     cancel() {
       this.visible = false;
