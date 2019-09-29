@@ -20,7 +20,10 @@
             <li
             v-for="item in hourList"
             :key="item"
-            :class="{select: hour==item}"
+            :class="{
+              select: hour==item,
+              disabled: hourDisable.indexOf(parseFloat(item)) > -1
+            }"
             @click="setTimeStamp(item, 'hour')"
             >{{item}}</li>
           </ul>
@@ -58,7 +61,7 @@
           </ul>
         </template>
       </div>
-      <div class="button_wrap" v-if="confrim">
+      <div class="button_wrap" v-if="confirm">
         <span @click="cancel">取消</span>
         <span @click="clickoutside">确定</span>
       </div>
@@ -86,13 +89,18 @@ export default {
       hourscroll: false,
       minscroll: false,
       secondscroll: false,
-      isFirst: true
+      isFirst: true,
+      hourDisable: [],
+      minDisable: [],
+      secondDisable: []
     }
   },
   props: {
     defaultTime: String,
     clearable: Boolean,
-    confrim: Boolean,
+    confirm: Boolean,
+    maxTime: String,
+    minTime: String
   },
   watch: {
     time(val) {
@@ -154,6 +162,21 @@ export default {
       this.setTimeStamp(min, 'min');
       this.setTimeStamp(second, 'second');
     },
+    getDisabledTime() {
+      const max = this.maxTime ? this.maxTime : '24:00:00';
+      const min = this.minTime ? this.minTime : '00:00:00';
+      const maxArr = max.split(':').map(e => parseInt(e));
+      const minArr = min.split(':').map(e => parseInt(e));
+      this.hourDisable = this.arrayFilter(maxArr[0], minArr[0], this.hourList);
+      this.minDisable = this.arrayFilter(maxArr[1], minArr[1], this.minList);
+      this.secondDisable = this.arrayFilter(maxArr[2], minArr[2], this.minList);
+    },
+    arrayFilter(max, min, arr) {
+      return arr.filter(e => {
+        const num = parseInt(e);
+        return (num < min) || (num > max);
+      })
+    },
     cancel() {
       this.visible = false;
       this.$nextTick(() => {
@@ -176,11 +199,12 @@ export default {
         arr.push(time);
       }
       return arr;
-    }
+    },
   },
   mounted() {
     this.hourList = this.getList(24);
     this.minList = this.getList(59);
+    this.getDisabledTime();
   }
 }
 </script>
@@ -205,7 +229,6 @@ export default {
       display: flex;
       flex: 1;
       height: 200px;
-      margin-top: 10px;
       ul {
         list-style: none;
         margin: 0;
@@ -267,7 +290,7 @@ export default {
       display: flex;
       justify-content: flex-end;
       span {
-        margin-left: 15px;
+        margin: 0 15px;
         cursor: pointer;
       }
       span:nth-child(2) {
@@ -283,7 +306,7 @@ export default {
     position: absolute;
     border-bottom: 1px solid #c0c4cc;
     border-top: 1px solid #c0c4cc;
-    top: 93px;
+    top: 83px;
   }
 }
 </style>
