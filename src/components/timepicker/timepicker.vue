@@ -1,5 +1,5 @@
 <template>
-  <div class="time-picker" v-clickoutside="clickoutside">
+  <div class="xo-timepicker" v-clickoutside="clickoutside">
     <div class="input_wrap">
       <xo-input
       v-model="time"
@@ -242,7 +242,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.time-picker {
+.xo-timepicker {
   position: relative;
   display: inline-block;
   .select_wrap {
@@ -340,11 +340,5 @@ export default {
     border-top: 1px solid #c0c4cc;
     top: 83px;
   }
-}
-</style>
-
-<style lang="less">
-.time-picker {
-
 }
 </style>

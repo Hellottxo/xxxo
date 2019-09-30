@@ -12,7 +12,8 @@
         <span>{{scope.data.label}}</span>
       </template>
     </xo-select>
-    <xo-time-picker default-time="11:12:11"></xo-time-picker>
+    <xo-time-picker></xo-time-picker>
+    <xo-date-picker clearable></xo-date-picker>
     <xo-tree
     :data="tree"
     :default-expand-node="defaultExpandNode"

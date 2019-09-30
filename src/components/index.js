@@ -4,6 +4,7 @@ import xoSelect from './select/index';
 import xoTree from './tree/index';
 import xoRate from './rate/index';
 import xoTimePicker from './timepicker/index';
+import xoDatePicker from './datepicker/index';
 
 const components = [
   xoTable,
@@ -12,6 +13,7 @@ const components = [
   xoTree,
   xoRate,
   xoTimePicker,
+  xoDatePicker,
 ];
 
 const install = function (Vue) {
