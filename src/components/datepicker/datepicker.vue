@@ -16,20 +16,29 @@
           ></i>
           <i class="icon
           single-arrow icon-prev"
+          v-if="!showYearSelect && !showWeekSelect"
           @click="monthChg('prev')"
           ></i>
         </div>
         <div class="title">
-          <span class="title-year">
+          <span
+          v-show="!showYearSelect"
+          class="title-year"
+          @click="yearSelect(year)">
             {{year}}年
           </span>
-          <span class="title-month">
+          <span
+          v-show="!showYearSelect && !showWeekSelect"
+          class="title-month"
+          @click="monthSelect">
             {{month}}月
           </span>
+          <span v-show="showYearSelect">{{title}}</span>
         </div>
         <div class="next">
           <i
           class="icon single-arrow icon-next"
+          v-if="!showYearSelect && !showWeekSelect"
           @click="monthChg('next')"
           ></i>
           <i
@@ -37,22 +46,37 @@
           @click="yearChg('next')"></i>
         </div>
       </div>
-      <div class="year_wrap"></div>
-      <div class="month_wrap"></div>
-      <div class="week_wrap">
+      <div class="year_wrap" v-show="showYearSelect">
+        <div
+        class="year-item item_wrap"
+        v-for="(item, index) in yearList"
+        :class="{focus: item == currentDay.slice(0,4)}"
+        :key="index"
+        @click="setYear(item)"
+        >{{item}}</div>
+      </div>
+      <div class="month_wrap" v-show="showWeekSelect">
+        <div
+        class="month-item item_wrap"
+        v-for="(item, index) in monthList"
+        :class="{focus: year == currentDay.slice(0,4) && MONTH[item] == parseFloat(currentDay.slice(5,7))}"
+        :key="index"
+        @click="setMonth(item)">{{item}}</div>
+      </div>
+      <div class="week_wrap" v-show="!showYearSelect && !showWeekSelect">
         <div v-for="item in WEEK" :key="item">
           {{item}}
         </div>
       </div>
-      <div class="date_wrap">
+      <div class="date_wrap" v-show="!showYearSelect && !showWeekSelect">
         <div
-        class="date-item"
+        class="date-item item_wrap"
         v-for="(item, index) in dateList"
         :key="index"
         :class="{
           notCurrentMonth: isnotCurrentMonth(index),
-          currentDay: markToday ? dateValidator(item, currentDay) : false,
-          focus: !isnotCurrentMonth(index) && dateValidator(item, date)
+          currentDay: markToday ? !isnotCurrentMonth(index) && dateValidator(item, currentDay) : false,
+          select: !isnotCurrentMonth(index) && dateValidator(item, date)
         }"
         @click="setDay(item)"
         >
@@ -78,6 +102,20 @@ const LAST_DAY = {
   10: 31,
   11: 30,
   12: 31
+};
+const MONTH = {
+  '一月': 1,
+  '二月': 2,
+  '三月': 3,
+  '四月': 4,
+  '五月': 5,
+  '六月': 6,
+  '七月': 7,
+  '八月': 8,
+  '九月': 9,
+  '十月': 10,
+  '十一月': 11,
+  '十二月': 12,
 }
 export default {
   name: 'xo-date-picker',
@@ -87,14 +125,18 @@ export default {
       WEEK,
       LAST_DAY,
       year: 2019,
-      month: 9,
+      month: 4,
       day: '',
       date: '',
       dateList: [],
-      YearList: [],
+      yearList: [],
       monthList: [],
       startIndex: 0,
       currentDay: {},
+      showYearSelect: false,
+      showWeekSelect: false,
+      title: '',
+      MONTH
     }
   },
   props: {
@@ -117,6 +159,8 @@ export default {
     },
     clickoutside() {
       this.visible = false;
+      this.showYearSelect = false;
+      this.showWeekSelect = false;
     },
     getDateList() {
       const monthlastday = this.isLeapMonth(this.month);
@@ -162,13 +206,45 @@ export default {
       this.getDateList();
     },
     yearChg(type) {
-      this.year = type === 'prev' ? this.year - 1 : this.year + 1;
+      if(this.showYearSelect) {
+        if(type === 'prev') this.yearSelect(parseFloat(this.yearList[0]) - 10);
+        if(type === 'next') this.yearSelect(parseFloat(this.yearList[0]) + 10);
+      }else {
+        this.year = parseFloat(this.year);
+        if(type === 'prev') this.year -= 1;
+        if(type === 'next') this.year += 1;
+      }
       this.getDateList();
     },
     setDay(val) {
       this.day = val;
       this.date = `${this.year}-${this.uniteDate(this.month)}-${this.uniteDate(this.day)}`;
       this.$emit('input', this.date);
+    },
+    setYear(val) {
+      this.showYearSelect = false;
+      this.year = val;
+      this.monthSelect();
+    },
+    setMonth(val) {
+      this.showWeekSelect = false;
+      this.month = this.MONTH[val];
+      this.getDateList();
+    },
+    yearSelect(val) {
+      if(!this.showWeekSelect) {
+        this.showYearSelect = true;
+        const str = val.toString().slice(0, -1);
+        this.yearList = [];
+        for(let i = 0; i < 10; i++) {
+          this.yearList.push(`${str}${i}`);
+        }
+        this.title = `${this.yearList[0]} - ${this.yearList[1]}`;
+      }
+    },
+    monthSelect() {
+      this.showWeekSelect = true;
+      this.monthList = Object.keys(this.MONTH);
     },
     uniteDate(val) {
       return val > 9 ? val : `0${val}`;
@@ -193,8 +269,8 @@ export default {
     }
   },
   mounted() {
-    this.getDateList();
     this.getCurrentDay();
+    this.getDateList();
   }
 }
 </script>
@@ -228,6 +304,8 @@ export default {
     .header_wrap {
       padding-bottom: 10px;
       cursor: pointer;
+      height: 22px;
+      line-height: 22px;
       .single-arrow {
         transform: scaleX(0.5) scaleY(0.8);
       }
@@ -236,6 +314,24 @@ export default {
       }
       span:hover, i:hover{
         color: #409eff;
+      }
+    }
+    .year_wrap {
+      flex-wrap: wrap;
+      .year-item {
+        flex-basis: 83px;
+        height: 28px;
+        line-height: 28px;
+        font-weight: bold;
+      }
+    }
+    .month_wrap {
+      flex-wrap: wrap;
+      .month-item {
+        flex-basis: 60px;
+        height: 39px;
+        line-height: 39px;
+        font-weight: bold;
       }
     }
     .week_wrap {
@@ -249,19 +345,7 @@ export default {
     .date_wrap {
       flex-wrap: wrap;
       .date-item {
-        display: flex;
         flex-basis: 30px;
-        flex-wrap: wrap;
-        padding: 5px;
-        flex-shrink: 0;
-        justify-content: center;
-        cursor: pointer;
-        position: relative;
-        border-radius: 10px;
-        transition: all 0.3s;
-      }
-      .date-item:hover {
-        background-color: #f5f7fa;
       }
       .notCurrentMonth {
         color: #ccc;
@@ -276,12 +360,29 @@ export default {
         background: #F56C6C;
         border-radius: 50%;
       }
-      .focus {
+      .select {
         color: #fff;
         background: #409eff !important;
         font-weight: bold;
       }
     }
+    .item_wrap {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 5px;
+      flex-shrink: 0;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      border-radius: 10px;
+      transition: all 0.3s;
+    }
+    .item_wrap:hover {
+      background-color: #f5f7fa;
+    }
+  }
+  .focus {
+    color: #409eff;
   }
 }
 </style>
