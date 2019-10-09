@@ -78,7 +78,7 @@
           currentDay: markToday ? !isnotCurrentMonth(index) && dateValidator(item, currentDay) : false,
           select: !isnotCurrentMonth(index) && dateValidator(item, date)
         }"
-        @click="setDay(item)"
+        @click="setDay(item, index)"
         >
           {{item}}
         </div>
@@ -216,8 +216,15 @@ export default {
       }
       this.getDateList();
     },
-    setDay(val) {
-      this.day = val;
+    setDay(item, index) {
+      const lastday = this.isLeapMonth(this.month);
+      if(index < this.startIndex ) {
+        this.monthChg('prev');
+      }
+      if(index > this.startIndex + lastday - 1) {
+        this.monthChg('next');
+      }
+      this.day = item;
       this.date = `${this.year}-${this.uniteDate(this.month)}-${this.uniteDate(this.day)}`;
       this.$emit('input', this.date);
     },
