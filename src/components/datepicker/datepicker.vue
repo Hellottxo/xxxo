@@ -269,10 +269,6 @@ export default {
       this.month = date.getMonth() + 1;
       const day = date.getDate();
       this.currentDay = `${this.year}-${this.uniteDate(this.month)}-${this.uniteDate(day)}`;
-    },
-    reset() {
-      this.day = '';
-      this.date = '';
     }
   },
   mounted() {

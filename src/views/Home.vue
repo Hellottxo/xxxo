@@ -1,5 +1,16 @@
 <template>
   <div class="home">
+    <xo-menu default-active="1">
+      <xo-sub-menu title="主页">
+        <xo-menu-item index="2">主页1</xo-menu-item>
+        <xo-menu-item index="7">主页2</xo-menu-item>
+        <xo-menu-item index="8">主页3</xo-menu-item>
+        <xo-menu-item index="9">主页4</xo-menu-item>
+      </xo-sub-menu>
+      <xo-menu-item index="1">我的订单</xo-menu-item>
+      <xo-menu-item index="3">我的收藏</xo-menu-item>
+      <xo-menu-item index="4">购物车</xo-menu-item>
+    </xo-menu>
     <xo-input autoSize>
       <!-- <template v-slot:suffix>
         <i class="">123534</i>
