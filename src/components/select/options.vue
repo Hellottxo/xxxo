@@ -67,7 +67,6 @@ export default {
         this.$emit('click', this.select);
         this.$emit('input', this.select);
       }
-      
     }
   }
 }
