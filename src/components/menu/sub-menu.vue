@@ -1,8 +1,8 @@
 <template>
-  <div class="xo-sub-menu">
-    <div
-    class="sub-menu-title"
-    @click="isCollapse = !isCollapse">
+  <div class="xo-sub-menu"
+  @click="isCollapse = !isCollapse"
+  v-clickoutside="collapse">
+    <div class="sub-menu-title">
       <span>{{title}}</span>
       <span>
         <i
@@ -29,6 +29,11 @@ export default {
   },
   props: {
     title: String
+  },
+  methods: {
+    collapse() {
+      this.isCollapse = false;
+    }
   }
 }
 </script>
