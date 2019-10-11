@@ -42,9 +42,10 @@ export default {
 
 <style lang="less" scoped>
 .xo-menu {
-  width: 240px;
+  min-width: 240px;
   min-height: 300px;
   border-right: 1px solid #e6e6e6;
+  font-size: 14px;
 }
 .horizontal {
   display: flex;
@@ -52,7 +53,7 @@ export default {
   padding: 0 0 0 55px;
   border-bottom: 1px solid #e6e6e6;
   border-right: 0;
-  min-height: 50px;
+  min-height: 40px;
 }
 div {
   -moz-user-select:none;/*火狐*/
@@ -62,3 +63,15 @@ div {
   user-select:none;
 }
 </style>
+
+<style lang="less">
+.horizontalSelect {
+  color: #409EFF;
+  border-bottom: 2px solid #409EFF;
+}
+.verticalSelect {
+  background-color: #409eff17;
+  color: #409EFF;
+}
+</style>
+

@@ -5,6 +5,7 @@
   :class="{
     horizontalSelect: mode === 'horizontal' && selectIndex === index,
     verticalSelect: mode === 'vertical' && selectIndex === index,
+    disabled: disabled
   }"
   >
     <slot></slot>
@@ -31,8 +32,10 @@ export default {
   methods: {
     ...mapMutations('menuModuel', ['chgSelectIndex']),
     handleClick() {
-      this.chgSelectIndex(this.index);
-      this.$emit('click', this);
+      if(!this.disabled) {
+        this.chgSelectIndex(this.index);
+        this.$emit('click', this);
+      }
     }
   },
 }
@@ -44,20 +47,20 @@ export default {
   height: 50px;
   line-height: 50px;
   cursor: pointer;
-  font-weight: bold;
   transition: all 0.2s;
   box-sizing: border-box;
   text-align: start;
+  word-break: keep-all;
 }
 .xo-menu-item:hover {
   color: #409EFF;
 }
-.horizontalSelect {
-  color: #409EFF;
-  border-bottom: 2px solid #409EFF;
+
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.25; 
 }
-.verticalSelect {
-  background-color: #409eff17;
-  color: #409EFF;
+.disabled:hover {
+  color: inherit;
 }
 </style>
