@@ -1,7 +1,11 @@
 <template>
   <div
   class="xo-menu"
-  :class="{horizontal: mode === 'horizontal'}"
+  :class="{
+    horizontal: mode === 'horizontal',
+    vertical: mode === 'vertical',
+    collapse: collapse
+  }"
   >
     <slot></slot>
   </div>
@@ -23,10 +27,16 @@ export default {
     mode: {
       type: String,
       default: 'vertical'
-    }
+    },
+    collapse: Boolean
   },
   computed: {
     ...mapState('menuModuel', ['selectIndex'])
+  },
+  watch: {
+    collapse(val) {
+
+    }
   },
   methods: {
     ...mapMutations('menuModuel', ['chgSelectIndex', 'chgMode']),
@@ -42,11 +52,15 @@ export default {
 
 <style lang="less" scoped>
 .xo-menu {
-  min-width: 240px;
   min-height: 300px;
   border-right: 1px solid #e6e6e6;
   font-size: 14px;
+  transition: all 0.5s;
 }
+.vertical:not(.collapse) {
+  min-width: 240px;
+}
+
 .horizontal {
   display: flex;
   width: 100%;
@@ -66,12 +80,36 @@ div {
 
 <style lang="less">
 .horizontalSelect {
-  color: #409EFF;
+  color: #409EFF !important;
+  span, i {
+    color: #409EFF;
+  }
+  .xo-menu-item {
+    color: #2c3e50;
+    border: none;
+  }
   border-bottom: 2px solid #409EFF;
 }
 .verticalSelect {
-  background-color: #409eff17;
   color: #409EFF;
+  background-color: #409eff17;
+  span, i {
+    color: #409EFF;
+  }
+}
+.collapse {
+  width: 56px;
+  .sub-menu-title span:nth-child(2), span:nth-child(3) {
+    display: none;
+  }
+  .xo-menu-item span:nth-child(2) {
+    display: none;
+  }
+}
+.xo-menu {
+  .sub-menu-title span, .xo-menu-item span {
+    margin: 0 5px 0 0;
+  }
 }
 </style>
 

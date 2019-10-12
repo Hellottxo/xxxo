@@ -62,7 +62,6 @@
 </template>
 
 <script>
-import '@/common/icon.less';
 import calctetxtareaHeight from './calctextareaHeight';
 
 export default {

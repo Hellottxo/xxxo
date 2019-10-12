@@ -51,9 +51,13 @@ export default {
   box-sizing: border-box;
   text-align: start;
   word-break: keep-all;
+  display: flex;
 }
 .xo-menu-item:hover {
   color: #409EFF;
+  i {
+    color: #409EFF;
+  }
 }
 
 .disabled {

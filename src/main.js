@@ -6,6 +6,7 @@ import clickOutside from './directive/clickoutside/index';
 import lazyload from './directive/lazylod/index';
 import components from './components/index';
 import './common/icon.less';
+import './common/transition.less';
 
 Vue.use(components);
 Vue.use(clickOutside);
