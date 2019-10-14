@@ -27,7 +27,7 @@
         ></i>
       </span>
     </div>
-    <transition name="fade-transition">
+    <transition :name="mode === 'vertical' && this.$parent.collapse ? 'fade-transition' : ''">
       <div
       v-show="iscollapse"
       :class="{

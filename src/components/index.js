@@ -8,6 +8,7 @@ import xoDatePicker from './datepicker/index';
 import xoMenu from './menu/index';
 import xoMenuItem from './menu-item/index';
 import xoSubMenu from './sub-menu/index';
+import xoButton from './button/index';
 
 const components = [
   xoTable,
@@ -20,6 +21,7 @@ const components = [
   xoMenu,
   xoMenuItem,
   xoSubMenu,
+  xoButton,
 ];
 
 const install = function (Vue) {
