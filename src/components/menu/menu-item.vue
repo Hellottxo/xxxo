@@ -5,7 +5,7 @@
   :class="{
     horizontalSelect: mode === 'horizontal' && selectIndex === index,
     verticalSelect: mode === 'vertical' && selectIndex === index,
-    disabled: disabled
+    menuDisabled: disabled
   }"
   >
     <slot></slot>
@@ -60,11 +60,11 @@ export default {
   }
 }
 
-.disabled {
+.menuDisabled {
   cursor: not-allowed;
   opacity: 0.25; 
 }
-.disabled:hover {
+.menuDisabled:hover {
   color: inherit;
 }
 </style>

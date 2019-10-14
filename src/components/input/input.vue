@@ -2,7 +2,7 @@
   <div class="xo-input">
     <div
     class="xo-input_wrap"
-    :class="{readonly: disabled}"
+    :class="{disabled: disabled}"
     :style="{
       width: width,
       maxWidth: maxWidth,
@@ -16,7 +16,7 @@
       :type="inputType"
       v-model="input"
       :class="{
-        readonly: disabled,
+        disabled: disabled,
         focus: isFocus
       }"
       :style="{
@@ -26,7 +26,7 @@
         paddingLeft: $scopedSlots.prefix ? `30px` : `15px`,
         paddingRight: $scopedSlots.suffix ? `30px` : `15px`,
       }"
-      :readonly="disabled"
+      :disabled="disabled"
       :placeholder="placeholder"
       @focus="setFocus(true)"
       @blur="setFocus(false)">
@@ -244,11 +244,6 @@ export default {
   }
   .focus {
     border-color: #409EFF !important;
-  }
-  .readonly {
-    background-color: #f5f7fa;
-    color: #c0c4cc;
-    cursor: not-allowed;
   }
 }
 </style>

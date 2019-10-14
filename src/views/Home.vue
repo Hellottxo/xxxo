@@ -1,15 +1,34 @@
 <template>
   <div class="home">
-    <xo-menu default-active="1">
-      <xo-sub-menu title="主页">
-        <xo-menu-item index="2">主页1</xo-menu-item>
+    <xo-button @click="collapse=!collapse" type="primary" disabled>展开</xo-button>
+    <xo-menu default-active="4" :collapse="collapse">
+      <xo-sub-menu title="主页" index="5">
+        <template v-slot:title>
+          <span>
+            <i class="icon icon-smile"></i>
+          </span>
+          <span>主页</span>
+        </template>
         <xo-menu-item index="7">主页2</xo-menu-item>
         <xo-menu-item index="8">主页3</xo-menu-item>
         <xo-menu-item index="9">主页4</xo-menu-item>
       </xo-sub-menu>
-      <xo-menu-item index="1">我的订单</xo-menu-item>
-      <xo-menu-item index="3">我的收藏</xo-menu-item>
-      <xo-menu-item index="4">购物车</xo-menu-item>
+      <xo-menu-item index="1" disabled>
+        <span><i class="icon icon-smile"></i></span>
+        <span>我的订单</span>
+      </xo-menu-item>
+      <xo-menu-item index="3">
+        <span><i class="icon icon-smile"></i></span>
+        <span>我的收藏</span>
+      </xo-menu-item>
+      <xo-menu-item index="4">
+        <span><i class="icon icon-smile"></i></span>
+        <span>购物车</span>
+      </xo-menu-item>
+      <xo-menu-item index="10">
+        <span><i class="icon icon-smile"></i></span>
+        <span>投诉</span>
+      </xo-menu-item>
     </xo-menu>
     <xo-input autoSize>
       <!-- <template v-slot:suffix>
@@ -17,14 +36,19 @@
       </template> -->
     </xo-input>
     <xo-rate :default-star="1" notice mode="smile" v-model="index"></xo-rate>
-    <xo-select multiple selectall :options="options" width="180">
+    <xo-select
+    multiple
+    selectall
+    :options="options"
+    disabled
+    width="180">
       <template v-slot:item="scope">
         <span>{{scope.data.value}}</span>
         <span>{{scope.data.label}}</span>
       </template>
     </xo-select>
-    <xo-time-picker></xo-time-picker>
-    <xo-date-picker clearable></xo-date-picker>
+    <xo-time-picker disabled></xo-time-picker>
+    <xo-date-picker clearable disabled></xo-date-picker>
     <xo-tree
     :data="tree"
     :default-expand-node="defaultExpandNode"
@@ -156,11 +180,11 @@ const tree = [{
   }]
 }]
 
-
 export default {
   name: 'home',
   data() {
     return {
+      collapse: false,
       columns,
       data,
       options,

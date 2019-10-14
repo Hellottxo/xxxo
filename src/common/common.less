@@ -2,8 +2,14 @@
 @white: #fff;
 @border-color: #dcdfe6;
 
-.hover:hover {
+.hover:not(.disabled) :hover {
   opacity: 0.8;
+}
+.disabled {
+  color: #c3cbd6 !important;
+  background-color: #f7f7f7 !important;
+  border-color: #d7dde4 !important;
+  cursor: not-allowed !important;
 }
 
 .click:active {

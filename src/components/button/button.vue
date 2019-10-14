@@ -8,7 +8,8 @@
       primary: type === 'primary',
       round: type === 'round',
       circle: type === 'circle',
-      text: type === 'text'
+      text: type === 'text',
+      disabled: disabled
     }">
       <slot></slot>
     </div>
@@ -20,6 +21,7 @@ export default {
   name: 'xo-button',
   props: {
     type: String,
+    disabled: Boolean
   },
   data() {
     return {
@@ -28,6 +30,7 @@ export default {
   },
   methods: {
     handleClick() {
+      if(this.disabled) return;
       this.$emit('click');
     }
   }

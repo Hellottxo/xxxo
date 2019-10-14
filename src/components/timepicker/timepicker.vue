@@ -105,7 +105,7 @@ export default {
     clearable: Boolean,
     confirm: Boolean,
     maxTime: String,
-    minTime: String
+    minTime: String,
   },
   watch: {
     time(val) {
@@ -281,10 +281,6 @@ export default {
         .select {
           color: #000;
           font-weight: bold;
-        }
-        .disabled {
-          cursor: not-allowed;
-          color: #c0c4cc;
         }
       }
       ul::-webkit-scrollbar {

@@ -285,10 +285,6 @@ export default {
       padding-left: 10px;
     }
   }
-  .disabled {
-    background-color: #f3f3f3;
-    cursor: not-allowed;
-  }
 }
 .isFocus {
   border-color: #409EFF !important;

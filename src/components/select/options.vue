@@ -11,7 +11,7 @@
         :class="{
           focus: select.indexOf(item) > -1,
           multiple: multiple && select.indexOf(item) > -1,
-          disabled: item.disabled,
+          optionsDisabled: item.disabled,
           custom: $scopedSlots.item && multiple
         }"
         >
@@ -103,7 +103,7 @@ export default {
     li:hover {
       background-color: #f5f7fa;
     }
-    .disabled {
+    .optionsDisabled {
       cursor: not-allowed;
       span {
         color: #c3cbd6 !important;
