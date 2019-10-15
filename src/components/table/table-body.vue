@@ -205,17 +205,16 @@ export default {
     isHidden(val) {
       if (this.endFixed) {
         return val !== 'end';
-      } if (this.startFixed) {
+      } 
+      if (this.startFixed) {
         return val !== 'start';
       }
       return false;
     },
     setLeftWidth() {
       const tableWidth = this.$refs.table.clientWidth;
-      if (this.endFixed) {
-        if (this.$parent.$refs.displayTableBody.clientWidth < tableWidth) {
-          this.leftWidth = this.endLeftWidth;
-        }
+      if (this.endFixed && this.$parent.$refs.displayTableBody.clientWidth < tableWidth) {
+        this.leftWidth = this.endLeftWidth;
       }
     },
   },

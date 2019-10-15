@@ -81,10 +81,7 @@ export default {
     collapse(index) {
       const flag = this.collapseArr.indexOf(index);
       if(flag > -1) {
-        console.log(this.collapseArr)
-
         this.collapseArr.splice(flag, 1);
-        console.log(this.collapseArr)
       }else {
         this.collapseArr.push(index);
       }

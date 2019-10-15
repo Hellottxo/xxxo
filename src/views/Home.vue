@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <xo-button @click="collapse=!collapse" type="primary" disabled>展开</xo-button>
-    <xo-menu default-active="4" :collapse="collapse">
+    <xo-menu default-active="4" :collapse="collapse" mode="horizontal">
       <xo-sub-menu title="主页" index="5">
         <template v-slot:title>
           <span>
