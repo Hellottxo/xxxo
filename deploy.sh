@@ -19,7 +19,7 @@ git commit -m 'deploy'
 # 如果发布到 https://<USERNAME>.github.io
 # git push -f git@github.com:Hellottxo/Hellottxo.github.io.git master
 
-# 如果发布到 https://Hellottxo.github.io/xoui
-git push -f git@github.com:Hellottxo/xoui.git master:gh-pages
+# 如果发布到 https://Hellottxo.github.io/xo-ui
+git push -f git@github.com:Hellottxo/xo-ui.git master:gh-pages
 
 cd -
