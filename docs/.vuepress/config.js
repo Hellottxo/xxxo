@@ -1,6 +1,7 @@
 module.exports = {
   title: 'XO-UI',
   description: 'A Vue.js 2.0 UI Toolkit',
+  base: '/xo-ui/',
   themeConfig: {
     nav: [
       { text: 'Github', link: 'https://github.com/Hellottxo' },
