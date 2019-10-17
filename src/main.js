@@ -4,7 +4,8 @@ import router from './router';
 import store from './vuex';
 import clickOutside from './directive/clickoutside/index';
 import lazyload from './directive/lazylod/index';
-import components from './components/index';
+import components from './index';
+import './common/common.less';
 import './common/icon.less';
 import './common/transition.less';
 
