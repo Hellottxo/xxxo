@@ -2,7 +2,7 @@
   <div class="xo-input">
     <div
     class="xo-input_wrap"
-    :class="{disabled: disabled}"
+    :class="{'xo-disabled': disabled}"
     :style="{
       width: width,
       maxWidth: maxWidth,
@@ -16,7 +16,7 @@
       :type="inputType"
       v-model="input"
       :class="{
-        disabled: disabled,
+        'xo-disabled': disabled,
         focus: isFocus
       }"
       :style="{

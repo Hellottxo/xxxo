@@ -1,13 +1,16 @@
-.common-hover:not(.disabled) :hover {
-  opacity: 0.8;
+.xo-hover {
+  &:hover {
+    opacity: 0.8;
+  }
 }
-.common-disabled {
+.xo-disabled {
   color: #c3cbd6 !important;
   background-color: #f7f7f7 !important;
   border-color: #d7dde4 !important;
   cursor: not-allowed !important;
+  opacity: 1;
 }
 
-.common-click:active {
+.xo-click:active {
   opacity: 1;
 }

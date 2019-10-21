@@ -43,7 +43,6 @@
 
 <script>
 import { mapState } from 'vuex';
-import { clearTimeout, setTimeout } from 'timers';
 export default {
   name: 'xo-sub-menu',
   data() {

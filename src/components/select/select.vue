@@ -8,7 +8,7 @@
       class="xo-select_wrap"
       :class="{
         isFocus: isFocus,
-        disabled: disabled
+        'xo-disabled': disabled
       }"
       @click.stop="inputWrapClick"
       @mouseenter="isMouseenter=true"
