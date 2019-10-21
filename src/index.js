@@ -9,6 +9,7 @@ import xoMenu from './components/menu/index';
 import xoMenuItem from './components/menu-item/index';
 import xoSubMenu from './components/sub-menu/index';
 import xoButton from './components/button/index';
+import clickOutside from './directive/clickoutside/index';
 
 const components = [
   xoTable,
@@ -28,6 +29,8 @@ const install = function (Vue) {
   components.forEach((component) => {
     Vue.component(component.name, component);
   });
+
+  Vue.use(clickOutside);
 };
 
 /* 支持使用标签的方式引入 */
@@ -48,4 +51,5 @@ export default {
   xoMenuItem,
   xoSubMenu,
   xoButton,
+  clickOutside,
 };

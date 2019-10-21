@@ -3,13 +3,13 @@
   @click="handleClick"
   >
     <div
-    class="xo-button_wrap hover click"
+    class="xo-button_wrap common-hover common-click"
     :class="{
       primary: type === 'primary',
       round: type === 'round',
       circle: type === 'circle',
       text: type === 'text',
-      disabled: disabled
+      'common-disabled': disabled
     }">
       <slot></slot>
     </div>

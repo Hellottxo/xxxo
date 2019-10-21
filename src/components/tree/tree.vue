@@ -98,8 +98,6 @@ export default {
       if(this.nodeKey) {
         const temp = this.data[index][this.nodeKey];
         return this.highlightRow == temp;
-      }else {
-        return this.highlightRow === temp;
       }
     },
     getchildExpandNode() {

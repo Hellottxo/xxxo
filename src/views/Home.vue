@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <xo-button @click="collapse=!collapse" type="primary" disabled>展开</xo-button>
+    <xo-button @click="collapse=!collapse" type="primary">展开</xo-button>
     <xo-menu default-active="4" :collapse="collapse" mode="horizontal">
       <xo-sub-menu title="主页" index="5">
         <template v-slot:title>
@@ -65,6 +65,7 @@
         </div>
       </template>
     </xo-table>
+    <!-- <div v-clickoutside="handleClick">xo</div>ss -->
   </div>
 </template>
 
@@ -204,6 +205,9 @@ export default {
   methods: {
     nodeClick(obj) {
       console.log(obj.id);
+    },
+    handleClick() {
+      console.log('hhhh')
     }
   }
 };

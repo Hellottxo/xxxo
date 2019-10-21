@@ -5,10 +5,10 @@ const install = function(Vue) {
   Vue.directive('clickoutside', clickOutside);
 }
 
-if (window.Vue) {
-  window.clickOutside = clickOutside;
-  Vue.use(install);
+if (typeof window !== 'undefined' && window.Vue) {
+  window.Vue.use({install});
 }
 
-clickOutside.install = install;
-export default clickOutside;
+export default {
+  install
+};

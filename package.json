@@ -1,6 +1,6 @@
 {
   "name": "xo-ui",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "private": false,
   "description": "A Vue.js 2.0 UI Toolkit",
   "main":"dist/xo-ui.umd.js",
