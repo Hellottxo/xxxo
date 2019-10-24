@@ -280,7 +280,6 @@ export default {
     this.getTableColumns();
   },
   mounted() {
-    this.isShowGutter();
     this.setTableWidth();
     const that = this;
     window.onresize = function () {
