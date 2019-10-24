@@ -14,7 +14,6 @@
       warning: type === 'warning',
       danger: type === 'danger',
       disabled: disabled,
-      plain: plain
     }">
       <span>
         <slot></slot>
@@ -39,8 +38,7 @@ export default {
       default: ''
     },
     round: Boolean,
-    circle: Boolean,
-    plain: Boolean
+    circle: Boolean
   },
   data() {
     return {

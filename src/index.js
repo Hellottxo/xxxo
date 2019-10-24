@@ -9,6 +9,7 @@ import xoMenu from './components/menu/index';
 import xoMenuItem from './components/menu-item/index';
 import xoSubMenu from './components/sub-menu/index';
 import xoButton from './components/button/index';
+import xoCard from './components/card/index';
 import clickOutside from './directive/clickoutside/index';
 
 const components = [
@@ -23,6 +24,7 @@ const components = [
   xoMenuItem,
   xoSubMenu,
   xoButton,
+  xoCard,
 ];
 
 const install = function (Vue) {
@@ -51,5 +53,6 @@ export default {
   xoMenuItem,
   xoSubMenu,
   xoButton,
+  xoCard,
   clickOutside,
 };
