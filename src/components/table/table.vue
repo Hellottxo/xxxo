@@ -161,11 +161,10 @@
 import { mapState, mapMutations } from 'vuex';
 import tableHeader from './table-header';
 import tableBody from './table-body';
-import { debounceThrottle } from '@/mixins/debounce-throttle.js';
+import { debounce } from '@/untils/debounce-throttle.js';
 
 export default {
   name: 'xo-table',
-  mixins: [debounceThrottle],
   components: {
     tableHeader,
     tableBody,
@@ -271,20 +270,18 @@ export default {
       this.showGutter = displayHeight < scrollHeight;
       this.widthGutter = displayWidth < scrollWidth;
     },
-    setTableWidth() {
+    setTableWidth: debounce(function() {
       this.tableWidth = `${this.$refs.xoTable.clientWidth}`;
       this.isShowGutter();
-    },
+    }, 500)
   },
   created() {
     this.getTableColumns();
   },
   mounted() {
     this.setTableWidth();
-    const that = this;
-    window.onresize = function () {
-      that.debounce(that.setTableWidth, 500);
-    };
+    window.onresize = this.setTableWidth;
+    ;
   },
 };
 </script>
