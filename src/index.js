@@ -10,6 +10,7 @@ import xoMenuItem from './components/menu-item/index';
 import xoSubMenu from './components/sub-menu/index';
 import xoButton from './components/button/index';
 import xoCard from './components/card/index';
+import Message from './components/message/index';
 import clickOutside from './directive/clickoutside/index';
 
 const components = [
@@ -31,6 +32,8 @@ const install = function (Vue) {
   components.forEach((component) => {
     Vue.component(component.name, component);
   });
+
+  Vue.prototype.$message = Message;
 
   Vue.use(clickOutside);
 };
@@ -54,5 +57,6 @@ export default {
   xoSubMenu,
   xoButton,
   xoCard,
+  Message,
   clickOutside,
 };

@@ -1,0 +1,49 @@
+.xo-message-wrap {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  .xo-message {
+    border: 1px solid @border-color;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: normal;
+    padding: 8px 13px;
+    border-radius: 4px;
+    min-width: 150px;
+    position: relative;
+    right: 50%;
+    background: #fff;
+    color: @black;
+    transition: all 0.5s;
+    margin-bottom: 8px;
+   .xo-message_icon-wrap {
+      margin-right: 5px;
+      i {
+        font-size: 14px;
+        line-height: 17px;
+      }
+      .primary {
+        color: @blue;
+      }
+      .warning {
+        color: @warning;
+      }
+      .success {
+        color: @success;
+      }
+      .info {
+        color: @info;
+      }
+      .danger {
+        color: @danger;
+      }
+    }
+    .xo-message-close {
+      margin-left: 30px;
+      line-height: 17px;
+      cursor: pointer;
+    }
+  }
+}
+

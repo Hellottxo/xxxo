@@ -105,7 +105,6 @@
 import xoInput from '@/components/input/index.js';
 import xoOptions from './options';
 import { constAnalysis } from '@/mixins/const-analysis.js';
-import { debounceThrottle } from '@/mixins/debounce-throttle.js';
 
 export default {
   name: 'xo-select',
@@ -119,7 +118,7 @@ export default {
       selectOptions: []
     }
   },
-  mixins: [constAnalysis, debounceThrottle],
+  mixins: [constAnalysis],
   props: {
     placeholder: {
       type: String,
