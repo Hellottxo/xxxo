@@ -6,13 +6,16 @@
     <div>
       <span class="xo-message_icon-wrap">
         <i
-        :class="type"
-        class="xo-message-icon icon icon-notice"></i>
+        :class="[
+          type,
+          `icon-${ICON_MAP[type]}-fill`
+        ]"
+        class="xo-message-icon iconfont icon-prompt-fill"></i>
       </span>
       <span>{{message}}</span>
     </div>
     <i
-    class="xo-message-close icon icon-close"
+    class="xo-message-close iconfont icon-close"
     @click="close"
     v-if="showClose"></i>
   </div>
@@ -30,7 +33,15 @@ export default {
       showClose: false,
       top: -20,
       offsetTop: -20,
-      type: ''
+      type: '',
+      ICON_MAP: {
+        '': 'prompt',
+        'primary': 'prompt',
+        'wraining': 'prompt',
+        'success': 'success',
+        'info': 'prompt',
+        'danger': 'reeor'
+      }
     }
   },
   methods: {

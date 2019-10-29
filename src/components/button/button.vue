@@ -17,7 +17,7 @@
     }">
       <span>
         <slot></slot>
-        <i v-if="icon != ''" class="icon" :class="`icon-${icon}`"></i>
+        <i v-if="icon != ''" class="iconfont" :class="`icon-${icon}`"></i>
       </span>
     </button>
   </div>
