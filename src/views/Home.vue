@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <xo-card shadow="hover">
+    <xo-card shadow="hover" :max-height="300">
       <template v-slot:header>
         <div>icon图标</div>
       </template>
@@ -1315,10 +1315,35 @@
       </template>
       <xo-tree
       :data="treeData"
+      @node-click="handleNodeClick"></xo-tree>
+    </xo-card>
+    <xo-card shadow="hover">
+      <template v-slot:header>
+        <div>
+          默认展开的树形控件
+        </div>
+      </template>
+      <div class="tree-wrap">
+        <xo-tree
+        :data="treeData"
+        node-key="id"
+        default-selected="6"
+        :default-expand="[0, 3]"
+        default-expand-all
+        @node-click="handleNodeClick"></xo-tree>
+      </div>
+    </xo-card>
+    <xo-card shadow="hover">
+      <template v-slot:header>
+        <div>
+          默认选中的树形控件
+        </div>
+      </template>
+      <xo-tree
+      :data="treeData"
       node-key="id"
       default-selected="6"
-      :default-expand="[0, 3]"
-      default-expand-all
+      :default-expand="[3]"
       @node-click="handleNodeClick"></xo-tree>
     </xo-card>
   </div>
@@ -1331,7 +1356,8 @@ const TREE_DATA = [{
   children: [
     {id: 1, label: '二级'},
     {id: 2, label: '二级'},
-    {id: 3, label: '二级', children: [
+    {id: 3, label: '二级', 
+    children: [
       {id: 4, label: '三级'},
       {id: 6, label: '三级'},
     ]},
@@ -1354,7 +1380,7 @@ export default {
   data() {
     return {
       collapse: false,
-      treeData: TREE_DATA
+      treeData: TREE_DATA,
     };
   },
   methods: {
@@ -1405,12 +1431,12 @@ export default {
     *zoom: 1;
     display: flex;
     flex-wrap: wrap;
+    padding-left: 0;
   }
 
   .icon_lists li {
     width: 100px;
-    margin-bottom: 10px;
-    margin-right: 20px;
+    margin: 10px;
     text-align: center;
     list-style: none !important;
     font-size: 14px;
@@ -1450,6 +1476,13 @@ export default {
   .icon_lists li .name,
   .icon_lists li .code-name {
     color: #666;
+  }
+
+  .tree-wrap {
+    display: flex;
+    &>div {
+      margin-left: 30px;
+    }
   }
 }
 </style>

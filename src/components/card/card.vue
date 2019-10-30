@@ -8,8 +8,19 @@
     <div class="xo-card_header">
       <slot name="header"></slot>
     </div>
-    <div class="xo-card_content">
-      <slot></slot>
+    <div
+    class="xo-card_content"
+    :style="{'max-height':isShowHidden ? '' : `${maxHeight}px`}">
+      <div ref="card">
+        <slot></slot>
+      </div>
+    </div>
+    <div
+    class="xo-card_arrow"
+    :class="{'xo-card_arrow-transform': isShowHidden}"
+    @click="showHidden"
+    v-if="isShowArrow">
+      <i class="iconfont icon-arrow-down"></i>
     </div>
   </div>
 </template>
@@ -17,11 +28,31 @@
 <script>
 export default {
   name: 'xo-card',
+  data() {
+    return {
+      isShowHidden: false,
+      isShowArrow: false
+    }
+  },
   props: {
     shadow: {
       type: String,
       default: ''
+    },
+    maxHeight: Number
+  },
+  methods: {
+    showHidden() {
+      this.isShowHidden = !this.isShowHidden;
+      this.$emit('show-visible')
+    },
+    showArrow() {
+      if(!this.maxHeight) return false;
+      return this.maxHeight < this.$refs.card.clientHeight;
     }
+  },
+  mounted() {
+    this.isShowArrow = this.showArrow();
   }
 }
 </script>

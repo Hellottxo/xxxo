@@ -93,7 +93,7 @@ export default {
     this.flatTree = this.flattenTreeData();
     if(this.defaultSelected) {
       const item = this.flatTree[this.defaultSelected];
-      this.$set(item.node, 'selected', !item.node.selected);
+      this.$set(item.node, 'selected', true);
     }
   }
 }
