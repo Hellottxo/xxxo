@@ -1,0 +1,36 @@
+.xo-tree {
+  font-size: 14px;
+  .xo-tree-node {
+    text-align: start;
+    
+    ul {
+      list-style: none;
+      cursor: pointer;
+      li {
+        .xo-node {
+          margin-bottom: 5px;
+        }
+        .xo-node-title {
+          padding: 2px 8px;
+        }
+        .xo-node-title:hover {
+          color: @blue;
+        }
+        .selected {
+          background-color: @border-color;
+          border-radius: 4px;
+        }
+        span {
+          transition: all 0.3s;
+          display: inline-block;
+          i {
+            color: @blue;
+          }
+        }
+        .xo-transform {
+          transform: rotate(90deg);
+        }
+      }
+    }
+  }
+}

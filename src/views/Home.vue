@@ -1307,16 +1307,45 @@
       <xo-button @click="handleCloseClick('info')" type="info">可关闭消息</xo-button>
       <xo-button @click="handleCloseClick('danger')" type="danger">可关闭消息</xo-button>
     </xo-card>
-    <xo-tree :data="treeData" :node-key="'id'"></xo-tree>
+    <xo-card shadow="hover">
+      <template v-slot:header>
+        <div>
+          树形控件
+        </div>
+      </template>
+      <xo-tree
+      :data="treeData"
+      node-key="id"
+      default-selected="6"
+      :default-expand="[0, 3]"
+      default-expand-all
+      @node-click="handleNodeClick"></xo-tree>
+    </xo-card>
   </div>
 </template>
 
 <script>
 const TREE_DATA = [{
   id: 0,
-  label: '一级',
+  label: '一级1',
   children: [
-    {id: 1, label: '二级'}
+    {id: 1, label: '二级'},
+    {id: 2, label: '二级'},
+    {id: 3, label: '二级', children: [
+      {id: 4, label: '三级'},
+      {id: 6, label: '三级'},
+    ]},
+  ]
+},{
+  id: 5,
+  label: '一级2',
+  children: [
+    {id: 7, label: '二级'},
+    {id: 8, label: '二级'},
+    {id: 9, label: '二级', children: [
+      {id: 10, label: '三级'},
+      {id: 11, label: '三级'},
+    ]},
   ]
 }]
 import Vue from 'vue'
@@ -1352,6 +1381,9 @@ export default {
         message: '这是一个可以手动关闭的消息',
         showClose: true
       })
+    },
+    handleNodeClick(item) {
+      console.log(item);
     }
   }
 };

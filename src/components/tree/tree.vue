@@ -1,169 +1,100 @@
 <template>
-  <div class="tree">
-    <div
+  <div class="xo-tree">
+    <xo-tree-node
     v-for="(item, index) in data"
-    :key="index">
-      <div
-      class="tree-content"
-      @mouseenter="hover=index"
-      @mouseleave="hover=-1"
-      @click="collapse(index)"
-      :style="{paddingLeft: getPaddingLeft}"
-      :class="{
-        hover: hover === index,
-        highlight: setHighlightRow(index)
-      }">
-        <div
-        class="icon-collapse"
-        v-if="item.children && collapseArr.indexOf(index)===-1"
-        >+</div>
-        <div
-        class="icon-collapse icon-nocollapse"
-        v-if="item.children && collapseArr.indexOf(index)>-1"
-        >-</div>
-        <div class="content-label">{{item.label}}</div>
-      </div>
-      <div class="child-node" v-show="item.children && collapseArr.indexOf(index)>-1">
-        <xo-tree
-        @node-click="nodeClick"
-        :data="item.children"
-        :parent-node="getNode(index)"
-        :default-expand-node="childdefaultExpandNode"
-        :node-key="nodeKey"></xo-tree>
-      </div>
-    </div>
+    :node-key="nodeKey"
+    :key="index"
+    :data="item"
+    :default-expand="defaultExpand"
+    :default-expand-all="defaultExpandAll"
+    :children-key="childrenKey"
+    ></xo-tree-node>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import xoTreeNode from './node';
 export default {
   name: 'xo-tree',
+  components: { xoTreeNode },
   data() {
     return {
-      collapseArr: [],
-      hover: -1,
-      childdefaultExpandNode: []
+      flatTree: {}
     }
   },
   props: {
     data: {
       type: Array,
       default: function() {
+        return [];
+      }
+    },
+    childrenKey: {
+      type: String,
+      default: 'children'
+    },
+    multiple: Boolean,
+    defaultSelected: String,
+    nodeKey: String,
+    defaultExpand: {
+      type: Array,
+      default: () => {
         return []
       }
     },
-    parentNode: {
-      type: String,
-      default: ''
-    },
-    defaultExpandNode: Array,
-    defaultHighligthNode: Number,
-    nodeKey: String,
-    defaultAllExpand: {
-      type: Boolean,
-      default: true
-    }
-  },
-  computed: {
-    ...mapState('treeModuel', ['highlightRow']),
-    getPaddingLeft() {
-      const temp = this.parentNode.split('-');
-      const len = this.parentNode ? temp.length : 0;
-      return `${(len + 1)*16}px`;
-    }
+    defaultExpandAll: Boolean
   },
   methods: {
-    ...mapMutations('treeModuel', ['chgHighlightRow']),
-    getNode(index) {
-      return this.parentNode ? `${this.parentNode}-${index}` : `${index}`;
-    },
-    collapse(index) {
-      const flag = this.collapseArr.indexOf(index);
-      if(flag > -1) {
-        this.collapseArr.splice(flag, 1);
-      }else {
-        this.collapseArr.push(index);
-      }
-      let temp;
-      if(this.nodeKey) {
-        temp = this.data[index][this.nodeKey];
-      }else {
-        temp = this.getNode(index);
-      }
-      this.chgHighlightRow(temp);
-      this.$emit('node-click', this.data[index], index, this);
-    },
-    setHighlightRow(index) {
-      if(this.nodeKey) {
-        const temp = this.data[index][this.nodeKey];
-        return this.highlightRow == temp;
-      }
-    },
-    getchildExpandNode() {
-      if(this.defaultExpandNode && !this.defaultAllExpand) {
-        this.collapseArr.push(this.defaultExpandNode[0]);
-        if(this.defaultExpandNode.length > 1) {
-          this.childdefaultExpandNode = this.defaultExpandNode.slice(1);
+    handleClick(nodeKey) {
+      if(!this.multiple) {
+        const arr = Object.keys(this.flatTree);
+        const key = arr.find(child => {
+          const selected = this.flatTree[child].node.selected;
+          if(selected === undefined) return;
+          return selected == true;
+        })
+        if(key != undefined) {
+          this.flatTree[key].node.selected = false;
         }
       }
+      const item = this.flatTree[nodeKey];
+      this.$set(item.node, 'selected', !item.node.selected);
+      this.$emit('node-click', item.node);
     },
-    setdefaultHighlight() {
-      if(this.nodeKey && this.defaultHighligthNode) {
-        this.chgHighlightRow(this.defaultHighligthNode);
-      }
+    setSelected(val) {
+      this.handleClick(val);
     },
-    setAllExpand() {
-      if(this.defaultAllExpand) {
-        for(let i = 0; i < this.data.length; i++) {
-          this.collapseArr.push(i);
+    flattenTreeData() {
+      let index = 0;
+      const flatTree = [];
+      const that = this;
+      function getFlattenNode(node) {
+        node.nodeKey = that.nodeKey === undefined ? index++ : node[that.nodeKey];
+        flatTree[node.nodeKey] = {
+          node: node,
+          nodeKey: node.nodeKey,
+        };
+        if(node[that.childrenKey]) {
+          node[that.childrenKey].forEach(e => getFlattenNode(e))
         }
       }
-    },
-    nodeClick(obj, node, components) {
-      this.$emit('node-click', obj, node, components);
+      this.data.forEach(node => {
+        getFlattenNode(node);
+      });
+      return flatTree;
     }
   },
-  created() {
-    this.getchildExpandNode();
-    this.setdefaultHighlight();
-    this.setAllExpand();
+  provide: function() {
+    return {
+      setSelected: this.setSelected
+    }
+  },
+  mounted() {
+    this.flatTree = this.flattenTreeData();
+    if(this.defaultSelected) {
+      const item = this.flatTree[this.defaultSelected];
+      this.$set(item.node, 'selected', !item.node.selected);
+    }
   }
 }
 </script>
-
-<style lang="less" scoped>
-.tree {
-  .tree-content {
-    font-size: 14px;
-    display: flex;
-    position: relative;
-    padding: 5px 0;
-    cursor: pointer;
-    .icon-collapse {
-      font-size: 14px;
-      border: 1px solid #409eff;
-      padding: 0 1px;
-      height: 10px;
-      line-height: 10px;
-      color: #409eff;
-      position: relative;
-      top: 4px;
-    }
-    .icon-nocollapse {
-      padding: 0 3px;
-    }
-    .content-label {
-      padding-left: 10px;
-    }
-    
-  }
-  .hover {
-    background-color: #fafbfc;
-  }
-  .highlight {
-    background-color:#f5f7fa;
-  }
-}
-</style>
-

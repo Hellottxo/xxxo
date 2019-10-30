@@ -1,9 +1,10 @@
 /**
  * @desc 树形控件
  * @param {Array} data
- * @param {Array} defaultExpandNode 展开node的index，如[0,0,0]
- * @param {Boolean} defaultHighlightNode: 默认高亮行，需指定nodeKey
- * @param {Boolean} defaultAllExpand Boolean，设置此值时，设置default-expand-node无效
+ * @param {String} childrenKey
+ * @param {String} nodeKey
+ * @param {String} defaultSelected 默认选中，必须设置nodeKey
+ * @param {Array} defaultExpand 默认展开，必须设置nodeKey
  */
 
 import xoTree from './tree.vue';
