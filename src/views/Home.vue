@@ -1313,38 +1313,39 @@
           树形控件
         </div>
       </template>
-      <xo-tree
-      :data="treeData"
-      @node-click="handleNodeClick"></xo-tree>
-    </xo-card>
-    <xo-card shadow="hover">
-      <template v-slot:header>
-        <div>
-          默认展开的树形控件
-        </div>
-      </template>
       <div class="tree-wrap">
         <xo-tree
         :data="treeData"
         node-key="id"
         default-selected="6"
         :default-expand="[0, 3]"
-        default-expand-all
         @node-click="handleNodeClick"></xo-tree>
       </div>
     </xo-card>
     <xo-card shadow="hover">
       <template v-slot:header>
         <div>
-          默认选中的树形控件
+          输入框
         </div>
       </template>
-      <xo-tree
-      :data="treeData"
-      node-key="id"
-      default-selected="6"
-      :default-expand="[3]"
-      @node-click="handleNodeClick"></xo-tree>
+      <div class="input-wrap">
+        <xo-input></xo-input>
+        <xo-input disable placeholder="禁止输入"></xo-input>
+        <xo-input clearable placeholder="可清空"></xo-input>
+        <xo-input type="password" placeholder="请输入密码"></xo-input>
+        <xo-input type="textarea" width="300px" wordLimit :maxlength="30"></xo-input>
+        <xo-input type="textarea" width="300px" autoSize></xo-input>
+        <xo-input>
+          <template v-slot:suffix>
+            <i class="iconfont icon-search"></i>
+          </template>
+        </xo-input>
+        <xo-input>
+          <template v-slot:prefix>
+            <i class="iconfont icon-calendar"></i>
+          </template>
+        </xo-input>
+      </div>
     </xo-card>
   </div>
 </template>
@@ -1410,7 +1411,7 @@ export default {
     },
     handleNodeClick(item) {
       console.log(item);
-    }
+    },
   }
 };
 </script>
@@ -1482,6 +1483,12 @@ export default {
     display: flex;
     &>div {
       margin-left: 30px;
+    }
+  }
+  .input-wrap {
+    &>div {
+      margin: 5px;
+      display: flex;
     }
   }
 }
