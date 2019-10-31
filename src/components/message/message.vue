@@ -46,10 +46,11 @@ export default {
   },
   methods: {
     close() {
-      const height = this.$el.offsetHeight;
-      this.offsetTop = - height - this.offsetTop;
+      this.offsetTop = - this.$el.offsetHeight - this.$el.offsetTop;
+      const that = this;
       setTimeout(() => {
-        this.$el.parentNode.removeChild(this.$el);
+         that.$el.parentNode.removeChild(that.$el);
+         clearTimeout(that.timeout);
       },500)
     },
     setCloseTimeout() {
