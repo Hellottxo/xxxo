@@ -1240,46 +1240,39 @@
       <template v-slot:header>
         <div>基础按钮</div>
       </template>
-      <xo-button @click="collapse=!collapse">你好</xo-button>
-      <xo-button @click="collapse=!collapse" type="primary">你好</xo-button>
-      <xo-button @click="collapse=!collapse" type="warning">你好</xo-button>
-      <xo-button @click="collapse=!collapse" type="success">你好</xo-button>
-      <xo-button @click="collapse=!collapse" type="text">你好</xo-button>
-      <xo-button @click="collapse=!collapse" type="info">你好</xo-button>
-      <xo-button @click="collapse=!collapse" type="danger">你好</xo-button>
-    </xo-card>
-    <xo-card shadow="hover">
-      <template v-slot:header>
-        <div>圆形按钮</div>
-      </template>
-      <xo-button @click="collapse=!collapse" circle icon="search"></xo-button>
-      <xo-button @click="collapse=!collapse" circle icon="clock" type="primary"></xo-button>
-      <xo-button @click="collapse=!collapse" circle icon="cry" type="warning"></xo-button>
-      <xo-button @click="collapse=!collapse" circle icon="collection" type="success"></xo-button>
-      <xo-button @click="collapse=!collapse" circle icon="hot" type="info"></xo-button>      
-      <xo-button @click="collapse=!collapse" circle icon="VIP" type="danger"></xo-button>
-    </xo-card>
-    <xo-card shadow="hover">
-      <template v-slot:header>
-        <div>圆角按钮</div>
-      </template>
-      <xo-button @click="collapse=!collapse" round>你好</xo-button>
-      <xo-button @click="collapse=!collapse" round type="primary">你好</xo-button>
-      <xo-button @click="collapse=!collapse" round type="warning">你好</xo-button>
-      <xo-button @click="collapse=!collapse" round type="success">你好</xo-button>
-      <xo-button @click="collapse=!collapse" round type="info">你好</xo-button>
-      <xo-button @click="collapse=!collapse" round type="danger">你好</xo-button>
-    </xo-card>
-    <xo-card shadow="hover">
-      <template v-slot:header>
-        <div>禁止按钮</div>
-      </template>
-      <xo-button @click="collapse=!collapse" disabled>你好</xo-button>
-      <xo-button @click="collapse=!collapse" disabled type="primary">你好</xo-button>
-      <xo-button @click="collapse=!collapse" disabled type="warning">你好</xo-button>
-      <xo-button @click="collapse=!collapse" disabled type="success">你好</xo-button>
-      <xo-button @click="collapse=!collapse" disabled type="info">你好</xo-button>
-      <xo-button @click="collapse=!collapse" disabled type="danger">你好</xo-button>
+      <div class="content-wrap">
+        <xo-button @click="collapse=!collapse">你好</xo-button>
+        <xo-button @click="collapse=!collapse" type="primary">你好</xo-button>
+        <xo-button @click="collapse=!collapse" type="warning">你好</xo-button>
+        <xo-button @click="collapse=!collapse" type="success">你好</xo-button>
+        <xo-button @click="collapse=!collapse" type="text">你好</xo-button>
+        <xo-button @click="collapse=!collapse" type="info">你好</xo-button>
+        <xo-button @click="collapse=!collapse" type="danger">你好</xo-button>
+      </div>
+      <div class="content-wrap">
+        <xo-button @click="collapse=!collapse" circle icon="search"></xo-button>
+        <xo-button @click="collapse=!collapse" circle icon="clock" type="primary"></xo-button>
+        <xo-button @click="collapse=!collapse" circle icon="cry" type="warning"></xo-button>
+        <xo-button @click="collapse=!collapse" circle icon="collection" type="success"></xo-button>
+        <xo-button @click="collapse=!collapse" circle icon="hot" type="info"></xo-button>      
+        <xo-button @click="collapse=!collapse" circle icon="VIP" type="danger"></xo-button>
+      </div>
+      <div class="content-wrap">
+        <xo-button @click="collapse=!collapse" round>你好</xo-button>
+        <xo-button @click="collapse=!collapse" round type="primary">你好</xo-button>
+        <xo-button @click="collapse=!collapse" round type="warning">你好</xo-button>
+        <xo-button @click="collapse=!collapse" round type="success">你好</xo-button>
+        <xo-button @click="collapse=!collapse" round type="info">你好</xo-button>
+        <xo-button @click="collapse=!collapse" round type="danger">你好</xo-button>
+      </div>
+      <div class="content-wrap">
+        <xo-button @click="collapse=!collapse" disabled>你好</xo-button>
+        <xo-button @click="collapse=!collapse" disabled type="primary">你好</xo-button>
+        <xo-button @click="collapse=!collapse" disabled type="warning">你好</xo-button>
+        <xo-button @click="collapse=!collapse" disabled type="success">你好</xo-button>
+        <xo-button @click="collapse=!collapse" disabled type="info">你好</xo-button>
+        <xo-button @click="collapse=!collapse" disabled type="danger">你好</xo-button>
+      </div>
     </xo-card>
     <xo-card shadow="hover">
       <template v-slot:header>
@@ -1287,25 +1280,47 @@
           提示消息
         </div>
       </template>
-      <xo-button @click="handleClick" >提示消息</xo-button>
-      <xo-button @click="handleClick('primary')" type="primary">提示消息</xo-button>
-      <xo-button @click="handleClick('warning')" type="warning">提示消息</xo-button>
-      <xo-button @click="handleClick('success')" type="success">提示消息</xo-button>
-      <xo-button @click="handleClick('info')" type="info">提示消息</xo-button>
-      <xo-button @click="handleClick('danger')" type="danger">提示消息</xo-button>
+      <div class="content-wrap">
+        <xo-button @click="handleClick" >提示消息</xo-button>
+        <xo-button @click="handleClick('primary')" type="primary">提示消息</xo-button>
+        <xo-button @click="handleClick('warning')" type="warning">提示消息</xo-button>
+        <xo-button @click="handleClick('success')" type="success">提示消息</xo-button>
+        <xo-button @click="handleClick('info')" type="info">提示消息</xo-button>
+        <xo-button @click="handleClick('danger')" type="danger">提示消息</xo-button>
+      </div>
+      <div class="content-wrap">
+        <xo-button @click="handleCloseClick" >可关闭消息</xo-button>
+        <xo-button @click="handleCloseClick('primary')" type="primary">可关闭消息</xo-button>
+        <xo-button @click="handleCloseClick('warning')" type="warning">可关闭消息</xo-button>
+        <xo-button @click="handleCloseClick('success')" type="success">可关闭消息</xo-button>
+        <xo-button @click="handleCloseClick('info')" type="info">可关闭消息</xo-button>
+        <xo-button @click="handleCloseClick('danger')" type="danger">可关闭消息</xo-button>
+      </div>
     </xo-card>
     <xo-card shadow="hover">
       <template v-slot:header>
         <div>
-          可以关闭的提示消息
+          评分
         </div>
       </template>
-      <xo-button @click="handleCloseClick" >可关闭消息</xo-button>
-      <xo-button @click="handleCloseClick('primary')" type="primary">可关闭消息</xo-button>
-      <xo-button @click="handleCloseClick('warning')" type="warning">可关闭消息</xo-button>
-      <xo-button @click="handleCloseClick('success')" type="success">可关闭消息</xo-button>
-      <xo-button @click="handleCloseClick('info')" type="info">可关闭消息</xo-button>
-      <xo-button @click="handleCloseClick('danger')" type="danger">可关闭消息</xo-button>
+      <div class="content-wrap">
+        <xo-rate></xo-rate>
+      </div>
+      <div class="content-wrap">
+        <xo-rate mode="good" rate :defaultStar="1"></xo-rate>
+      </div>
+      <div class="content-wrap">
+        <xo-rate mode="favorites" rate :defaultStar="2" :baseNumber="100"></xo-rate>
+      </div>
+      <div class="content-wrap">
+        <xo-rate mode="smile" rate :defaultStar="3" :baseNumber="200"></xo-rate>
+      </div>
+      <div class="content-wrap">
+        <xo-rate mode="Daytimemode" rate :defaultStar="4" :baseNumber="3"></xo-rate>
+      </div>
+      <div class="content-wrap">
+        <xo-rate mode="hot" readonly rate :defaultStar="4" :baseNumber="3"></xo-rate>
+      </div>
     </xo-card>
     <xo-card shadow="hover">
       <template v-slot:header>
@@ -1313,7 +1328,7 @@
           树形控件
         </div>
       </template>
-      <div class="tree-wrap">
+      <div class="content-wrap">
         <xo-tree
         :data="treeData"
         node-key="id"
@@ -1328,7 +1343,7 @@
           输入框
         </div>
       </template>
-      <div class="input-wrap">
+      <div class="content-wrap">
         <xo-input></xo-input>
         <xo-input disable placeholder="禁止输入"></xo-input>
         <xo-input clearable placeholder="可清空"></xo-input>
@@ -1478,17 +1493,11 @@ export default {
   .icon_lists li .code-name {
     color: #666;
   }
-
-  .tree-wrap {
-    display: flex;
-    &>div {
-      margin-left: 30px;
-    }
-  }
-  .input-wrap {
-    &>div {
-      margin: 5px;
+  .content-wrap {
+    margin: 5px;
+    &>.xo-input {
       display: flex;
+      margin-bottom: 5px;
     }
   }
 }
