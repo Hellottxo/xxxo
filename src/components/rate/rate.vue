@@ -6,12 +6,14 @@
           <i
             :class="`icon-${mode}-fill`"
             class="iconfont icon-select"
+            :style="{cursor: readonly ? 'not-allowed' : 'pointer'}"
             @click="setRate(index)"
             @mousemove="move(index)"
             v-if="star !== -1 && index <= star"
           ></i>
           <i
             :class="`icon-${mode}`"
+            :style="{cursor: readonly ? 'not-allowed' : 'pointer'}"
             class="iconfont"
             @mousemove="move(index)"
             @click="setRate(index)"
