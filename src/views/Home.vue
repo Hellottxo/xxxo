@@ -1,5 +1,65 @@
 <template>
   <div class="home">
+    <xo-card shadow="hover">
+      <template v-slot:header>
+        <div>
+          卡片
+        </div>
+      </template>
+      <div class="content-wrap">
+        <xo-card>
+          <div>基础卡片</div>
+        </xo-card>
+      </div>
+      <div class="content-wrap">
+        <xo-card>
+          <template v-slot:header>
+            <div>
+              标题
+            </div>
+          </template>
+          <div>
+            带标题的卡片
+          </div>
+        </xo-card>
+      </div>
+      <div class="content-wrap">
+        <xo-card align="left">
+          <template v-slot:header>
+            <div>
+              左侧对齐卡片
+            </div>
+          </template>
+          <div>
+            这是一张左侧对齐卡片
+          </div>
+        </xo-card>
+      </div>
+      <div class="content-wrap">
+        <xo-card shadow="hover">
+          鼠标悬浮时阴影特效的卡片
+        </xo-card>
+      </div>
+      <div class="content-wrap">
+        <xo-card shadow="always">
+          始终有阴影的卡片
+        </xo-card>
+      </div>
+      <div class="content-wrap">
+        <xo-card :max-height="30" align="left" shadow="hover">
+          <template v-slot:header>
+            <div>
+              可收起的卡片
+            </div>
+          </template>
+          <div>
+            <div>使用max-height属性固定卡片主体高度</div>
+            <div>当卡片主体高度大于所设定max-height时，内容被收起，自动展示展开按钮</div>
+            <div>本卡片所设置的max-height为30，超过30时，内容自动收起</div>
+          </div>
+        </xo-card>
+      </div>
+    </xo-card>
     <xo-card shadow="hover" :max-height="300">
       <template v-slot:header>
         <div>icon图标</div>
@@ -1348,7 +1408,7 @@
         <xo-input disable placeholder="禁止输入"></xo-input>
         <xo-input clearable placeholder="可清空"></xo-input>
         <xo-input type="password" placeholder="请输入密码"></xo-input>
-        <xo-input type="textarea" width="300px" wordLimit :maxlength="30"></xo-input>
+        <xo-input type="textarea" width="300px" wordLimit :maxLength="30"></xo-input>
         <xo-input type="textarea" width="300px" autoSize></xo-input>
         <xo-input>
           <template v-slot:suffix>
@@ -1494,10 +1554,10 @@ export default {
     color: #666;
   }
   .content-wrap {
-    margin: 5px;
+    margin: 10px;
     &>.xo-input {
       display: flex;
-      margin-bottom: 5px;
+      margin-bottom: 10px;
     }
   }
 }

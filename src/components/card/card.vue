@@ -5,12 +5,18 @@
     'xo-shadow': shadow === 'always',
     'xo-hover-shadow': shadow === 'hover'
   }">
-    <div class="xo-card_header">
+    <div
+    class="xo-card_header"
+    v-if="$scopedSlots.header"
+    :style="{'text-align': align}">
       <slot name="header"></slot>
     </div>
     <div
     class="xo-card_content"
-    :style="{'max-height':isShowHidden ? '' : `${maxHeight}px`}">
+    :style="{
+      'max-height':isShowHidden ? '' : `${maxHeight}px`,
+      'text-align':align
+    }">
       <div ref="card">
         <slot></slot>
       </div>
@@ -39,7 +45,11 @@ export default {
       type: String,
       default: ''
     },
-    maxHeight: Number
+    maxHeight: Number,
+    align: {
+      type: String,
+      default: 'center'
+    }
   },
   methods: {
     showHidden() {

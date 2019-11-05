@@ -18,7 +18,7 @@
       <input
       v-if="type !== 'textarea'"
       v-model="input"
-      :type="isPassword ? 'text' : 'password'"
+      :type="isPassword ? 'password' : 'text'"
       :class="{
         'xo-disable': disable,
         focus: isFocus
