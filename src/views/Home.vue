@@ -1422,6 +1422,33 @@
         </xo-input>
       </div>
     </xo-card>
+    <xo-card shadow="hover">
+      <template v-slot:header>
+        <div>
+          选择器
+        </div>
+      </template>
+      <div class="content-wrap">
+        <xo-select clearable>
+          <template v-for="item in optionsData">
+            <xo-options :options="item" :key="item.value" :value="item.value">{{item.label}}</xo-options>
+          </template>
+        </xo-select>
+        <xo-select multiple :width="200">
+          <template v-for="item in optionsData">
+            <xo-options :options="item" :key="item.value" :value="item.value">{{item.label}}</xo-options>
+          </template>
+        </xo-select>
+        <xo-select multiple :width="200" collapse @change="selectChange">
+          <template v-for="item in optionsData">
+            <xo-options :options="item" :key="item.value">{{item.label}}</xo-options>
+          </template>
+        </xo-select>
+        <xo-select multiple :width="200" collapse filter @change="selectChange">
+            <xo-options v-for="item in optionsData" :options="item" :key="item.value">{{item.label}}</xo-options>
+        </xo-select>
+      </div>
+    </xo-card>
   </div>
 </template>
 
@@ -1450,13 +1477,41 @@ const TREE_DATA = [{
     ]},
   ]
 }]
-import Vue from 'vue'
+
+const OPTIONS_DATA = [
+  {
+    value: 'beijing',
+    label: '北京市'
+  },
+  {
+    value: 'shanghai',
+    label: '上海市'
+  },
+  {
+    value: 'shenzhen',
+    label: '深圳市'
+  },
+  {
+    value: 'hangzhou',
+    label: '杭州市'
+  },
+  {
+    value: 'nanjing',
+    label: '南京市'
+  },
+  {
+  value: 'chongqing',
+  label: '重庆市'
+  }
+]
+
 export default {
   name: 'home',
   data() {
     return {
       collapse: false,
       treeData: TREE_DATA,
+      optionsData: OPTIONS_DATA
     };
   },
   methods: {
@@ -1487,6 +1542,10 @@ export default {
     handleNodeClick(item) {
       console.log(item);
     },
+    selectChange(val) {
+      const arr = val.map(e => e.label)
+      console.log(`选择了${arr.join(',')}`)
+    }
   }
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="xo-select">
+  <div class="xo-select" ref="select">
     <div
     :style="{width: `${width}px`}"
     v-clickoutside="clickOutside">
@@ -24,20 +24,20 @@
               <span
               class="select-item_del"
               @click.stop="delSelect(item.value)">
-                x
+                <i class="iconfont icon-reeor-fill"></i>
               </span>
             </div>
           </template>
           <template v-else>
-              <div>
+              <div class="select-item_tag">
                 <span>{{input[0].label}}</span>
                 <span
                 class="select-item_del"
                 @click.stop="delSelect(input[0].value)">
-                  x
+                  <i class="iconfont icon-reeor-fill"></i>
                 </span>
               </div>
-              <div v-show="input.length > 1">{{`+${input.length-1}`}}</div>
+              <div class="select-item_tag" v-show="input.length > 1">{{`+${input.length-1}`}}</div>
           </template>
         </template>
         <div
@@ -47,7 +47,8 @@
           {{input[0].label}}
         </div>
         <div
-        class="select-placeholder" v-if="input.length === 0 && !filter">
+        class="select-placeholder"
+        v-if="input.length === 0 && !filter">
           {{`${placeholder ? placeholder : '请选择'}`}}
         </div>
         <template v-if="filter">
@@ -59,30 +60,34 @@
           </xo-input>
         </template>
         <i
-        class="select-icon-clear select-icon"
+        class="iconfont icon-reeor-fill"
         v-if="clearable && input.length > 0 && !multiple && isMouseenter"
         @click.stop="delSelect()"
         ></i>
         <i
         v-else
-        class="select-icon-arrow select-icon"
+        class="iconfont icon-arrow-down"
         :class="{transform: visible}"
         ></i>
       </div>
-      <template>
-        <xo-options
-        v-model="input"
-        v-show="visible"
-        :multiple="multiple"
-        :options="selectOptions"
-        @click="optionsClick">
-          <template v-slot:item="scope" v-if="$scopedSlots.item">
-            <slot name="item" :data="scope.data"></slot>
-          </template>
-        </xo-options>
-      </template>
     </div>
     
+    <div
+    class="xo-options_wrap"
+    ref="options"
+    :style="{'margin-top': `${optionsReverseMargin}px`}"
+    v-show="visible">
+      <ul
+      :class="{
+        'options-arrow_reverse': optionsTop,
+        'options-arrow': !optionsTop
+      }"
+      v-if="$scopedSlots.default">
+        <slot :filter="filter"></slot>
+      </ul>
+      <div v-else>暂无数据</div>
+    </div>
+
     <div  v-if="tagline && multiple && input.length > 0">
       <template v-if="!collapse">
         <div
@@ -93,7 +98,7 @@
           <span
           class="select-item_del"
           @click.stop="delSelect(item.value)">
-            x
+            <i class="iconfont icon-reeor-fill"></i>
           </span>
         </div>
       </template>
@@ -103,8 +108,8 @@
 
 <script>
 import xoInput from '@/components/input/index.js';
-import xoOptions from './options';
 import { constAnalysis } from '@/mixins/const-analysis.js';
+import { debounce } from '@/untils/debounce-throttle.js';
 
 export default {
   name: 'xo-select',
@@ -115,7 +120,9 @@ export default {
       isFocus: false,
       isMouseenter: false,
       keyWords: '',
-      selectOptions: []
+      selectOptions: [],
+      optionsTop: false,
+      optionsReverseMargin: null,
     }
   },
   mixins: [constAnalysis],
@@ -124,16 +131,10 @@ export default {
       type: String,
       default: '请选择'
     },
-    options: {
-      type: Array,
-      default: () => {
-        return [];
-      }
-    },
     clearable: Boolean,
     width: {
-      type: String,
-      default: '200'
+      type: Number,
+      default: 160
     },
     multiple: Boolean,
     collapse: Boolean,
@@ -142,16 +143,16 @@ export default {
     filter: Boolean
   },
   components: {
-    xoInput,
-    xoOptions
+    xoInput
+  },
+  provide: function() {
+    return {
+      handleSelectClick: this.optionsClick
+    }
   },
   watch: {
     input(val) {
-      const arr = val.map(e => {return e.value});
-      this.$emit('change', arr);
-    },
-    keyWords(val) {
-      this.debounce(this.filterMtheod,500);
+      this.$emit('change', this.input);
     }
   },
   methods: {
@@ -166,7 +167,17 @@ export default {
     },
     optionsClick(val) {
       if(this.disabled) return;
-      this.input = val;
+      if(!this.multiple) {
+        this.input = [];
+        this.input[0] = val;
+      }else {
+        const index = this.input.indexOf(val);
+        if(index > -1) {
+          this.input.splice(index, 1);
+        }else {
+          this.input.push(val);
+        }
+      }
       this.visible = this.multiple;
       this.isFocus = true;
     },
@@ -174,13 +185,6 @@ export default {
       if(this.disabled) return;
       this.isFocus = false;
       this.visible = false;
-    },
-    filterMtheod() {
-      if(this.keyWords) {
-        this.selectOptions = this.options.filter(e => e.label.search(this.keyWords) > -1);
-      }else {
-        this.selectOptions = this.options;
-      }
     },
     delSelect(val) {
       if(this.disabled) return;
@@ -191,110 +195,22 @@ export default {
       }else {
         this.input = [];
       }
+    },
+    setOptionsDisplay() {
+      const optionsHeight = this.$refs.options.getElementsByTagName('li').length * 30;
+      const bottomHeight = document.body.clientHeight - this.$refs.select.offsetTop;
+      const selectHeight = this.$refs.select.clientHeight;
+      this.optionsTop = optionsHeight > bottomHeight;
+      if(this.optionsTop) {
+        this.optionsReverseMargin = -(optionsHeight + selectHeight + 10);
+      }
     }
   },
   created() {
     this.selectOptions = this.options;
+  },
+  mounted() {
+    window.onscroll = this.setOptionsDisplay;
   }
 }
 </script>
-
-<style lang="less" scoped>
-.xo-select {
-  .xo-select_wrap {
-    border: 1px solid #dcdfe6;
-    border-radius: 4px;
-    position: relative;
-    padding: 0 20px 0 8px;
-    display: flex;
-    flex-wrap: wrap;
-    line-height: 30px;
-    min-height: 30px;
-    cursor: pointer;
-    transition: all 0.3s;
-    .select-placeholder {
-      line-height: 30px;
-      display: flex;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      font-size: 10px;
-      color: #c3cbd6;
-    }
-    .xo-input {
-      display: flex;
-      flex: 1;
-    }
-    .select-icon {
-      font-size: 10px;
-      color: #9ea7b4;
-      transition: all 0.2s ease-in-out;
-      position: absolute;
-      line-height: 30px;
-      right: 8px;
-      top: 0;
-    }
-    .select-icon-arrow {
-      font-size: 10px;
-      color: #9ea7b4;
-      transition: all 0.2s ease-in-out;
-      position: absolute;
-      line-height: 30px;
-      right: 8px;
-      top: 0;
-      transform: scaleY(0.6);
-    }
-    .select-icon-arrow::before {
-      content: "\25BC";
-    }
-    .select-icon-clear {
-      font-size: 10px;
-      color: #9ea7b4;
-      transition: all 0.2s ease-in-out;
-      position: absolute;
-      line-height: 30px;
-      right: 10px;
-    }
-    .select-icon-clear::before {
-      content: "\2716";
-    }
-    .select-down {
-      top: 4px !important;
-    }
-    .transform {
-      transform: rotate(180deg) scaleY(0.6);
-    }
-  }
-  .select-item_tag {
-    font-size: 10px;
-    display: flex;
-    height: 22px;
-    line-height: 22px;
-    margin: 3px 4px 3px 0;
-    padding: 0 8px;
-    border: 1px solid #e3e8ee;
-    border-radius: 3px;
-    background: #f7f7f7;
-    font-size: 12px;
-    vertical-align: middle;
-    opacity: 1;
-    overflow: hidden;
-    cursor: pointer;
-    .select-item_del {
-      padding-left: 10px;
-    }
-  }
-}
-.isFocus {
-  border-color: #409EFF !important;
-}
-</style>
-
-<style lang="less">
-.xo-select {
-  .xo-input .xo-input_wrap input {
-    border: none !important;
-    padding: 0 !important;
-  }
-}
-</style>

@@ -1,6 +1,7 @@
 import xoTable from './components/table/index';
 import xoInput from './components/input/index';
 import xoSelect from './components/select/index';
+import xoOptions from './components/options/index';
 import xoTree from './components/tree/index';
 import xoRate from './components/rate/index';
 import xoTimePicker from './components/timepicker/index';
@@ -17,6 +18,7 @@ const components = [
   xoTable,
   xoInput,
   xoSelect,
+  xoOptions,
   xoTree,
   xoRate,
   xoTimePicker,
@@ -48,6 +50,7 @@ export default {
   xoTable,
   xoInput,
   xoSelect,
+  xoOptions,
   xoTree,
   xoRate,
   xoTimePicker,
