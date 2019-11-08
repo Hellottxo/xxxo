@@ -161,7 +161,7 @@
 import { mapState, mapMutations } from 'vuex';
 import tableHeader from './table-header';
 import tableBody from './table-body';
-import { debounce } from '@/untils/debounce-throttle.js';
+import { debounce } from '@/utils/debounce-throttle.js';
 
 export default {
   name: 'xo-table',

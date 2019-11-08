@@ -109,7 +109,7 @@
 <script>
 import xoInput from '@/components/input/index.js';
 import { constAnalysis } from '@/mixins/const-analysis.js';
-import { debounce } from '@/untils/debounce-throttle.js';
+import { debounce } from '@/utils/debounce-throttle.js';
 
 export default {
   name: 'xo-select',
