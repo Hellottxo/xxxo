@@ -3,6 +3,7 @@
   class="xo-options"
   @click="handleClick"
   :class="{selected: selected}"
+  v-show="visible"
   >
     <slot></slot>
   </li>
@@ -13,6 +14,7 @@ export default {
   name: 'xo-options',
   data() {
     return {
+      visible: true
     }
   },
   inject: ['handleSelectClick'],

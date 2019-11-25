@@ -54,8 +54,9 @@
         <template v-if="filter">
           <xo-input
           :width="'100%'"
-          :min-width="'60px'"
+          :min-width="'40px'"
           v-model="keyWords"
+          @change="change"
           :placeholder="input.length > 0 ? '' : (placeholder ? placeholder : '请选择')">
           </xo-input>
         </template>
@@ -75,17 +76,11 @@
     <div
     class="xo-options_wrap"
     ref="options"
-    :style="{'margin-top': `${optionsReverseMargin}px`}"
     v-show="visible">
-      <ul
-      :class="{
-        'options-arrow_reverse': optionsTop,
-        'options-arrow': !optionsTop
-      }"
-      v-if="$scopedSlots.default">
+      <ul class="options-arrow" v-if="optionsVisible">
         <slot :filter="filter"></slot>
       </ul>
-      <div v-else>暂无数据</div>
+      <div class="options-arrow options-nodata" v-else>暂无数据</div>
     </div>
 
     <div  v-if="tagline && multiple && input.length > 0">
@@ -121,8 +116,7 @@ export default {
       isMouseenter: false,
       keyWords: '',
       selectOptions: [],
-      optionsTop: false,
-      optionsReverseMargin: null,
+      optionsVisible: true
     }
   },
   mixins: [constAnalysis],
@@ -196,21 +190,18 @@ export default {
         this.input = [];
       }
     },
-    setOptionsDisplay() {
-      const optionsHeight = this.$refs.options.getElementsByTagName('li').length * 30;
-      const bottomHeight = document.body.clientHeight - this.$refs.select.offsetTop;
-      const selectHeight = this.$refs.select.clientHeight;
-      this.optionsTop = optionsHeight > bottomHeight;
-      if(this.optionsTop) {
-        this.optionsReverseMargin = -(optionsHeight + selectHeight + 10);
-      }
-    }
-  },
-  created() {
-    this.selectOptions = this.options;
-  },
-  mounted() {
-    window.onscroll = this.setOptionsDisplay;
+    change(val) {
+      this.$children.forEach(e => {
+        if(e.options) {
+          e.visible = e.options.label.includes(val)
+        }
+      })
+      this.optionsVisible = this.$scopedSlots.default && this.$children.some(e => {
+        if(e.options) {
+          e.options.visible = true
+        }
+      })
+    },
   }
 }
 </script>
