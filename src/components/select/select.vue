@@ -174,9 +174,15 @@ export default {
         if (e.options) {
           const flag = val === "" || e.options.label.includes(val);
           e.visible = flag;
-          this.noData = flag === true
         }
       });
+      this.noData = !this.$children.every(e => {
+        if(e.visible) {
+          return e.visible === false
+        }else {
+          return true
+        }
+      })
     }
   }
 }
