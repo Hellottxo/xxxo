@@ -6,6 +6,7 @@
   v-show="visible"
   >
     <slot></slot>
+    <i v-if="$parent.multiple && selected" class="iconfont icon-seleted"></i>
   </li>
 </template>
 
@@ -31,21 +32,11 @@ export default {
       const arr = this.$parent.input;
       const index = arr.indexOf(this.options);
       return index > -1;
-    },
-    filter() {
-      return this.$parent.filter;
-    },
-    keyWords() {
-      this.filterMethod(this.$parent.keyWords);
-      return this.$parent.keyWords;
     }
   },
   methods: {
     handleClick() {
       this.handleSelectClick(this.options)
-    },
-    filterMethod(val) {
-      console.log(this.$parent);
     }
   }
 }

@@ -1444,8 +1444,10 @@
             <xo-options :options="item" :key="item.value">{{item.label}}</xo-options>
           </template>
         </xo-select>
-        <xo-select multiple :width="200" collapse filter @change="selectChange">
+        <xo-select multiple :width="200" collapse filter @change="selectChange" @visibleChange="visibleChange">
             <xo-options v-for="item in optionsData" :options="item" :key="item.value">{{item.label}}</xo-options>
+        </xo-select>
+        <xo-select multiple :width="200" collapse filter @change="selectChange" @visibleChange="visibleChange">
         </xo-select>
       </div>
     </xo-card>
@@ -1545,6 +1547,9 @@ export default {
     selectChange(val) {
       const arr = val.map(e => e.label)
       console.log(`选择了${arr.join(',')}`)
+    },
+    visibleChange(val) {
+      console.log(`下拉框状态：${val}`)
     }
   }
 };

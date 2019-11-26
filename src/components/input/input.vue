@@ -120,9 +120,9 @@ export default {
     };
   },
   watch: {
-    input() {
-      this.$emit('input', this.input);
-      this.$emit('change', this.input);
+    input(val) {
+      this.$emit('input', val);
+      this.$emit('change', val);
       if(this.type === 'textarea') {
         this.resizeTextarea();
       }
