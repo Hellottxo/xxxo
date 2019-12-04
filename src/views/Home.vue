@@ -1451,6 +1451,14 @@
         </xo-select>
       </div>
     </xo-card>
+    <xo-card shadow="hover">
+      <template v-slot:header>
+        <div>
+          时间选择器
+        </div>
+      </template>
+      <xo-time-picker></xo-time-picker>
+    </xo-card>
   </div>
 </template>
 
