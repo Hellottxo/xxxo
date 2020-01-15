@@ -4,7 +4,7 @@ import main from './message.vue';
 const MessageConstructor = Vue.extend(main);
 let instance;
 
-const Message = function(options) {
+const Message = (options) => {
   instance = new MessageConstructor();
   instance.type = options.type || '';
   instance.message = options.message || '';

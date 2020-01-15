@@ -11,7 +11,7 @@
 
 import xoRate from './rate.vue';
 
-xoRate.install = function (Vue) {
+xoRate.install = (Vue) => {
   Vue.component(xoRate.name, xoRate);
 };
 

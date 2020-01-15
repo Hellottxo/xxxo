@@ -6,7 +6,7 @@
 
 import xoSubMenu from '../menu/sub-menu.vue';
 
-xoSubMenu.install = function (Vue) {
+xoSubMenu.install = (Vue) => {
   Vue.component(xoSubMenu.name, xoSubMenu);
 };
 

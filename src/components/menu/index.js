@@ -7,7 +7,7 @@
 
 import xoMenu from './menu.vue';
 
-xoMenu.install = function (Vue) {
+xoMenu.install = (Vue) => {
   Vue.component(xoMenu.name, xoMenu);
 };
 

@@ -8,7 +8,7 @@
 
 import xoCard from './card.vue';
 
-xoCard.install = function (Vue) {
+xoCard.install = (Vue) => {
   Vue.component(xoCard.name, xoCard);
 };
 

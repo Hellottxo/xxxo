@@ -16,7 +16,7 @@
 
 import xoTable from './table.vue';
 
-xoTable.install = function (Vue) {
+xoTable.install = (Vue) => {
   Vue.component(xoTable.name, xoTable);
 };
 

@@ -9,7 +9,7 @@
 
 import xoButton from './button.vue';
 
-xoButton.install = function (Vue) {
+xoButton.install = (Vue) => {
   Vue.component(xoButton.name, xoButton);
 };
 

@@ -11,7 +11,7 @@
 
 import xoTree from './tree.vue';
 
-xoTree.install = function (Vue) {
+xoTree.install = (Vue) => {
   Vue.component(xoTree.name, xoTree);
 };
 

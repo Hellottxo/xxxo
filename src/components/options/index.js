@@ -4,7 +4,7 @@
 
 import xoOptions from '../select/options.vue';
 
-xoOptions.install = function (Vue) {
+xoOptions.install = (Vue) => {
   Vue.component(xoOptions.name, xoOptions);
 };
 

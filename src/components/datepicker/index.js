@@ -6,7 +6,7 @@
 
 import xoDatePicker from './datepicker.vue';
 
-xoDatePicker.install = function (Vue) {
+xoDatePicker.install = (Vue) => {
   Vue.component(xoDatePicker.name, xoDatePicker);
 };
 

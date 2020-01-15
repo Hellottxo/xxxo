@@ -9,7 +9,7 @@
 
 import xoTimePicker from './timepicker.vue';
 
-xoTimePicker.install = function (Vue) {
+xoTimePicker.install = (Vue) => {
   Vue.component(xoTimePicker.name, xoTimePicker);
 };
 

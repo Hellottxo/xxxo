@@ -14,7 +14,7 @@
 
 import xoInput from './input.vue';
 
-xoInput.install = function (Vue) {
+xoInput.install = (Vue) => {
   Vue.component(xoInput.name, xoInput);
 };
 

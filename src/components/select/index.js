@@ -14,7 +14,7 @@
 
 import xoSelect from './select.vue';
 
-xoSelect.install = function (Vue) {
+xoSelect.install = (Vue) => {
   Vue.component(xoSelect.name, xoSelect);
 };
 
