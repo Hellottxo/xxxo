@@ -36,6 +36,7 @@
       @blur="setFocus(false)">
 
       <textarea
+      v-else
       ref="textarea"
       v-model="input"
       :style="{
@@ -43,7 +44,6 @@
         width: width,
         maxWidth: maxWidth,
         minWidth: minWidth,}"
-      v-else
       :maxLength="wordLimit ? maxLength : ''"
       :class="{focus: isFocus}"
       @focus="setFocus(true)"
@@ -75,7 +75,15 @@ import calctetxtareaHeight from './calctextareaHeight';
 
 export default {
   name: 'xo-input',
+  model: {
+    prop: 'inputValue',
+    event: 'change'
+  },
   props: {
+    inputValue: {
+      type: [String, Number],
+      default: ''
+    },
     width: String,
     minWidth: String,
     maxWidth: String,
@@ -110,7 +118,7 @@ export default {
   },
   data() {
     return {
-      input: '',
+      input: this.inputValue,
       isFocus: false,
       isMouseenter: false,
       isPassword: false,
@@ -141,7 +149,7 @@ export default {
     },
     clearSelect() {
       this.input = '';
-      this.$emit('input', this.input);
+      this.$emit('input', '');
     },
     resizeTextarea() {
       this.textareaHeight = calctetxtareaHeight(this.$refs.textarea, this.input);
