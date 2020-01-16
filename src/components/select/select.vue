@@ -78,25 +78,21 @@
 </template>
 
 <script>
-import xoInput from "@/components/input/index.js";
-import { constAnalysis } from "@/mixins/const-analysis.js";
-import { debounce } from "@/utils/debounce-throttle.js";
+import xoInput from "@/components/input/index.js"
+import { constAnalysis } from "@/mixins/const-analysis.js"
+import { debounce } from "@/utils/debounce-throttle.js"
 
 export default {
   name: "xo-select",
-  data() {
-    return {
-      visible: false,
-      input: [],
-      isFocus: false,
-      isMouseenter: false,
-      keyWords: "",
-      selectOptions: [],
-      noData: true
-    };
+  model: {
+    prop: "select",
+    event: "change"
   },
-  mixins: [constAnalysis],
   props: {
+    select: {
+      type: Array,
+      default: () => []
+    },
     placeholder: {
       type: String,
       default: "请选择"
@@ -112,6 +108,19 @@ export default {
     disabled: Boolean,
     filter: Boolean
   },
+  data() {
+    return {
+      visible: false,
+      input: this.select,
+      isFocus: false,
+      isMouseenter: false,
+      keyWords: "",
+      options: [],
+      selectOptions: [],
+      noData: true
+    };
+  },
+  mixins: [constAnalysis],
   components: {
     xoInput
   },
@@ -120,66 +129,74 @@ export default {
       handleSelectClick: this.optionsClick
     };
   },
+  created() {
+    if (this.$slots.default) {
+      this.options = this.$slots.default.map(e => 
+        e.componentOptions.propsData.options
+      )
+    }
+  },
   watch: {
     input(val) {
-      this.$emit("change", val);
+      this.$emit("change", val)
     },
     visible(val) {
-      this.$emit("visibleChange", val);
+      this.$emit("visibleChange", val)
     }
   },
   methods: {
     setFocus(val) {
-      if (this.disabled) return;
-      this.isFocus = val;
+      if (this.disabled) return
+      this.isFocus = val
     },
     inputWrapClick() {
-      if (this.disabled) return;
-      this.isFocus = true;
-      this.visible = !this.visible;
+      if (this.disabled) return
+      this.isFocus = true
+      this.visible = !this.visible
     },
-    optionsClick(val) {
-      if (this.disabled) return;
+    optionsClick(select) {
+      const val = select.value
+      if (this.disabled) return
       if (!this.multiple) {
-        this.input = [];
-        this.input[0] = val;
+        this.input = []
+        this.input[0] = val
       } else {
-        const index = this.input.indexOf(val);
+        const index = this.input.indexOf(val)
         if (index > -1) {
-          this.input.splice(index, 1);
+          this.input.splice(index, 1)
         } else {
-          this.input.push(val);
+          this.input.push(val)
         }
       }
-      this.visible = this.multiple;
-      this.isFocus = true;
+      this.visible = this.multiple
+      this.isFocus = true
     },
     clickOutside() {
-      if (this.disabled) return;
-      this.isFocus = false;
-      this.visible = false;
+      if (this.disabled) return
+      this.isFocus = false
+      this.visible = false
     },
     delSelect(val) {
       if (this.disabled) return;
-      this.isFocus = true;
+      this.isFocus = true
       if (this.multiple) {
         const index = this.input.findIndex(e => e.value === val);
-        this.input.splice(index, 1);
+        this.input.splice(index, 1)
       } else {
-        this.input = [];
+        this.input = []
       }
     },
     change(val) {
       this.$children.forEach(e => {
         if (e.options) {
-          const flag = val === "" || e.options.label.includes(val);
-          e.visible = flag;
+          const flag = val === "" || e.options.label.includes(val)
+          e.visible = flag
         }
       });
       this.noData = !this.$children.every(e => {
-        if(e.visible) {
+        if (e.visible) {
           return e.visible === false
-        }else {
+        } else {
           return true
         }
       })
