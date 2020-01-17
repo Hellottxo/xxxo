@@ -30,13 +30,13 @@ export default {
   computed: {
     selected() {
       const arr = this.$parent.input;
-      const index = arr.indexOf(this.options);
+      const index = arr.indexOf(this.options.value);
       return index > -1;
     }
   },
   methods: {
     handleClick() {
-      this.handleSelectClick(this.options)
+      this.handleSelectClick(this.options.value)
     }
   }
 }
