@@ -76,6 +76,18 @@ const TIME_TYPE = ["hour", "min", "second"];
 
 export default {
   name: "xo-time-picker",
+  model: {
+    prop: 'timeValue',
+    event: 'change'
+  },
+  props: {
+    timeValue: String,
+    defaultTime: String,
+    clearable: Boolean,
+    confirm: Boolean,
+    maxTime: String,
+    minTime: String
+  },
   data() {
     return {
       TIME_TYPE,
@@ -85,7 +97,7 @@ export default {
       hour: "",
       min: "",
       second: "",
-      time: "",
+      time: this.timeValue,
       oldtime: [],
       hourscroll: false,
       minscroll: false,
@@ -95,23 +107,21 @@ export default {
       minArr: []
     };
   },
-  props: {
-    defaultTime: String,
-    clearable: Boolean,
-    confirm: Boolean,
-    maxTime: String,
-    minTime: String
-  },
   watch: {
     time(val) {
       if (!val) {
         this.reset();
       }
+      this.$emit('input', val);
+      this.$emit('change', val);
     },
     visible(val) {
       if (val) {
         this.oldtime = [this.hour, this.min, this.second];
       }
+    },
+    timeValue(val) {
+      this.time = val
     }
   },
   methods: {

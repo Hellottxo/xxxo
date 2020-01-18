@@ -134,6 +134,9 @@ export default {
       if(this.type === 'textarea') {
         this.resizeTextarea();
       }
+    },
+    inputValue(val) {
+      this.input = val
     }
   },
   methods: {

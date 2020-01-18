@@ -134,19 +134,17 @@ export default {
       this.options = this.$slots.default.map(
         e => e.componentOptions.propsData.options
       )
-      console.log(this.options)
     }
   },
   watch: {
     input(val) {
-      const res = val.map(e => ({
-        value: e,
-        label: this.getLabel(e)
-      }))
-      this.$emit("change", res)
+      this.$emit("change", val)
     },
     visible(val) {
       this.$emit("visibleChange", val)
+    },
+    select(val) {
+      this.input = val
     }
   },
   methods: {
