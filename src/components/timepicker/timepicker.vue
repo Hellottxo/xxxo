@@ -1,7 +1,11 @@
 <template>
   <div class="xo-timepicker" v-clickoutside="clickoutside">
     <div class="input_wrap">
-      <xo-input v-model="time" placeholder="选择时间" :clearable="clearable" @focus="inputFocus(true)"></xo-input>
+      <xo-input
+        v-model="time" placeholder="选择时间"
+        :clearable="clearable"
+        @focus="inputFocus(true)"
+      />
     </div>
     <div class="select_wrap" v-show="visible">
       <div class="time_wrap">
@@ -77,8 +81,8 @@ const TIME_TYPE = ["hour", "min", "second"];
 export default {
   name: "xo-time-picker",
   model: {
-    prop: 'timeValue',
-    event: 'change'
+    prop: "timeValue",
+    event: "change"
   },
   props: {
     timeValue: String,
@@ -112,8 +116,8 @@ export default {
       if (!val) {
         this.reset();
       }
-      this.$emit('input', val);
-      this.$emit('change', val);
+      this.$emit("input", val);
+      this.$emit("change", val);
     },
     visible(val) {
       if (val) {
@@ -121,7 +125,7 @@ export default {
       }
     },
     timeValue(val) {
-      this.time = val
+      this.time = val;
     }
   },
   methods: {

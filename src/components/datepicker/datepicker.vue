@@ -5,7 +5,7 @@
       v-model="date"
       placeholder="选择日期"
       :clearable="clearable"
-      @focus="inputFocus"></xo-input>
+      @focus="inputFocus(true)"></xo-input>
     </div>
     <div class="select_wrap" v-if="visible">
       <div class="header_wrap">
@@ -119,6 +119,18 @@ const MONTH = {
 }
 export default {
   name: 'xo-date-picker',
+  model: {
+    prop: 'dateValue',
+    event: 'change'
+  },
+  props: {
+    dateValue: String,
+    clearable: Boolean,
+    markToday: {
+      type: Boolean,
+      default: true
+    }
+  },
   data() {
     return {
       visible: false,
@@ -127,7 +139,7 @@ export default {
       year: 2019,
       month: 4,
       day: '',
-      date: '',
+      date: this.dateValue,
       dateList: [],
       yearList: [],
       monthList: [],
@@ -139,18 +151,14 @@ export default {
       MONTH
     }
   },
-  props: {
-    clearable: Boolean,
-    markToday: {
-      type: Boolean,
-      default: true
-    }
-  },
   watch: {
     date(val) {
       if(!val) {
         this.reset();
       }
+    },
+    dateValue(val) {
+      this.date = val
     }
   },
   methods: {
@@ -277,115 +285,3 @@ export default {
   }
 }
 </script>
-
-<style lang="less" scoped>
-.xo-datepicker {
-  position: relative;
-  display: inline-block;
-  .select_wrap {
-    display: flex;
-    flex-direction: column;
-    margin-top: 8px;
-    width: 280px;
-    position: absolute;
-    z-index: 222;
-    border: 1px solid #dcdfe6;
-    border-radius: 4px;
-    background: #fff;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    padding: 10px;
-    &>div {
-      display: flex;
-      font-size: 13px;
-      .title {
-        display: flex;
-        flex: 1;
-        justify-content: center;
-        font-weight: bold;
-      }
-    }
-    .header_wrap {
-      padding-bottom: 10px;
-      cursor: pointer;
-      height: 22px;
-      line-height: 22px;
-      .single-arrow {
-        transform: scaleX(0.5) scaleY(0.8);
-      }
-      i {
-        font-weight: bold;
-      }
-      span:hover, i:hover{
-        color: #409eff;
-      }
-    }
-    .year_wrap {
-      flex-wrap: wrap;
-      .year-item {
-        flex-basis: 83px;
-        height: 28px;
-        line-height: 28px;
-        font-weight: bold;
-      }
-    }
-    .month_wrap {
-      flex-wrap: wrap;
-      .month-item {
-        flex-basis: 60px;
-        height: 39px;
-        line-height: 39px;
-        font-weight: bold;
-      }
-    }
-    .week_wrap {
-      &>div {
-        display: flex;
-        flex: 1;
-        justify-content: center;
-        padding: 5px;
-      }
-    }
-    .date_wrap {
-      flex-wrap: wrap;
-      .date-item {
-        flex-basis: 30px;
-      }
-      .notCurrentMonth {
-        color: #ccc;
-      }
-      .currentDay::after {
-        content: '';
-        position: absolute;
-        height: 5px;
-        width: 5px;
-        right: 6px;
-        top: 6px;
-        background: #F56C6C;
-        border-radius: 50%;
-      }
-      .select {
-        color: #fff;
-        background: #409eff !important;
-        font-weight: bold;
-      }
-    }
-    .item_wrap {
-      display: flex;
-      flex-wrap: wrap;
-      padding: 5px;
-      flex-shrink: 0;
-      justify-content: center;
-      cursor: pointer;
-      position: relative;
-      border-radius: 10px;
-      transition: all 0.3s;
-    }
-    .item_wrap:hover {
-      background-color: #f5f7fa;
-    }
-  }
-  .focus {
-    color: #409eff;
-  }
-}
-</style>
