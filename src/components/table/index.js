@@ -1,12 +1,14 @@
 /**
  * @desc 表格组件
+ * @param {Array} columns 列数据
+ * @param {Array} data 表格数据
  * @param {Boolean} border 默认外边框
- * @param {Boolean} showHeader 默认显示表格
+ * @param {Boolean} showHeader 默认显示表头
  * @param {Boolean} verticalLine 表格内竖直线verticalLine
  * @param {Boolean} stripe 斑马纹
  * @param {String} stripeColor 斑马纹颜色需设置stripe有效）
  * @param {Boolean} highlightRow 高亮行
- * @param {function} row-click(row, column)
+ * @param {function} rowClick(row, column)
  * @param {Array} children 展开子行，对需展开的行增加children属性,箭头默认出现在第一列右侧
  * @param {Boolean} arrowPosition 指定展开箭头出现的列
  * @param {Array} childcolumns 自定义展开子行的表头，默认为columns

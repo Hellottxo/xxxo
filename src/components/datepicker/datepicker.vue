@@ -234,7 +234,7 @@ export default {
       }
       this.day = item;
       this.date = `${this.year}-${this.uniteDate(this.month)}-${this.uniteDate(this.day)}`;
-      this.$emit('input', this.date);
+      this.$emit('change', this.date)
     },
     setYear(val) {
       this.showYearSelect = false;
