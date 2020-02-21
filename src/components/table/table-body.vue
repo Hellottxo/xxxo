@@ -223,11 +223,3 @@ export default {
   },
 };
 </script>
-
-<style lang="less" scoped>
-.table-body {
-  .hidden {
-    visibility: hidden;
-  }
-}
-</style>

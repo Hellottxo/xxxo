@@ -148,11 +148,3 @@ export default {
   },
 };
 </script>
-
-<style lang="less" scoped>
-.table-header {
-  .hidden {
-    visibility: hidden;
-  }
-}
-</style>
