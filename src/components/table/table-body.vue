@@ -16,12 +16,12 @@
           <tr
             :key="index"
             :class="{
-              'stripe': stripe && (index + 1)%2 === 0,
+              'stripe': stripe && (index + 1) % 2 === 0,
               'highlight': index === highlightIndex,
               'hover': index === hoverIndex
             }"
             :style="{ 'background-color':
-            stripeColor && (index + 1)%2 === 0 ? stripeColor : '' }"
+            stripeColor && (index + 1) % 2 === 0 ? stripeColor : '' }"
             @mouseenter="hoverRow(index)"
             @mouseleave="hoverRow(-1)"
           >
@@ -37,7 +37,7 @@
               <div class="cell">
                 <i
                   class="icon-triangle-right"
-                  :class="{'open': hasRowExpand.indexOf(index) > -1}"
+                  :class="{'open': hasRowExpand.includes(index)}"
                   v-if="item.rowExpand"
                 ></i>
               </div>
@@ -46,7 +46,7 @@
               v-for="(config, i) in tableColumns"
               :key="config.key"
               :class="{
-              'border-right': verticalLine,
+              'border-right': i === tableColumns.length - 1 ? '' : verticalLine,
               'hidden': isHidden(config.fixed) }"
               @click="rowClick(index, config.$index)"
               :style="{
@@ -64,13 +64,13 @@
                   <i
                     class="icon-triangle-right"
                     v-if="item.children && (item.arrowPosition ? item.arrowPosition === config.key : (expand ? i === 1 : i === 0))"
-                    :class="{'open': hasChildOpen.indexOf(index) > -1}"
+                    :class="{'open': hasChildOpen.includes(index)}"
                   ></i>
                 </div>
               </template>
             </td>
           </tr>
-          <template v-if="item.children && hasChildOpen.indexOf(index) > -1">
+          <template v-if="item.children && hasChildOpen.includes(index)">
             <tr v-for="child in item.children" :key="child.$index" class="child-tr">
               <td v-if="expand" :class="{ 'border-right': verticalLine }"></td>
               <td
@@ -87,10 +87,10 @@
           <tr
             class="slot"
             :key="item.$index"
-            v-if="hasRowExpand.indexOf(index) > -1 && item.rowExpand"
+            v-if="hasRowExpand.includes(index) && item.rowExpand"
           >
             <td :colspan="tableColumns.length+1">
-              <slot name="append" :data="item"></slot>
+              {{item.rowExpand}}
             </td>
           </tr>
         </template>

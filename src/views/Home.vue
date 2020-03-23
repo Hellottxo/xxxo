@@ -992,7 +992,7 @@
         <div>选择器</div>
       </template>
       <div class="content-wrap">
-        <xo-select clearable>
+        <xo-select clearable v-model="input">
           <template v-for="item in optionsData">
             <xo-options :options="item" :key="item.value" :value="item.value">{{item.label}}</xo-options>
           </template>
@@ -1037,7 +1037,16 @@
       <template v-slot:header>
         <div>表格</div>
       </template>
-      <xo-table :columns="columns" :data="data" />
+      <xo-table
+        :width="500"
+        :heigth="100"
+        :columns="columns"
+        :data="tableData"
+        :verticalLine="true"
+        :stripe="true"
+        :highlightRow="true"
+        @rowClick="rowClick"
+      />
     </xo-card>
   </div>
 </template>
@@ -1053,10 +1062,7 @@ const TREE_DATA = [
       {
         id: 3,
         label: "二级",
-        children: [
-          { id: 4, label: "三级" },
-          { id: 6, label: "三级" }
-        ]
+        children: [{ id: 4, label: "三级" }, { id: 6, label: "三级" }]
       }
     ]
   },
@@ -1069,10 +1075,7 @@ const TREE_DATA = [
       {
         id: 9,
         label: "二级",
-        children: [
-          { id: 10, label: "三级" },
-          { id: 11, label: "三级" }
-        ]
+        children: [{ id: 10, label: "三级" }, { id: 11, label: "三级" }]
       }
     ]
   }
@@ -1108,15 +1111,30 @@ const OPTIONS_DATA = [
 const COLUMNS = [
   {
     label: "Name",
-    key: "name"
+    key: "name",
+    width: 100,
   },
   {
     label: "Age",
-    key: "age"
+    key: "age",
+    width: 200,
   },
   {
     label: "Address",
-    key: "address"
+    key: "address",
+    width: 300,
+    fixed: 'start'
+  },
+  {
+    label: 'Sex',
+    key: 'Sex',
+    width: 100,
+    fixed: 'start'
+  },
+  {
+    label: 'Attribute',
+    key: 'Attribute',
+    width: 100
   }
 ];
 
@@ -1125,13 +1143,43 @@ const TABLE_DATA = [
     name: "John Brown",
     age: 18,
     address: "New York No. 1 Lake Park",
-    date: "2016-10-03"
+    date: "2016-10-03",
+    children: [{ name: 'xo' }],
+    arrowPosition: 'address'
   },
   {
     name: "Jim Green",
     age: 24,
     address: "London No. 1 Lake Park",
-    date: "2016-10-01"
+    date: "2016-10-01",
+    rowExpand: '123'
+  },
+  {
+    name: "Joe Black",
+    age: 30,
+    address: "Sydney No. 1 Lake Park",
+    date: "2016-10-02"
+  },
+  {
+    name: "Jon Snow",
+    age: 26,
+    address: "Ottawa No. 2 Lake Park",
+    date: "2016-10-04"
+  },
+  {
+    name: "John Brown",
+    age: 18,
+    address: "New York No. 1 Lake Park",
+    date: "2016-10-03",
+    children: [{ name: 'xo' }],
+    arrowPosition: 'address'
+  },
+  {
+    name: "Jim Green",
+    age: 24,
+    address: "London No. 1 Lake Park",
+    date: "2016-10-01",
+    rowExpand: '123'
   },
   {
     name: "Joe Black",
@@ -1155,7 +1203,7 @@ export default {
       treeData: TREE_DATA,
       optionsData: OPTIONS_DATA,
       columns: COLUMNS,
-      data: TABLE_DATA
+      tableData: TABLE_DATA
     };
   },
   methods: {
@@ -1192,6 +1240,9 @@ export default {
     },
     visibleChange(val) {
       console.log(`下拉框状态：${val}`);
+    },
+    rowClick(row) {
+      console.log(`点击了行${row}`);
     }
   }
 };
@@ -1202,7 +1253,7 @@ export default {
   padding: 10px 0;
   & > div {
     margin: 20px;
-    width: 1000px;
+    max-width: 1000px;
     .xo-button {
       margin: 0 5px;
     }

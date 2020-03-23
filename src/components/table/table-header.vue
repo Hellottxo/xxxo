@@ -3,24 +3,28 @@
   class="table-header">
     <table
       :style="{
-        marginLeft:`${endFixed ? leftWidth-1 : 0}px`,
+        marginLeft:`${endFixed ? leftWidth : 0}px`,
         width: `${width}px`
       }"
       ref="table"
     >
       <colgroup>
         <col width="40" v-if="expand">
-        <col v-for="config in tableColumns" :key="config.key" :width="config.width ? config.width : ''">
-        <col width="10px" v-if="showGutter">
+        <col
+          v-for="config in tableColumns"
+          :key="config.key"
+          :width="config.width ? config.width : ''"
+        >
+        <col width="15" v-if="showGutter">
       </colgroup>
       <thead>
         <tr>
           <th :class="{'border-right': verticalLine}" v-if="expand"></th>
           <th
-          v-for="config in tableColumns"
+          v-for="(config, i) in tableColumns"
           :key="config.key"
           :class="{
-            'border-right': verticalLine,
+            'border-right': i === tableColumns.length - 1 ? '' : verticalLine,
             'hidden': isHidden(config.fixed) }">
             <div
               class="cell"
@@ -37,6 +41,7 @@
             </div>
           </th>
           <th
+          :rowspan="tableColumns.length"
           v-if="showGutter"
           :class="{'border-right': verticalLine}"></th>
         </tr>
@@ -122,7 +127,7 @@ export default {
           width += th[len - count].clientWidth;
         } 
         if (str === 'start'){
-          width += th[count].clientWidth;
+          width += th[count - 1].clientWidth;
         }
         count--;
       }
@@ -134,12 +139,12 @@ export default {
       if (this.endFixed) {
         this.endFixedWidth = this.getFixedWidth('end');
         this.chgEndFixedWidth(this.endFixedWidth);
-        this.leftWidth = this.endFixedWidth - width + 1;
+        this.leftWidth = this.endFixedWidth - width;
         this.chgEndLeftWidth(this.leftWidth);
       }
       if (this.startFixed) {
         this.startFixedwidth = this.getFixedWidth('start');
-        this.chgStartFixedWidth(this.startFixedwidth);
+        this.chgStartFixedWidth(this.startFixedwidth + 1);
       }
     },
   },

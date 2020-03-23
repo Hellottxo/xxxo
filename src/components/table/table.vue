@@ -23,7 +23,7 @@
         :style="{marginLeft: `${scrollWidth}px`}"
         :showGutter="showGutter"
         ref="tableHeader"
-      ></table-header>
+      />
     </div>
     <div
     class="xo-table-body"
@@ -53,7 +53,7 @@
     <div
     :style="{
     height: `${widthGutter ? height - 10 : height}px`,
-    width: `${endFixedWidth - 10}px`,
+    width: `${endFixedWidth}px`,
     right: this.showGutter ? `10px` : 0
     }"
     :class="{end: widthGutter}"
@@ -98,14 +98,15 @@
       </div>
     </div>
     <div
-    :style="{
-    height: `${widthGutter ? height - 10 : height}px`,
-    width: `${startFixedWidth}px`,
-    }"
-    @mousewheel="fixedMousewheel"
-    class="xo-table-fixed"
-    :class="{start: widthGutter}"
-    v-if="this.startFixed">
+      :style="{
+      height: `${widthGutter ? height - 10 : height}px`,
+      width: `${startFixedWidth}px`,
+      }"
+      @mousewheel="fixedMousewheel"
+      class="xo-table-fixed"
+      :class="{start: widthGutter}"
+      v-if="this.startFixed"
+    >
       <div
       class="xo-table-fixed_header"
       v-if="showHeader">
@@ -116,7 +117,7 @@
           :showGutter="showGutter"
           :startFixed="startFixed"
           :width="tableWidth"
-        ></table-header>
+        />
       </div>
       <div class="xo-table-fixed_body">
         <table-body
@@ -232,8 +233,8 @@ export default {
   },
   methods: {
     ...mapMutations('tableModuel', ['chgTableColumns']),
-    rowClick(row, column) {
-      this.$emit('row-click', row, column);
+    rowClick(row) {
+      this.$emit('row-click', row);
     },
     tableScroll(e) {
       this.scrollWidth = -e.target.scrollLeft;
