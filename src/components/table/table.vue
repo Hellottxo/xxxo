@@ -220,11 +220,11 @@ export default {
       default: false,
     },
     width: {
-      type: String,
+      type: [String, Number],
       default: '100%',
     },
     height: {
-      type: String,
+      type: [String, Number],
       default: '100%',
     },
   },

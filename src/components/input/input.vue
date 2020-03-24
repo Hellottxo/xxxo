@@ -84,9 +84,9 @@ export default {
       type: [String, Number],
       default: ''
     },
-    width: String,
-    minWidth: String,
-    maxWidth: String,
+    width: [String, Number],
+    minWidth: [String, Number],
+    maxWidth: [String, Number],
     disable: {
       type: Boolean,
       default: false,

@@ -15,7 +15,7 @@
           :key="config.key"
           :width="config.width ? config.width : ''"
         >
-        <col width="15" v-if="showGutter">
+        <col width="10" v-if="showGutter">
       </colgroup>
       <thead>
         <tr>
@@ -41,9 +41,9 @@
             </div>
           </th>
           <th
-          :rowspan="tableColumns.length"
-          v-if="showGutter"
-          :class="{'border-right': verticalLine}"></th>
+            :rowspan="tableColumns.length"
+            v-if="showGutter"
+          />
         </tr>
       </thead>
     </table>
@@ -88,7 +88,7 @@ export default {
       default: false,
     },
     width: {
-      type: String,
+      type: [String, Number],
       default: '',
     },
   },

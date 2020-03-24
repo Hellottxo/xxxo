@@ -973,8 +973,8 @@
         <xo-input disable placeholder="禁止输入"></xo-input>
         <xo-input clearable placeholder="可清空"></xo-input>
         <xo-input type="password" placeholder="请输入密码"></xo-input>
-        <xo-input type="textarea" width="300px" wordLimit :maxLength="30"></xo-input>
-        <xo-input type="textarea" width="300px" autoSize></xo-input>
+        <xo-input type="textarea" width="300" wordLimit :maxLength="30"></xo-input>
+        <xo-input type="textarea" width="300" autoSize></xo-input>
         <xo-input>
           <template v-slot:suffix>
             <i class="iconfont icon-search"></i>
@@ -992,7 +992,7 @@
         <div>选择器</div>
       </template>
       <div class="content-wrap">
-        <xo-select clearable v-model="input">
+        <xo-select clearable v-model="selectData">
           <template v-for="item in optionsData">
             <xo-options :options="item" :key="item.value" :value="item.value">{{item.label}}</xo-options>
           </template>
@@ -1038,8 +1038,7 @@
         <div>表格</div>
       </template>
       <xo-table
-        :width="500"
-        :heigth="100"
+        :height="300"
         :columns="columns"
         :data="tableData"
         :verticalLine="true"
@@ -1112,28 +1111,28 @@ const COLUMNS = [
   {
     label: "Name",
     key: "name",
-    width: 100,
+    width: 100
   },
   {
     label: "Age",
     key: "age",
-    width: 200,
+    width: 200
   },
   {
     label: "Address",
     key: "address",
     width: 300,
-    fixed: 'start'
+    fixed: "start"
   },
   {
-    label: 'Sex',
-    key: 'Sex',
+    label: "Sex",
+    key: "Sex",
     width: 100,
-    fixed: 'start'
+    fixed: "start"
   },
   {
-    label: 'Attribute',
-    key: 'Attribute',
+    label: "Attribute",
+    key: "Attribute",
     width: 100
   }
 ];
@@ -1144,15 +1143,15 @@ const TABLE_DATA = [
     age: 18,
     address: "New York No. 1 Lake Park",
     date: "2016-10-03",
-    children: [{ name: 'xo' }],
-    arrowPosition: 'address'
+    children: [{ name: "xo" }],
+    arrowPosition: "address"
   },
   {
     name: "Jim Green",
     age: 24,
     address: "London No. 1 Lake Park",
     date: "2016-10-01",
-    rowExpand: '123'
+    rowExpand: "123"
   },
   {
     name: "Joe Black",
@@ -1171,15 +1170,15 @@ const TABLE_DATA = [
     age: 18,
     address: "New York No. 1 Lake Park",
     date: "2016-10-03",
-    children: [{ name: 'xo' }],
-    arrowPosition: 'address'
+    children: [{ name: "xo" }],
+    arrowPosition: "address"
   },
   {
     name: "Jim Green",
     age: 24,
     address: "London No. 1 Lake Park",
     date: "2016-10-01",
-    rowExpand: '123'
+    rowExpand: "123"
   },
   {
     name: "Joe Black",
@@ -1203,7 +1202,8 @@ export default {
       treeData: TREE_DATA,
       optionsData: OPTIONS_DATA,
       columns: COLUMNS,
-      tableData: TABLE_DATA
+      tableData: TABLE_DATA,
+      selectData: ['beijing']
     };
   },
   methods: {
