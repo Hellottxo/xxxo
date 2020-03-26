@@ -13,15 +13,29 @@
     overflow: hidden;
   }
   .xo-card_arrow {
-    font-size: 20px;
-    padding: 5px;
+    font-size: 14px;
+    height: 40px;
     cursor: pointer;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid @border-color;
+    transition: all .5s;
   }
   .xo-card_arrow:hover {
+    transform: matrix(-1);
     color: @blue;
+    font-size: 16px;
   }
   .xo-card_arrow-transform {
     transform: rotate(180deg);
+  }
+  .xo-card_footer-content {
+    padding: 10px;
+    border-top: 1px solid @border-color;
+    background: @light-background-color;
+  }
+  .xo-card_footer-text {
+    margin-right: 10px;
   }
 }

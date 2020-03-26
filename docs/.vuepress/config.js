@@ -11,14 +11,15 @@ module.exports = {
         title: '开发者指南',
         collapsable: false,
         children: [
+          '/Development/install',
           '/Development/quick-start',
-          '/Development/built-in-transition',
         ],
       },
       {
         title: '组件',
         collapsable: false,
         children: [
+          '/Components/card',
           '/Components/button',
           '/Components/tree',
           '/Components/input',
