@@ -2,4 +2,3 @@
 
 ### 基础用法
 
-<xo-input></xo-input>

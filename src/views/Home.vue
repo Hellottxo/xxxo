@@ -5,8 +5,9 @@
         <div>卡片</div>
       </template>
       <div class="content-wrap">
-        <xo-card>
+        <xo-card :hiddenText="'xxx'" @visibleChange="showVisible">
           <div>基础卡片</div>
+          <template v-slot:footer>123</template>
         </xo-card>
       </div>
       <div class="content-wrap">
@@ -1038,6 +1039,7 @@
         <div>表格</div>
       </template>
       <xo-table
+        :width="500"
         :height="300"
         :columns="columns"
         :data="tableData"
@@ -1203,7 +1205,7 @@ export default {
       optionsData: OPTIONS_DATA,
       columns: COLUMNS,
       tableData: TABLE_DATA,
-      selectData: ['beijing']
+      selectData: ["beijing"]
     };
   },
   methods: {
@@ -1243,6 +1245,10 @@ export default {
     },
     rowClick(row) {
       console.log(`点击了行${row}`);
+    },
+    showVisible(flag) {
+      console.log(1)
+      console.log(flag)
     }
   }
 };
