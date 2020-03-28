@@ -1,14 +1,11 @@
-/* eslint-disable */
 import clickOutside from './clickoutside';
 
-const install = function(Vue) {
+const install = (Vue) => {
   Vue.directive('clickoutside', clickOutside);
-}
+};
 
 if (typeof window !== 'undefined' && window.Vue) {
-  window.Vue.use({install});
+  window.Vue.use({ install });
 }
 
-export default {
-  install
-};
+export default { install };

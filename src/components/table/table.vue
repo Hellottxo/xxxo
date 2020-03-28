@@ -234,7 +234,7 @@ export default {
   methods: {
     ...mapMutations('tableModuel', ['chgTableColumns']),
     rowClick(row) {
-      this.$emit('row-click', row);
+      this.$emit('rowClick', row);
     },
     tableScroll(e) {
       this.scrollWidth = -e.target.scrollLeft;
