@@ -65,7 +65,7 @@ export default {
   methods: {
     showHidden() {
       this.isShowHidden = !this.isShowHidden;
-      this.$emit("visibleChange", this.isShowHidden);
+      this.$emit("visible-change", this.isShowHidden);
     },
     showArrow() {
       if (!this.maxHeight && !this.$scopedSlots.footer) return false;
