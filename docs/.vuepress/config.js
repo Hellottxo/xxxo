@@ -2,7 +2,12 @@ module.exports = {
   title: 'XO-UI',
   description: 'A Vue.js 2.0 UI Toolkit',
   base: '/xo-ui/',
+  head: [
+    ['link', {rel: 'icon', href: '/public/logo.png'}]
+  ],
+  port: 8686,
   themeConfig: {
+    logo: '/public/logo.png',
     nav: [
       { text: 'Github', link: 'https://github.com/Hellottxo' },
     ],
@@ -23,9 +28,6 @@ module.exports = {
           '/components/button',
           '/components/tree',
           '/components/input',
-          '/components/select',
-          '/components/time-picker',
-          '/components/date-picker',
           '/components/table',
         ],
       },
