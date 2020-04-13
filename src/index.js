@@ -11,6 +11,7 @@ import xoMenuItem from './components/menu-item/index';
 import xoSubMenu from './components/sub-menu/index';
 import xoButton from './components/button/index';
 import xoCard from './components/card/index';
+import xoIcon from './components/icon/index';
 import Message from './components/message/index';
 import clickOutside from './directive/clickoutside/index';
 
@@ -28,6 +29,7 @@ const components = [
   xoSubMenu,
   xoButton,
   xoCard,
+  xoIcon,
 ];
 
 const install = (Vue) => {
@@ -58,6 +60,7 @@ export default {
   xoSubMenu,
   xoButton,
   xoCard,
+  xoIcon,
   Message,
   clickOutside,
 };
