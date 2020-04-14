@@ -1,69 +1,68 @@
 <template>
-  <div
-  class="xo-message xo-shadow"
-  :style="{'top':`${offsetTop}px`}"
-  >
-    <div>
+  <div class="xo-message xo-shadow" :style="{'top':`${offsetTop}px`}">
+    <div class="xo-message-container">
       <span class="xo-message_icon-wrap">
-        <i
-        :class="[
-          type,
-          `icon-${ICON_MAP[type]}-fill`
-        ]"
-        class="xo-message-icon iconfont icon-prompt-fill"></i>
+        <icon :mode="mode" :class="type"/>
       </span>
       <span>{{message}}</span>
     </div>
-    <i
-    class="xo-message-close iconfont icon-close"
-    @click="close"
-    v-if="showClose"></i>
+    <i class="xo-message-close iconfont icon-close" @click="close" v-if="showClose"></i>
   </div>
 </template>
 
 
 <script>
+import icon from "../icon/index.js";
+
 export default {
-  name: 'xo-message',
+  name: "xo-message",
+  components: {
+    icon
+  },
   data() {
     return {
-      message: '',
+      message: "",
       timeout: null,
       duration: 3000,
       showClose: false,
       top: -20,
       offsetTop: -20,
-      type: '',
+      type: "",
       ICON_MAP: {
-        '': 'prompt',
-        'primary': 'prompt',
-        'wraining': 'prompt',
-        'success': 'success',
-        'info': 'prompt',
-        'danger': 'reeor'
+        "": "",
+        primary: "prompt",
+        warning: "prompt",
+        success: "success",
+        info: "prompt",
+        danger: "reeor"
       }
+    };
+  },
+  computed: {
+    mode() {
+      return `${this.ICON_MAP[this.type]}-fill`;
     }
   },
   methods: {
     close() {
-      this.offsetTop = - this.$el.offsetHeight - this.$el.offsetTop;
+      this.offsetTop = -this.$el.offsetHeight - this.$el.offsetTop;
       const that = this;
       setTimeout(() => {
-         that.$el.parentNode.removeChild(that.$el);
-         clearTimeout(that.timeout);
-      },500)
+        that.$el.parentNode.removeChild(that.$el);
+        clearTimeout(that.timeout);
+      }, 500);
     },
     setCloseTimeout() {
       this.timeout = setTimeout(() => {
         this.close();
-      },this.duration)
+      }, this.duration);
     }
   },
   mounted() {
     this.setCloseTimeout();
     setTimeout(() => {
       this.offsetTop = this.top;
-    }, 0)
+    }, 0);
   }
-}
+};
 </script>
