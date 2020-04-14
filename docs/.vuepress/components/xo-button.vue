@@ -39,9 +39,11 @@ import codeCard from "./code-card";
 import xoButton from "../../../src/components/button";
 import "../../../src/styles/index.less";
 export default {
+  name: 'button',
   data() {
     return {
       code1: `
+      正常按钮
       <xo-button>default</xo-button>
       <xo-button type="primary">primary</xo-button>
       <xo-button type="warning">warning</xo-button>
@@ -79,3 +81,13 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.btnWrap {
+  margin: 10px 0;
+}
+.text {
+  font-size: 14px;
+  margin: 25px 10px;
+}
+</style>

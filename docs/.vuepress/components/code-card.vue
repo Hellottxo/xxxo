@@ -1,5 +1,5 @@
 <template>
-  <xo-card :hiddenText="text" @visibleChange="showVisible" align="left">
+  <xo-card :hiddenText="text" @visible-change="showVisible" align="left">
     <template v-slot:header>
       <div class="title">{{title}}</div>
     </template>
@@ -21,6 +21,7 @@ import Vue from "vue";
 import highlight from "../../../src/directive/highlight/index.js";
 Vue.use(highlight);
 export default {
+  name: 'code-card',
   props: {
     code: String,
     title: String
@@ -42,9 +43,8 @@ export default {
 </script>
 
 <style scoped>
-.card {
-  width: 500px;
-  margin-bottom: 10px;
+.xo-card {
+  margin: 20px;
 }
 .title {
   font-weight: bold;

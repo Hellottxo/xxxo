@@ -3,11 +3,11 @@ module.exports = {
   description: 'A Vue.js 2.0 UI Toolkit',
   base: '/xo-ui/',
   head: [
-    ['link', {rel: 'icon', href: '/public/logo.png'}]
+    ['link', {rel: 'icon', href: '/logo.png'}]
   ],
   port: 8686,
   themeConfig: {
-    logo: '/public/logo.png',
+    logo: '/logo.png',
     nav: [
       { text: 'Github', link: 'https://github.com/Hellottxo' },
     ],
@@ -24,8 +24,10 @@ module.exports = {
         title: '组件',
         collapsable: false,
         children: [
+          '/components/icon',
           '/components/card',
           '/components/button',
+          '/components/message',
           '/components/tree',
           '/components/input',
           '/components/table',

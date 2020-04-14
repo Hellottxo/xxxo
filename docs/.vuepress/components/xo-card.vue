@@ -10,7 +10,6 @@
         </ul>
       </xo-card>
     </code-card>
-    <br />
     <code-card title="可展开/收起的卡片" :code="code2">
       <xo-card class="card" :max-height="30" align="left" shadow="hover">
         <div>
@@ -20,20 +19,18 @@
         </div>
       </xo-card>
     </code-card>
-    <br />
     <code-card title="自定义隐藏内容" :code="code3">
       <xo-card
         class="card"
         align="left"
         shadow="hover"
         :hiddenText="text"
-        @visibleChange="visibleChange"
+        @visible-change="visibleChange"
       >
-        通过hiddenText属性设置隐藏栏提示文字，通过slot自定义隐藏内容，visibleChange是展开收起时的回调事件
+        通过hiddenText属性设置隐藏栏提示文字，通过slot自定义隐藏内容，visible-change是展开收起时的回调事件
         <template v-slot:footer>自定义隐藏内容</template>
       </xo-card>
     </code-card>
-    <br />
     <code-card title="卡片阴影效果" :code="code4">
       <div class="cardWrap">
         <xo-card class="inline-card">无阴影</xo-card>
@@ -50,6 +47,7 @@ import "../../../src/styles/index.less";
 import Vue from "vue";
 import codeCard from "./code-card";
 export default {
+  name: 'card',
   data() {
     return {
       text: "展开",
@@ -88,9 +86,9 @@ export default {
           align="left"
           shadow="hover"
           :hiddenText="text"
-          @visibleChange="visibleChange"
+          @visible-change="visibleChange"
         >
-          通过hiddenText属性设置隐藏栏提示文字，通过slot自定义隐藏内容，visibleChange是展开收起时的回调事件
+          通过hiddenText属性设置隐藏栏提示文字，通过slot自定义隐藏内容，visible-change是展开收起时的回调事件
           <template v-slot:footer>自定义隐藏内容</template>
         </xo-card>
       </template>
@@ -132,7 +130,6 @@ export default {
 <style scoped>
 .card {
   width: 500px;
-  margin-bottom: 10px;
 }
 .cardWrap {
   display: flex;

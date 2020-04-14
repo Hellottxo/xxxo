@@ -52,7 +52,7 @@
       <div>
         <ul class="icon_lists dib-box">
           <li class="dib">
-            <span class="icon iconfont icon-arrow-down"></span>
+            <xo-icon mode="arrow-down"></xo-icon>
             <div class="name">arrow-down</div>
             <div class="code-name">.icon-arrow-down</div>
           </li>
