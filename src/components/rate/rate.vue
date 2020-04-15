@@ -6,6 +6,7 @@
           <icon
             :mode="star !== -1 && item <= star ? `${mode}-fill` : mode"
             :class="star !== -1 && item <= star ? 'icon-select' : ''"
+            class="rate-icon"
             :style="{cursor: readonly ? 'not-allowed' : 'pointer'}"
             @click.native="setRate(item)"
             @mousemove.native="move(item)"
@@ -60,7 +61,7 @@ export default {
         this.selectStar = index;
         const baseNumber = this.baseNumber > 0 ? this.baseNumber : 5;
         this.text =
-          index === -1 ? "0.0" : Number(((index + 1) / this.num) * this.baseNumber).toFixed(1);
+          index === -1 ? "0.0" : Number((index / this.num) * this.baseNumber).toFixed(1);
         this.$emit('input', this.text);
       }
     },
