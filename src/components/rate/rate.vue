@@ -1,24 +1,15 @@
 <template>
   <div class="xo-rate">
     <div @mouseleave="move(false)">
-      <div class="icon_wrap" v-for="(item, index) in list" :key="index">
+      <div class="icon_wrap" v-for="item in num" :key="item">
         <template>
-          <i
-            :class="`icon-${mode}-fill`"
-            class="iconfont icon-select"
+          <icon
+            :mode="star !== -1 && item <= star ? `${mode}-fill` : mode"
+            :class="star !== -1 && item <= star ? 'icon-select' : ''"
             :style="{cursor: readonly ? 'not-allowed' : 'pointer'}"
-            @click="setRate(index)"
-            @mousemove="move(index)"
-            v-if="star !== -1 && index <= star"
-          ></i>
-          <i
-            :class="`icon-${mode}`"
-            :style="{cursor: readonly ? 'not-allowed' : 'pointer'}"
-            class="iconfont"
-            @mousemove="move(index)"
-            @click="setRate(index)"
-            v-else
-          ></i>
+            @click.native="setRate(item)"
+            @mousemove.native="move(item)"
+          />
         </template>
       </div>
     </div>
@@ -27,8 +18,13 @@
 </template>
 
 <script>
+import icon from "../icon/index.js";
+
 export default {
   name: "xo-rate",
+  components: {
+    icon
+  },
   props: {
     num: {
       type: Number,
@@ -49,15 +45,12 @@ export default {
   data() {
     return {
       text: 0,
-      list: [],
       star: -1,
       selectStar: -1
     };
   },
   methods: {
     getList() {
-      const n = this.num;
-      this.list = new Array(n);
       const index = this.defaultStar ? this.defaultStar - 1 : -1;
       this.setRate(index, true);
     },
@@ -82,4 +75,3 @@ export default {
   }
 };
 </script>
-
