@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     getList() {
-      const index = this.defaultStar ? this.defaultStar - 1 : -1;
+      const index = this.defaultStar || -1;
       this.setRate(index, true);
     },
     setRate(index, val) {
@@ -62,7 +62,7 @@ export default {
         const baseNumber = this.baseNumber > 0 ? this.baseNumber : 5;
         this.text =
           index === -1 ? "0.0" : Number((index / this.num) * this.baseNumber).toFixed(1);
-        this.$emit('input', this.text);
+        this.$emit('click', this.text);
       }
     },
     move(index) {

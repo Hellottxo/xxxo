@@ -6,7 +6,6 @@
  * @param {Boolean} readonly 只读
  * @param {Boolean} defaultStar 默认等级
  * @param {Boolean} baseNumber 评分底分
- * @param {Boolean} defaultStar 默认等级
  */
 
 import xoRate from './rate.vue';
