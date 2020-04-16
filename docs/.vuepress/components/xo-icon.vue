@@ -1,7 +1,7 @@
 <template>
-  <xo-card shadow="hover" :max-height="500">
+  <xo-card shadow="hover" :max-height="500" align="left">
     <template v-slot:header>
-      <div>icon图标</div>
+      <div class="title">icon图标</div>
     </template>
     <div>
       <ul class="icon_lists dib-box">
@@ -187,7 +187,10 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
+<style scoped>
+.title {
+  font-weight: bold;
+}
 .icon_lists {
   width: 100% !important;
   overflow: hidden;

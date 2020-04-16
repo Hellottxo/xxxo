@@ -2,6 +2,7 @@
   <xo-card :hiddenText="text" @visible-change="showVisible" align="left">
     <template v-slot:header>
       <div class="title">{{title}}</div>
+      <span>{{describle}}</span>
     </template>
     <slot></slot>
     <template v-slot:footer>
@@ -24,7 +25,8 @@ export default {
   name: 'code-card',
   props: {
     code: String,
-    title: String
+    title: String,
+    describle: String
   },
   data() {
     return {
