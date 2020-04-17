@@ -2,6 +2,10 @@
   <div>
     <code-card title="基础用法" :code="code1">
       <xo-rate/>
+      <br/>
+      <div>可以通过 num 设置评分等级，如下设置为 6</div>
+      <br/>
+      <xo-rate :num="6"/>
     </code-card>
     <code-card title="支持多类icon" :code="code2">
       <xo-rate mode="good"/>
@@ -14,7 +18,7 @@
       <xo-rate :defaultStar="4"/>
     </code-card>
     <code-card title="只读" :code="code4">
-      <xo-rate readonly :defaultStar="4"/>
+      <xo-rate readonly :defaultStar="3"/>
     </code-card>
     <code-card title="展示结果" :code="code5">
       <xo-rate rate :defaultStar="4" :baseNumber="5" @click="this.click"/>
@@ -22,9 +26,9 @@
     <code-card title="计算基础值" :code="code6">
       <div>默认初始值为5，可以通过baseNumber设置基础值</div>
       <br>
-      <xo-rate rate :defaultStar="4"/>
-      <xo-rate rate :defaultStar="4" :baseNumber="100"/>
-      <xo-rate rate :defaultStar="4" :baseNumber="50"/>
+      <xo-rate rate :defaultStar="2"/>
+      <xo-rate rate :defaultStar="2" :baseNumber="100"/>
+      <xo-rate rate :defaultStar="2" :baseNumber="50"/>
     </code-card>
   </div>
 </template>
@@ -39,6 +43,7 @@ export default {
     return {
       code1: `
       <xo-rate/>
+      <xo-rate :num="8"/>
       `,
       code2: `
       <xo-rate mode="good"/>
@@ -51,7 +56,7 @@ export default {
       <xo-rate :defaultStar="4"/>
       `,
       code4: `
-      <xo-rate readonly :defaultStar="4"/>
+      <xo-rate readonly :defaultStar="3"/>
       `,
       code5: `
       添加click回调函数，可以获取当前结果值
@@ -70,9 +75,9 @@ export default {
       <\/script>
       `,
       code6: `
-      <xo-rate rate :defaultStar="4"/>
-      <xo-rate rate :defaultStar="4" :baseNumber="100"/>
-      <xo-rate rate :defaultStar="4" :baseNumber="50"/>
+      <xo-rate rate :defaultStar="2"/>
+      <xo-rate rate :defaultStar="2" :baseNumber="100"/>
+      <xo-rate rate :defaultStar="2" :baseNumber="50"/>
       `
     };
   },

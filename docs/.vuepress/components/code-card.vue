@@ -22,7 +22,7 @@ import Vue from "vue";
 import highlight from "../../../src/directive/highlight/index.js";
 Vue.use(highlight);
 export default {
-  name: 'code-card',
+  name: "code-card",
   props: {
     code: String,
     title: String,

@@ -10,5 +10,5 @@
 |type|button类型|`string`: `primary` \| `warning` \| `success` \| `info` \| `danger` |-|
 |icon|button插入icon|`string`|-|
 |disabled|是否金庸|`boolean`|-|
-|click|button点击事件|() => void|-|
+|click|button点击事件|`Function()`|-|
 

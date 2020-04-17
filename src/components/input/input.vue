@@ -104,7 +104,7 @@ export default {
       default: 'text',
     },
     autoSize: {
-      type: [Boolean, Object],
+      type: Boolean,
       default: false,
     },
     wordLimit: {

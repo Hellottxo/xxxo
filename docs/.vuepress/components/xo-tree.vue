@@ -1,11 +1,18 @@
 <template>
   <div>
     <code-card title="基础用法" :code="code1">
-      <xo-tree
+      <xo-tree :data="treeData" node-key="id"/>
+    </code-card>
+    <code-card title="默认展开" :code="code2">
+      <xo-tree :data="treeData" node-key="id" :default-expand="['1', '2']"/>
+    </code-card>
+    <code-card title="默认选中" :code="code3">
+      <xo-tree 
         :data="treeData"
-        node-key="id"
-        default-selected="6"
-        :default-expand="[0, 3]"
+        node-key="id" 
+        :default-expand="['1', '1-2']" 
+        default-selected="1-1" 
+        @node-click="handleNodeClick"
       />
     </code-card>
   </div>
@@ -21,33 +28,140 @@ export default {
     return {
       treeData: [
         {
-          id: 0,
-          label: "一级1",
+          id: '1',
+          label: "一级",
           children: [
-            { id: 1, label: "二级" },
-            { id: 2, label: "二级" },
+            { id: '1-1', label: "二级" },
             {
-              id: 3,
+              id: '1-2',
               label: "二级",
-              children: [{ id: 4, label: "三级" }, { id: 6, label: "三级" }]
+              children: [{ id: '1-2-1', label: "三级" }, { id: '1-2-2', label: "三级" }]
             }
           ]
         },
         {
-          id: 5,
+          id: '2',
           label: "一级2",
           children: [
-            { id: 7, label: "二级" },
-            { id: 8, label: "二级" },
-            {
-              id: 9,
-              label: "二级",
-              children: [{ id: 10, label: "三级" }, { id: 11, label: "三级" }]
-            }
+            { id: '2-1', label: "二级2" },
           ]
         }
       ],
       code1: `
+      <template>
+        <xo-tree :data="treeData" node-key="id"/>
+      </template>
+
+      <script>
+      export default {
+        data() {
+          return {
+            treeData: [
+              {
+                id: '1',
+                label: "一级",
+                children: [
+                  { id: '1-1', label: "二级" },
+                  {
+                    id: '1-2',
+                    label: "二级",
+                    children: [{ id: '1-2-1', label: "三级" }, { id: '1-2-2', label: "三级" }]
+                  }
+                ]
+              },
+              {
+                id: '2',
+                label: "一级2",
+                children: [
+                  { id: '2-1', label: "二级2" },
+                ]
+              }
+            ]
+          }
+        }
+      }
+      <\/script>
+      `,
+      code2: `
+      <template>
+        <xo-tree :data="treeData" node-key="id" :default-expand="['1', '2']"/>
+      </template>
+
+      <script>
+      export default {
+        data() {
+          return {
+            treeData: [
+              {
+                id: '1',
+                label: "一级",
+                children: [
+                  { id: '1-1', label: "二级" },
+                  {
+                    id: '1-2',
+                    label: "二级",
+                    children: [{ id: '1-2-1', label: "三级" }, { id: '1-2-2', label: "三级" }]
+                  }
+                ]
+              },
+              {
+                id: '2',
+                label: "一级2",
+                children: [
+                  { id: '2-1', label: "二级2" },
+                ]
+              }
+            ]
+          }
+        }
+      }
+      <\/script>
+      `,
+      code3: `
+      <template>
+        <xo-tree 
+          :data="treeData"
+          node-key="id" 
+          :default-expand="['1', '1-2']" 
+          default-selected="1-1" 
+          @node-click="handleNodeClick"
+        />
+      </template>
+
+      <script>
+      export default {
+        data() {
+          return {
+            treeData: [
+              {
+                id: '1',
+                label: "一级",
+                children: [
+                  { id: '1-1', label: "二级" },
+                  {
+                    id: '1-2',
+                    label: "二级",
+                    children: [{ id: '1-2-1', label: "三级" }, { id: '1-2-2', label: "三级" }]
+                  }
+                ]
+              },
+              {
+                id: '2',
+                label: "一级2",
+                children: [
+                  { id: '2-1', label: "二级2" },
+                ]
+              }
+            ]
+          }
+        },
+        methods: {
+          handleClick(node) {
+            console.log(node);
+          }
+        }
+      }
+      <\/script>
       `
     };
   },
@@ -56,7 +170,9 @@ export default {
     xoTree
   },
   methods: {
-
+    handleNodeClick(node) {
+      console.log(`选择了节点: ${node.nodeKey} ${node.label}`);
+    }
   }
 };
 </script>

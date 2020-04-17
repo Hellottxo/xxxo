@@ -1,5 +1,5 @@
 import hljs from 'highlight.js';
-import 'highlight.js/styles/atelier-heath-light.css';
+import 'highlight.js/styles/github.css';
 
 const highlight = (el) => {
   const blocks = el.querySelectorAll('pre code');
