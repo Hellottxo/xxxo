@@ -8,6 +8,7 @@
     :default-expand="defaultExpand"
     :default-expand-all="defaultExpandAll"
     :children-key="childrenKey"
+    :selected="selected"
     ></xo-tree-node>
   </div>
 </template>
@@ -19,7 +20,8 @@ export default {
   components: { xoTreeNode },
   data() {
     return {
-      flatTree: {}
+      flatTree: {},
+      selected: ''
     }
   },
   props: {
@@ -34,8 +36,8 @@ export default {
       default: 'children'
     },
     multiple: Boolean,
-    defaultSelected: String,
-    nodeKey: String,
+    defaultSelected: [String, Number],
+    nodeKey: [String, Number],
     defaultExpand: {
       type: Array,
       default: () => {
@@ -58,7 +60,8 @@ export default {
         }
       }
       const item = this.flatTree[nodeKey];
-      this.$set(item.node, 'selected', !item.node.selected);
+      this.selected = item.nodeKey;
+      // this.$set(item.node, 'selected', !item.node.selected);
       this.$emit('node-click', item.node);
     },
     setSelected(val) {
@@ -92,8 +95,7 @@ export default {
   mounted() {
     this.flatTree = this.flattenTreeData();
     if(this.defaultSelected) {
-      const item = this.flatTree[this.defaultSelected];
-      this.$set(item.node, 'selected', true);
+      this.selected = this.defaultSelected;
     }
   }
 }

@@ -11,7 +11,7 @@
           </span>
           <span
           class="xo-node-title"
-          :class="{selected: data.selected}"
+          :class="{selected: data.nodeKey === selected}"
           @click="handleClick">{{data.label}}</span>
         </div>
         <div v-if="data[childrenKey]">
@@ -24,6 +24,7 @@
           :data="item"
           :children-key="childrenKey"
           :default-expand-all="defaultExpandAll"
+          :selected="selected"
           ></xo-tree-node>
         </div>
       </li>
@@ -48,6 +49,7 @@ export default {
       type: String,
       default: 'children'
     },
+    selected: [String, Number]
   },
   inject: ['setSelected'],
   data() {
