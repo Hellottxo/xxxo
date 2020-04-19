@@ -6,10 +6,15 @@
       marginLeft: `${leftWidth}px`,
       marginTop: scrollTopWidth !== 0 ? `${scrollTopWidth}px` : 0,
       width: `${width}px`
-      }">
+      }"
+    >
       <colgroup>
-        <col width="40" v-if="expand">
-        <col v-for="config in tableColumns" :key="config.key" :width="config.width ? config.width : ''">
+        <col width="40" v-if="expand" />
+        <col
+          v-for="config in tableColumns"
+          :key="config.key"
+          :width="config.width ? config.width : ''"
+        />
       </colgroup>
       <tbody>
         <template v-for="(item, index) in data">
@@ -26,14 +31,15 @@
             @mouseleave="hoverRow(-1)"
           >
             <td
-            :class="{
+              :class="{
               'border-right': verticalLine
             }"
-            :style="{
+              :style="{
               borderBottom: index === data.length - 1 ? 'none' : ''
             }"
-            @click="showExpand(index)"
-            v-if="expand">
+              @click="showExpand(index)"
+              v-if="expand"
+            >
               <div class="cell">
                 <i
                   class="icon-triangle-right"
@@ -63,7 +69,9 @@
                   <span :title="item[config.key]">{{ item[config.key] }}</span>
                   <i
                     class="icon-triangle-right"
-                    v-if="item.children && (item.arrowPosition ? item.arrowPosition === config.key : (expand ? i === 1 : i === 0))"
+                    v-if="item.children && (item.arrowPosition
+                    ? item.arrowPosition === config.key
+                    : (expand ? i === 1 : i === 0))"
                     :class="{'open': hasChildOpen.includes(index)}"
                   ></i>
                 </div>
@@ -84,14 +92,8 @@
               </td>
             </tr>
           </template>
-          <tr
-            class="slot"
-            :key="item.$index"
-            v-if="hasRowExpand.includes(index) && item.rowExpand"
-          >
-            <td :colspan="tableColumns.length+1">
-              {{item.rowExpand}}
-            </td>
+          <tr class="slot" :key="item.$index" v-if="hasRowExpand.includes(index) && item.rowExpand">
+            <td :colspan="tableColumns.length+1">{{item.rowExpand}}</td>
           </tr>
         </template>
       </tbody>
@@ -159,7 +161,15 @@ export default {
     },
   },
   computed: {
-    ...mapState('tableModuel', ['clickRow', 'hasChildOpen', 'hasRowExpand', 'tableColumns', 'endFixedWidth', 'endLeftWidth', 'hoverIndex']),
+    ...mapState('tableModuel', [
+      'clickRow',
+      'hasChildOpen',
+      'hasRowExpand',
+      'tableColumns',
+      'endFixedWidth',
+      'endLeftWidth',
+      'hoverIndex',
+    ]),
   },
   watch: {
     clickRow() {
@@ -174,7 +184,12 @@ export default {
     },
   },
   methods: {
-    ...mapMutations('tableModuel', ['chgClickRow', 'chgChildOpen', 'chgRowExpand', 'chgHoverIndex']),
+    ...mapMutations('tableModuel', [
+      'chgClickRow',
+      'chgChildOpen',
+      'chgRowExpand',
+      'chgHoverIndex',
+    ]),
     rowClick(row, column) {
       this.chgClickRow(row);
       this.$emit('row-click', row, column);
@@ -213,7 +228,10 @@ export default {
     },
     setLeftWidth() {
       const tableWidth = this.$refs.table.clientWidth;
-      if (this.endFixed && this.$parent.$refs.displayTableBody.clientWidth < tableWidth) {
+      if (
+        this.endFixed
+        && this.$parent.$refs.displayTableBody.clientWidth < tableWidth
+      ) {
         this.leftWidth = this.endLeftWidth;
       }
     },

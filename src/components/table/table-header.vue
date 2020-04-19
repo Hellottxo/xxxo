@@ -129,7 +129,7 @@ export default {
         if (str === 'start') {
           width += th[count - 1].clientWidth;
         }
-        count--;
+        count -= 1;
       }
       if (this.expand && str === 'start') width += th[0].clientWidth;
       return width;
