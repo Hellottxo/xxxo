@@ -232,148 +232,148 @@
 const TREE_DATA = [
   {
     id: 0,
-    label: "一级1",
+    label: '一级1',
     children: [
-      { id: 1, label: "二级" },
-      { id: 2, label: "二级" },
+      { id: 1, label: '二级' },
+      { id: 2, label: '二级' },
       {
         id: 3,
-        label: "二级",
-        children: [{ id: 4, label: "三级" }, { id: 6, label: "三级" }]
-      }
-    ]
+        label: '二级',
+        children: [{ id: 4, label: '三级' }, { id: 6, label: '三级' }],
+      },
+    ],
   },
   {
     id: 5,
-    label: "一级2",
+    label: '一级2',
     children: [
-      { id: 7, label: "二级" },
-      { id: 8, label: "二级" },
+      { id: 7, label: '二级' },
+      { id: 8, label: '二级' },
       {
         id: 9,
-        label: "二级",
-        children: [{ id: 10, label: "三级" }, { id: 11, label: "三级" }]
-      }
-    ]
-  }
+        label: '二级',
+        children: [{ id: 10, label: '三级' }, { id: 11, label: '三级' }],
+      },
+    ],
+  },
 ];
 
 const OPTIONS_DATA = [
   {
-    value: "beijing",
-    label: "北京市"
+    value: 'beijing',
+    label: '北京市',
   },
   {
-    value: "shanghai",
-    label: "上海市"
+    value: 'shanghai',
+    label: '上海市',
   },
   {
-    value: "shenzhen",
-    label: "深圳市"
+    value: 'shenzhen',
+    label: '深圳市',
   },
   {
-    value: "hangzhou",
-    label: "杭州市"
+    value: 'hangzhou',
+    label: '杭州市',
   },
   {
-    value: "nanjing",
-    label: "南京市"
+    value: 'nanjing',
+    label: '南京市',
   },
   {
-    value: "chongqing",
-    label: "重庆市"
-  }
+    value: 'chongqing',
+    label: '重庆市',
+  },
 ];
 
 const COLUMNS = [
   {
-    label: "Name",
-    key: "name",
-    width: 100
-  },
-  {
-    label: "Age",
-    key: "age",
-    width: 200
-  },
-  {
-    label: "Address",
-    key: "address",
-    width: 300,
-    fixed: "start"
-  },
-  {
-    label: "Sex",
-    key: "Sex",
+    label: 'Name',
+    key: 'name',
     width: 100,
-    fixed: "start"
   },
   {
-    label: "Attribute",
-    key: "Attribute",
-    width: 100
-  }
+    label: 'Age',
+    key: 'age',
+    width: 200,
+  },
+  {
+    label: 'Address',
+    key: 'address',
+    width: 300,
+    fixed: 'start',
+  },
+  {
+    label: 'Sex',
+    key: 'Sex',
+    width: 100,
+    fixed: 'start',
+  },
+  {
+    label: 'Attribute',
+    key: 'Attribute',
+    width: 100,
+  },
 ];
 
 const TABLE_DATA = [
   {
-    name: "John Brown",
+    name: 'John Brown',
     age: 18,
-    address: "New York No. 1 Lake Park",
-    date: "2016-10-03",
-    children: [{ name: "xo" }],
-    arrowPosition: "address"
+    address: 'New York No. 1 Lake Park',
+    date: '2016-10-03',
+    children: [{ name: 'xo' }],
+    arrowPosition: 'address',
   },
   {
-    name: "Jim Green",
+    name: 'Jim Green',
     age: 24,
-    address: "London No. 1 Lake Park",
-    date: "2016-10-01",
-    rowExpand: "123"
+    address: 'London No. 1 Lake Park',
+    date: '2016-10-01',
+    rowExpand: '123',
   },
   {
-    name: "Joe Black",
+    name: 'Joe Black',
     age: 30,
-    address: "Sydney No. 1 Lake Park",
-    date: "2016-10-02"
+    address: 'Sydney No. 1 Lake Park',
+    date: '2016-10-02',
   },
   {
-    name: "Jon Snow",
+    name: 'Jon Snow',
     age: 26,
-    address: "Ottawa No. 2 Lake Park",
-    date: "2016-10-04"
+    address: 'Ottawa No. 2 Lake Park',
+    date: '2016-10-04',
   },
   {
-    name: "John Brown",
+    name: 'John Brown',
     age: 18,
-    address: "New York No. 1 Lake Park",
-    date: "2016-10-03",
-    children: [{ name: "xo" }],
-    arrowPosition: "address"
+    address: 'New York No. 1 Lake Park',
+    date: '2016-10-03',
+    children: [{ name: 'xo' }],
+    arrowPosition: 'address',
   },
   {
-    name: "Jim Green",
+    name: 'Jim Green',
     age: 24,
-    address: "London No. 1 Lake Park",
-    date: "2016-10-01",
-    rowExpand: "123"
+    address: 'London No. 1 Lake Park',
+    date: '2016-10-01',
+    rowExpand: '123',
   },
   {
-    name: "Joe Black",
+    name: 'Joe Black',
     age: 30,
-    address: "Sydney No. 1 Lake Park",
-    date: "2016-10-02"
+    address: 'Sydney No. 1 Lake Park',
+    date: '2016-10-02',
   },
   {
-    name: "Jon Snow",
+    name: 'Jon Snow',
     age: 26,
-    address: "Ottawa No. 2 Lake Park",
-    date: "2016-10-04"
-  }
+    address: 'Ottawa No. 2 Lake Park',
+    date: '2016-10-04',
+  },
 ];
 
 export default {
-  name: "home",
+  name: 'home',
   data() {
     return {
       collapse: false,
@@ -381,7 +381,7 @@ export default {
       optionsData: OPTIONS_DATA,
       columns: COLUMNS,
       tableData: TABLE_DATA,
-      selectData: ["beijing"]
+      selectData: ['beijing'],
     };
   },
   methods: {
@@ -389,32 +389,32 @@ export default {
       if (val) {
         this.$message({
           type: val,
-          message: "这是一个会停顿3s的消息"
+          message: '这是一个会停顿3s的消息',
         });
         return;
       }
-      this.$message({ message: "这是一个会停顿3s的消息" });
+      this.$message({ message: '这是一个会停顿3s的消息' });
     },
     handleCloseClick(val) {
       if (val) {
         this.$message({
           type: val,
           showClose: true,
-          message: "这是一个可以手动关闭的消息"
+          message: '这是一个可以手动关闭的消息',
         });
         return;
       }
       this.$message({
-        message: "这是一个可以手动关闭的消息",
-        showClose: true
+        message: '这是一个可以手动关闭的消息',
+        showClose: true,
       });
     },
     handleNodeClick(item) {
       console.log(item);
     },
     selectChange(val) {
-      const arr = val.map(e => e.label);
-      console.log(`选择了${arr.join(",")}`);
+      const arr = val.map((e) => e.label);
+      console.log(`选择了${arr.join(',')}`);
     },
     visibleChange(val) {
       console.log(`下拉框状态：${val}`);
@@ -423,10 +423,10 @@ export default {
       console.log(`点击了行${row}`);
     },
     showVisible(flag) {
-      console.log(1)
-      console.log(flag)
-    }
-  }
+      console.log(1);
+      console.log(flag);
+    },
+  },
 };
 </script>
 

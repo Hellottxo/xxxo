@@ -15,47 +15,46 @@
 
 <script>
 import xoTreeNode from './node';
+
 export default {
   name: 'xo-tree',
   components: { xoTreeNode },
   data() {
     return {
       flatTree: {},
-      selected: ''
-    }
+      selected: '',
+    };
   },
   props: {
     data: {
       type: Array,
-      default: function() {
+      default() {
         return [];
-      }
+      },
     },
     childrenKey: {
       type: String,
-      default: 'children'
+      default: 'children',
     },
     multiple: Boolean,
     defaultSelected: [String, Number],
     nodeKey: [String, Number],
     defaultExpand: {
       type: Array,
-      default: () => {
-        return []
-      }
+      default: () => [],
     },
-    defaultExpandAll: Boolean
+    defaultExpandAll: Boolean,
   },
   methods: {
     handleClick(nodeKey) {
-      if(!this.multiple) {
+      if (!this.multiple) {
         const arr = Object.keys(this.flatTree);
-        const key = arr.find(child => {
-          const selected = this.flatTree[child].node.selected;
-          if(selected === undefined) return;
+        const key = arr.find((child) => {
+          const { selected } = this.flatTree[child].node;
+          if (selected === undefined) return;
           return selected == true;
-        })
-        if(key != undefined) {
+        });
+        if (key != undefined) {
           this.flatTree[key].node.selected = false;
         }
       }
@@ -74,29 +73,29 @@ export default {
       function getFlattenNode(node) {
         node.nodeKey = that.nodeKey === undefined ? index++ : node[that.nodeKey];
         flatTree[node.nodeKey] = {
-          node: node,
+          node,
           nodeKey: node.nodeKey,
         };
-        if(node[that.childrenKey]) {
-          node[that.childrenKey].forEach(e => getFlattenNode(e))
+        if (node[that.childrenKey]) {
+          node[that.childrenKey].forEach((e) => getFlattenNode(e));
         }
       }
-      this.data.forEach(node => {
+      this.data.forEach((node) => {
         getFlattenNode(node);
       });
       return flatTree;
-    }
+    },
   },
-  provide: function() {
+  provide() {
     return {
-      setSelected: this.setSelected
-    }
+      setSelected: this.setSelected,
+    };
   },
   mounted() {
     this.flatTree = this.flattenTreeData();
-    if(this.defaultSelected) {
+    if (this.defaultSelected) {
       this.selected = this.defaultSelected;
     }
-  }
-}
+  },
+};
 </script>

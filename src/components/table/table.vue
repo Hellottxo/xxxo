@@ -271,10 +271,10 @@ export default {
       this.showGutter = displayHeight < scrollHeight;
       this.widthGutter = displayWidth < scrollWidth;
     },
-    setTableWidth: debounce(function() {
+    setTableWidth: debounce(function () {
       this.tableWidth = `${this.$refs.xoTable.clientWidth}`;
       this.isShowGutter();
-    }, 500)
+    }, 500),
   },
   created() {
     this.getTableColumns();
@@ -282,7 +282,6 @@ export default {
   mounted() {
     this.setTableWidth();
     window.onresize = this.setTableWidth;
-    ;
   },
 };
 </script>

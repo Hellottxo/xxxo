@@ -15,29 +15,27 @@ export default {
   name: 'xo-options',
   data() {
     return {
-      visible: true
-    }
+      visible: true,
+    };
   },
   inject: ['handleSelectClick'],
   props: {
     options: {
       type: Object,
-      default: () => {
-        return {};
-      }
-    }
+      default: () => ({}),
+    },
   },
   computed: {
     selected() {
       const arr = this.$parent.input;
       const index = arr.indexOf(this.options.value);
       return index > -1;
-    }
+    },
   },
   methods: {
     handleClick() {
-      this.handleSelectClick(this.options.value)
-    }
-  }
-}
+      this.handleSelectClick(this.options.value);
+    },
+  },
+};
 </script>

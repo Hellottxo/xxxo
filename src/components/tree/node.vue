@@ -39,23 +39,21 @@ export default {
     data: Object,
     defaultExpand: {
       type: Array,
-      default: () => {
-        return []
-      }
+      default: () => [],
     },
     nodeKey: String,
     defaultExpandAll: Boolean,
     childrenKey: {
       type: String,
-      default: 'children'
+      default: 'children',
     },
-    selected: [String, Number]
+    selected: [String, Number],
   },
   inject: ['setSelected'],
   data() {
     return {
-      collapse: false
-    }
+      collapse: false,
+    };
   },
   methods: {
     handleClick() {
@@ -63,11 +61,11 @@ export default {
     },
   },
   mounted() {
-    if(this.defaultExpandAll) {
+    if (this.defaultExpandAll) {
       this.collapse = true;
-    }else {
+    } else {
       this.collapse = this.defaultExpand.includes(this.data[this.nodeKey]);
     }
-  }
-}
+  },
+};
 </script>

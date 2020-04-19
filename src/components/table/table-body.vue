@@ -205,7 +205,7 @@ export default {
     isHidden(val) {
       if (this.endFixed) {
         return val !== 'end';
-      } 
+      }
       if (this.startFixed) {
         return val !== 'start';
       }

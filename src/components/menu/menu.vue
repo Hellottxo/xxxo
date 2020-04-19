@@ -13,41 +13,42 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
+
 export default {
   name: 'xo-menu',
   data() {
     return {
-    }
+    };
   },
   props: {
     defaultActive: {
       type: String,
-      default: null
+      default: null,
     },
     mode: {
       type: String,
-      default: 'vertical'
+      default: 'vertical',
     },
-    collapse: Boolean
+    collapse: Boolean,
   },
   computed: {
-    ...mapState('menuModuel', ['selectIndex'])
+    ...mapState('menuModuel', ['selectIndex']),
   },
   watch: {
     collapse(val) {
 
-    }
+    },
   },
   methods: {
     ...mapMutations('menuModuel', ['chgSelectIndex', 'chgMode']),
   },
   mounted() {
-    if(this.defaultActive) {
+    if (this.defaultActive) {
       this.chgSelectIndex(this.defaultActive);
     }
     this.chgMode(this.mode);
-  }
-}
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -112,4 +113,3 @@ div {
   }
 }
 </style>
-

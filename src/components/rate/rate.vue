@@ -19,35 +19,35 @@
 </template>
 
 <script>
-import icon from "../icon/index.js";
+import icon from '../icon/index.js';
 
 export default {
-  name: "xo-rate",
+  name: 'xo-rate',
   components: {
-    icon
+    icon,
   },
   props: {
     num: {
       type: Number,
-      default: 5
+      default: 5,
     },
     rate: Boolean,
     mode: {
       type: String,
-      default: "collection"
-    }, 
+      default: 'collection',
+    },
     defaultStar: Number,
     readonly: Boolean,
     baseNumber: {
       type: Number,
-      default: 5
-    }
+      default: 5,
+    },
   },
   data() {
     return {
       text: 0,
       star: -1,
-      selectStar: -1
+      selectStar: -1,
     };
   },
   methods: {
@@ -56,23 +56,22 @@ export default {
       this.setRate(index, true);
     },
     setRate(index, val) {
-      if(!this.readonly || val) {
+      if (!this.readonly || val) {
         this.star = index;
         this.selectStar = index;
         const baseNumber = this.baseNumber > 0 ? this.baseNumber : 5;
-        this.text =
-          index === -1 ? "0.0" : Number((index / this.num) * this.baseNumber).toFixed(1);
+        this.text = index === -1 ? '0.0' : Number((index / this.num) * this.baseNumber).toFixed(1);
         this.$emit('click', this.text);
       }
     },
     move(index) {
-      if(!this.readonly) {
-        this.star = index ? index : this.selectStar;
+      if (!this.readonly) {
+        this.star = index || this.selectStar;
       }
-    }
+    },
   },
   mounted() {
     this.getList();
-  }
+  },
 };
 </script>

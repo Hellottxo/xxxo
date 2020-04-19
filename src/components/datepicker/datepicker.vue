@@ -101,35 +101,35 @@ const LAST_DAY = {
   9: 30,
   10: 31,
   11: 30,
-  12: 31
+  12: 31,
 };
 const MONTH = {
-  '一月': 1,
-  '二月': 2,
-  '三月': 3,
-  '四月': 4,
-  '五月': 5,
-  '六月': 6,
-  '七月': 7,
-  '八月': 8,
-  '九月': 9,
-  '十月': 10,
-  '十一月': 11,
-  '十二月': 12,
-}
+  一月: 1,
+  二月: 2,
+  三月: 3,
+  四月: 4,
+  五月: 5,
+  六月: 6,
+  七月: 7,
+  八月: 8,
+  九月: 9,
+  十月: 10,
+  十一月: 11,
+  十二月: 12,
+};
 export default {
   name: 'xo-date-picker',
   model: {
     prop: 'dateValue',
-    event: 'change'
+    event: 'change',
   },
   props: {
     dateValue: String,
     clearable: Boolean,
     markToday: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   data() {
     return {
@@ -148,18 +148,18 @@ export default {
       showYearSelect: false,
       showWeekSelect: false,
       title: '',
-      MONTH
-    }
+      MONTH,
+    };
   },
   watch: {
     date(val) {
-      if(!val) {
+      if (!val) {
         this.reset();
       }
     },
     dateValue(val) {
-      this.date = val
-    }
+      this.date = val;
+    },
   },
   methods: {
     inputFocus(val) {
@@ -172,69 +172,69 @@ export default {
     },
     getDateList() {
       const monthlastday = this.isLeapMonth(this.month);
-      this.startIndex =new Date(`${this.year}/${this.month}/1`).getDay();
+      this.startIndex = new Date(`${this.year}/${this.month}/1`).getDay();
       const endIndex = new Date(`${this.year}/${this.month}/${monthlastday}`).getDay();
       let yesterday = this.isLeapMonth(this.month > 1 ? this.month - 1 : 12);
       const currentMonth = new Array(monthlastday).fill('').map((item, index) => index + 1);
-      let lastMonth = [];
-      for(let i = 0; i < this.startIndex; i++) {
+      const lastMonth = [];
+      for (let i = 0; i < this.startIndex; i++) {
         lastMonth.unshift(yesterday);
         yesterday--;
       }
       const len = (currentMonth.length + lastMonth.length) > 35 ? 6 - endIndex : 13 - endIndex;
-      let nextMonth = [];
-      for(let i = 1; i <= len; i++) {
+      const nextMonth = [];
+      for (let i = 1; i <= len; i++) {
         nextMonth.push(i);
       }
       this.dateList = lastMonth.concat(currentMonth).concat(nextMonth);
-    }, 
+    },
     isLeapMonth(month) {
-      if(this.year % 4 == 0 && this.year % 100 != 0 && month == 2) {
+      if (this.year % 4 == 0 && this.year % 100 != 0 && month == 2) {
         return this.LAST_DAY[month] + 1;
       }
       return this.LAST_DAY[month];
     },
     monthChg(type) {
-      if(type === 'prev') {
-        if(this.month === 1) {
+      if (type === 'prev') {
+        if (this.month === 1) {
           this.month = 12;
           this.year -= 1;
-        }else {
+        } else {
           this.month -= 1;
         }
       }
-      if(type === 'next') {
-        if(this.month === 12) {
+      if (type === 'next') {
+        if (this.month === 12) {
           this.month = 1;
           this.year += 1;
-        }else {
+        } else {
           this.month += 1;
         }
       }
       this.getDateList();
     },
     yearChg(type) {
-      if(this.showYearSelect) {
-        if(type === 'prev') this.yearSelect(parseFloat(this.yearList[0]) - 10);
-        if(type === 'next') this.yearSelect(parseFloat(this.yearList[0]) + 10);
-      }else {
+      if (this.showYearSelect) {
+        if (type === 'prev') this.yearSelect(parseFloat(this.yearList[0]) - 10);
+        if (type === 'next') this.yearSelect(parseFloat(this.yearList[0]) + 10);
+      } else {
         this.year = parseFloat(this.year);
-        if(type === 'prev') this.year -= 1;
-        if(type === 'next') this.year += 1;
+        if (type === 'prev') this.year -= 1;
+        if (type === 'next') this.year += 1;
       }
       this.getDateList();
     },
     setDay(item, index) {
       const lastday = this.isLeapMonth(this.month);
-      if(index < this.startIndex ) {
+      if (index < this.startIndex) {
         this.monthChg('prev');
       }
-      if(index > this.startIndex + lastday - 1) {
+      if (index > this.startIndex + lastday - 1) {
         this.monthChg('next');
       }
       this.day = item;
       this.date = `${this.year}-${this.uniteDate(this.month)}-${this.uniteDate(this.day)}`;
-      this.$emit('change', this.date)
+      this.$emit('change', this.date);
     },
     setYear(val) {
       this.showYearSelect = false;
@@ -247,11 +247,11 @@ export default {
       this.getDateList();
     },
     yearSelect(val) {
-      if(!this.showWeekSelect) {
+      if (!this.showWeekSelect) {
         this.showYearSelect = true;
         const str = val.toString().slice(0, -1);
         this.yearList = [];
-        for(let i = 0; i < 10; i++) {
+        for (let i = 0; i < 10; i++) {
           this.yearList.push(`${str}${i}`);
         }
         this.title = `${this.yearList[0]} - ${this.yearList[1]}`;
@@ -277,11 +277,11 @@ export default {
       this.month = date.getMonth() + 1;
       const day = date.getDate();
       this.currentDay = `${this.year}-${this.uniteDate(this.month)}-${this.uniteDate(day)}`;
-    }
+    },
   },
   mounted() {
     this.getCurrentDay();
     this.getDateList();
-  }
-}
+  },
+};
 </script>

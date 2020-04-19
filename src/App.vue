@@ -7,12 +7,13 @@
 </template>
 
 <script>
-import Home from './views/Home'
+import Home from './views/Home';
+
 export default {
   components: {
-    Home
-  }
-}
+    Home,
+  },
+};
 </script>
 
 <style lang="less">

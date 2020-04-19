@@ -10,7 +10,7 @@
     }"
     @mouseenter="isMouseenter=true"
     @mouseleave="isMouseenter=false"
-    > 
+    >
       <span class="icon-prefix" v-if="$scopedSlots.prefix">
         <slot name="prefix"></slot>
       </span>
@@ -62,7 +62,7 @@
       class="iconfont icon-browse"
       @click="isPassword = !isPassword"
       ></i>
-      
+
       <span class="icon-suffix" v-if="$scopedSlots.suffix">
         <slot name="suffix"></slot>
       </span>
@@ -77,12 +77,12 @@ export default {
   name: 'xo-input',
   model: {
     prop: 'inputValue',
-    event: 'change'
+    event: 'change',
   },
   props: {
     inputValue: {
       type: [String, Number],
-      default: ''
+      default: '',
     },
     width: [String, Number],
     minWidth: [String, Number],
@@ -113,8 +113,8 @@ export default {
     },
     maxLength: {
       type: Number,
-      default: 10
-    }
+      default: 10,
+    },
   },
   data() {
     return {
@@ -131,22 +131,22 @@ export default {
     input(val) {
       this.$emit('input', val);
       this.$emit('change', val);
-      if(this.type === 'textarea') {
+      if (this.type === 'textarea') {
         this.resizeTextarea();
       }
     },
     inputValue(val) {
-      this.input = val
-    }
+      this.input = val;
+    },
   },
   methods: {
     setFocus(val) {
-      if(val) {
+      if (val) {
         this.$emit('focus', this.input);
-      }else {
+      } else {
         this.$emit('blur', this.input);
       }
-      if(!this.disable) {
+      if (!this.disable) {
         this.isFocus = val;
       }
     },
@@ -156,12 +156,12 @@ export default {
     },
     resizeTextarea() {
       this.textareaHeight = calctetxtareaHeight(this.$refs.textarea, this.input);
-    }
+    },
   },
   mounted() {
-    if(this.type === 'password') {
+    if (this.type === 'password') {
       this.isPassword = true;
     }
-  }
-}
+  },
+};
 </script>

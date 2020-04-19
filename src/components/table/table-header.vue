@@ -125,8 +125,8 @@ export default {
       while (count > 0) {
         if (str === 'end') {
           width += th[len - count].clientWidth;
-        } 
-        if (str === 'start'){
+        }
+        if (str === 'start') {
           width += th[count - 1].clientWidth;
         }
         count--;

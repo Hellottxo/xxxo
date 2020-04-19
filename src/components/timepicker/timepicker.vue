@@ -22,7 +22,7 @@
               :key="item"
               :class="{
               select: hour==item,
-              disabled: (parseInt(item) > maxArr[0]) || (parseInt(item) < minArr[0]) 
+              disabled: (parseInt(item) > maxArr[0]) || (parseInt(item) < minArr[0])
             }"
               @click="setTimeStamp(item, 'hour')"
             >{{item}}</li>
@@ -76,13 +76,13 @@
 </template>
 
 <script>
-const TIME_TYPE = ["hour", "min", "second"];
+const TIME_TYPE = ['hour', 'min', 'second'];
 
 export default {
-  name: "xo-time-picker",
+  name: 'xo-time-picker',
   model: {
-    prop: "timeValue",
-    event: "change"
+    prop: 'timeValue',
+    event: 'change',
   },
   props: {
     timeValue: String,
@@ -90,7 +90,7 @@ export default {
     clearable: Boolean,
     confirm: Boolean,
     maxTime: String,
-    minTime: String
+    minTime: String,
   },
   data() {
     return {
@@ -98,9 +98,9 @@ export default {
       visible: false,
       hourList: [],
       minList: [],
-      hour: "",
-      min: "",
-      second: "",
+      hour: '',
+      min: '',
+      second: '',
       time: this.timeValue,
       oldtime: [],
       hourscroll: false,
@@ -108,7 +108,7 @@ export default {
       secondscroll: false,
       isFirst: true,
       maxArr: [],
-      minArr: []
+      minArr: [],
     };
   },
   watch: {
@@ -116,8 +116,8 @@ export default {
       if (!val) {
         this.reset();
       }
-      this.$emit("input", val);
-      this.$emit("change", val);
+      this.$emit('input', val);
+      this.$emit('change', val);
     },
     visible(val) {
       if (val) {
@@ -126,14 +126,14 @@ export default {
     },
     timeValue(val) {
       this.time = val;
-    }
+    },
   },
   methods: {
     inputFocus(val) {
       this.visible = val;
       this.$nextTick(() => {
         if ((this.isFirst || !this.time) && this.defaultTime) {
-          const arr = this.defaultTime.split(":");
+          const arr = this.defaultTime.split(':');
           this.hour = arr[0];
           this.min = arr[1];
           this.second = arr[2];
@@ -151,12 +151,12 @@ export default {
     setTimeStamp(val, type) {
       this[type] = val;
       const ref = this.$refs[type];
-      const height = ref.getElementsByTagName("li")[0].scrollHeight;
+      const height = ref.getElementsByTagName('li')[0].scrollHeight;
       ref.scrollTop = Number(val) * height;
     },
     mouseScroll(type) {
       const ref = this.$refs[type];
-      const height = ref.getElementsByTagName("li")[0].scrollHeight;
+      const height = ref.getElementsByTagName('li')[0].scrollHeight;
       const index = Math.round(ref.scrollTop / height);
       const time = index < 10 ? `0${index}` : index;
       this[type] = time;
@@ -172,18 +172,18 @@ export default {
       return this[`${type}scroll`];
     },
     setTime(hour, min, second) {
-      this.setTimeStamp(hour, "hour");
-      this.setTimeStamp(min, "min");
-      this.setTimeStamp(second, "second");
+      this.setTimeStamp(hour, 'hour');
+      this.setTimeStamp(min, 'min');
+      this.setTimeStamp(second, 'second');
     },
     getDisabledTime() {
-      const max = this.maxTime ? this.maxTime : "24:00:00";
-      const min = this.minTime ? this.minTime : "00:00:00";
-      this.maxArr = max.split(":").map(e => parseInt(e));
-      this.minArr = min.split(":").map(e => parseInt(e));
+      const max = this.maxTime ? this.maxTime : '24:00:00';
+      const min = this.minTime ? this.minTime : '00:00:00';
+      this.maxArr = max.split(':').map((e) => parseInt(e));
+      this.minArr = min.split(':').map((e) => parseInt(e));
     },
     timeValidate() {
-      const date = "2009-10-1";
+      const date = '2009-10-1';
       const val = `${this.hour}:${this.min}:${this.second}`;
       const time = Date.parse(`${date} ${val}`);
       const max = Date.parse(`${date} ${this.maxTime}`);
@@ -228,24 +228,24 @@ export default {
       this.setTime(this.hour, this.min, this.second);
     },
     reset() {
-      this.hour = "";
-      this.min = "";
-      this.second = "";
-      this.time = "";
+      this.hour = '';
+      this.min = '';
+      this.second = '';
+      this.time = '';
     },
     getList(num) {
-      let arr = [];
+      const arr = [];
       for (let i = 0; i <= num; i++) {
         const time = i < 10 ? `0${i}` : i;
         arr.push(time);
       }
       return arr;
-    }
+    },
   },
   mounted() {
     this.hourList = this.getList(24);
     this.minList = this.getList(59);
     this.getDisabledTime();
-  }
+  },
 };
 </script>

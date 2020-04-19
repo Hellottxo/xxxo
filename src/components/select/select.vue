@@ -78,35 +78,35 @@
 </template>
 
 <script>
-import xoInput from "@/components/input/index.js"
-import { constAnalysis } from "@/mixins/const-analysis.js"
-import { debounce } from "@/utils/debounce-throttle.js"
+import xoInput from '@/components/input/index.js';
+import { constAnalysis } from '@/mixins/const-analysis.js';
+import { debounce } from '@/utils/debounce-throttle.js';
 
 export default {
-  name: "xo-select",
+  name: 'xo-select',
   model: {
-    prop: "select",
-    event: "change"
+    prop: 'select',
+    event: 'change',
   },
   props: {
     select: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     placeholder: {
       type: String,
-      default: "请选择"
+      default: '请选择',
     },
     clearable: Boolean,
     width: {
       type: Number,
-      default: 160
+      default: 160,
     },
     multiple: Boolean,
     collapse: Boolean,
     tagline: Boolean,
     disabled: Boolean,
-    filter: Boolean
+    filter: Boolean,
   },
   data() {
     return {
@@ -114,98 +114,97 @@ export default {
       input: this.select,
       isFocus: false,
       isMouseenter: false,
-      keyWords: "",
+      keyWords: '',
       options: [],
       selectOptions: [],
-      noData: true
-    }
+      noData: true,
+    };
   },
   mixins: [constAnalysis],
   components: {
-    xoInput
+    xoInput,
   },
-  provide: function() {
+  provide() {
     return {
-      handleSelectClick: this.optionsClick
-    }
+      handleSelectClick: this.optionsClick,
+    };
   },
   created() {
     if (this.$slots.default) {
       this.options = this.$slots.default.map(
-        e => e.componentOptions.propsData.options
-      )
+        (e) => e.componentOptions.propsData.options,
+      );
     }
   },
   watch: {
     input(val) {
-      this.$emit("change", val)
+      this.$emit('change', val);
     },
     visible(val) {
-      this.$emit("visibleChange", val)
+      this.$emit('visibleChange', val);
     },
     select(val) {
-      this.input = val
-    }
+      this.input = val;
+    },
   },
   methods: {
     setFocus(val) {
-      if (this.disabled) return
-      this.isFocus = val
+      if (this.disabled) return;
+      this.isFocus = val;
     },
     inputWrapClick() {
-      if (this.disabled) return
-      this.isFocus = true
-      this.visible = !this.visible
+      if (this.disabled) return;
+      this.isFocus = true;
+      this.visible = !this.visible;
     },
     optionsClick(val) {
-      if (this.disabled) return
+      if (this.disabled) return;
       if (!this.multiple) {
-        this.input = []
-        this.input[0] = val
+        this.input = [];
+        this.input[0] = val;
       } else {
-        const index = this.input.indexOf(val)
+        const index = this.input.indexOf(val);
         if (index > -1) {
-          this.input.splice(index, 1)
+          this.input.splice(index, 1);
         } else {
-          this.input.push(val)
+          this.input.push(val);
         }
       }
-      this.visible = this.multiple
-      this.isFocus = true
+      this.visible = this.multiple;
+      this.isFocus = true;
     },
     clickOutside() {
-      if (this.disabled) return
-      this.isFocus = false
-      this.visible = false
+      if (this.disabled) return;
+      this.isFocus = false;
+      this.visible = false;
     },
     delSelect(val) {
-      if (this.disabled) return
-      this.isFocus = true
+      if (this.disabled) return;
+      this.isFocus = true;
       if (this.multiple) {
-        const index = this.input.findIndex(e => e.value === val)
-        this.input.splice(index, 1)
+        const index = this.input.findIndex((e) => e.value === val);
+        this.input.splice(index, 1);
       } else {
-        this.input = []
+        this.input = [];
       }
     },
     inputChange(key) {
-      this.$children.forEach(e => {
+      this.$children.forEach((e) => {
         if (e.options) {
-          const flag = key === "" || e.options.label.includes(key)
-          e.visible = flag
+          const flag = key === '' || e.options.label.includes(key);
+          e.visible = flag;
         }
-      })
-      this.noData = !this.$children.every(e => {
+      });
+      this.noData = !this.$children.every((e) => {
         if (e.visible) {
-          return e.visible === false
-        } else {
-          return true
+          return e.visible === false;
         }
-      })
+        return true;
+      });
     },
     getLabel(value) {
-      return this.options.find(e => e.value === value).label
-    }
-  }
-}
+      return this.options.find((e) => e.value === value).label;
+    },
+  },
+};
 </script>

@@ -6,12 +6,12 @@
 export default {
   name: 'xo-icon',
   props: {
-    mode: String
+    mode: String,
   },
   computed: {
     iconMode() {
-      return `icon-${this.mode}`
-    }
-  }
-}
+      return `icon-${this.mode}`;
+    },
+  },
+};
 </script>

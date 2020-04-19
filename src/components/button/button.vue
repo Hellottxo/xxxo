@@ -31,25 +31,25 @@ export default {
     disabled: Boolean,
     icon: {
       type: String,
-      default: ''
+      default: '',
     },
     size: {
       type: String,
-      default: ''
+      default: '',
     },
     round: Boolean,
-    circle: Boolean
+    circle: Boolean,
   },
   data() {
     return {
       isClick: false,
-    }
+    };
   },
   methods: {
     handleClick() {
-      if(this.disabled) return;
+      if (this.disabled) return;
       this.$emit('click');
-    }
-  }
-}
+    },
+  },
+};
 </script>

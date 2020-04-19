@@ -14,31 +14,32 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
+
 export default {
   name: 'xo-menu-item',
   data() {
-    return {}
+    return {};
   },
   props: {
     index: {
       type: String,
-      default: null
+      default: null,
     },
-    disabled: Boolean
+    disabled: Boolean,
   },
   computed: {
-    ...mapState('menuModuel', ['selectIndex', 'mode'])
+    ...mapState('menuModuel', ['selectIndex', 'mode']),
   },
   methods: {
     ...mapMutations('menuModuel', ['chgSelectIndex']),
     handleClick() {
-      if(!this.disabled) {
+      if (!this.disabled) {
         this.chgSelectIndex(this.index);
         this.$emit('click', this);
       }
-    }
+    },
   },
-}
+};
 </script>
 
 <style lang="less" scoped>
@@ -62,7 +63,7 @@ export default {
 
 .menuDisabled {
   cursor: not-allowed;
-  opacity: 0.25; 
+  opacity: 0.25;
 }
 .menuDisabled:hover {
   color: inherit;

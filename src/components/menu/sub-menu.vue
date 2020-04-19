@@ -43,33 +43,34 @@
 
 <script>
 import { mapState } from 'vuex';
+
 export default {
   name: 'xo-sub-menu',
   data() {
     return {
       iscollapse: false,
-      focus: false
-    }
+      focus: false,
+    };
   },
   props: {
     title: String,
     index: {
       type: String,
-      default: null
-    }
+      default: null,
+    },
   },
   computed: {
-    ...mapState('menuModuel', ['mode', 'selectIndex'])
+    ...mapState('menuModuel', ['mode', 'selectIndex']),
   },
   watch: {
     selectIndex() {
       const CHILDREN = this.$children;
-      this.focus = CHILDREN.findIndex(e => e.index === this.selectIndex) > -1;
-    }
+      this.focus = CHILDREN.findIndex((e) => e.index === this.selectIndex) > -1;
+    },
   },
   methods: {
     clickoutside() {
-      if(this.mode === 'horizontal' || this.$parent.collapse) {
+      if (this.mode === 'horizontal' || this.$parent.collapse) {
         this.iscollapse = false;
       }
     },
@@ -78,15 +79,15 @@ export default {
       this.iscollapse = !this.iscollapse;
     },
     mouseEnter(flag) {
-      if(this.mode === 'vertical' && !this.$parent.collapse) return;
-      
+      if (this.mode === 'vertical' && !this.$parent.collapse) return;
+
       clearTimeout(this.timeOut);
       this.timeOut = setTimeout(() => {
         this.iscollapse = flag;
-      }, 200)
-    }
-  }
-}
+      }, 200);
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
@@ -102,7 +103,7 @@ export default {
     padding: 0 20px;
     line-height: 50px;
     .title_wrap {
-      min-width: 50px; 
+      min-width: 50px;
     }
     .icon_wrap {
       width: 30px;
@@ -160,7 +161,7 @@ export default {
   line-height: 50px;
 }
 .collapseVerticalSelect {
-  background-color: #409eff17; 
+  background-color: #409eff17;
   i {
     color: #409EFF;
   }

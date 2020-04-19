@@ -12,36 +12,36 @@
 
 
 <script>
-import icon from "../icon/index.js";
+import icon from '../icon/index.js';
 
 export default {
-  name: "xo-message",
+  name: 'xo-message',
   components: {
-    icon
+    icon,
   },
   data() {
     return {
-      message: "",
+      message: '',
       timeout: null,
       duration: 3000,
       showClose: false,
       top: -20,
       offsetTop: -20,
-      type: "",
+      type: '',
       ICON_MAP: {
-        "": "",
-        primary: "prompt",
-        warning: "prompt",
-        success: "success",
-        info: "prompt",
-        danger: "reeor"
-      }
+        '': '',
+        primary: 'prompt',
+        warning: 'prompt',
+        success: 'success',
+        info: 'prompt',
+        danger: 'reeor',
+      },
     };
   },
   computed: {
     mode() {
       return `${this.ICON_MAP[this.type]}-fill`;
-    }
+    },
   },
   methods: {
     close() {
@@ -56,13 +56,13 @@ export default {
       this.timeout = setTimeout(() => {
         this.close();
       }, this.duration);
-    }
+    },
   },
   mounted() {
     this.setCloseTimeout();
     setTimeout(() => {
       this.offsetTop = this.top;
     }, 0);
-  }
+  },
 };
 </script>
