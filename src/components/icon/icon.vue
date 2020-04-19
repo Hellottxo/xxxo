@@ -1,5 +1,7 @@
 <template>
-  <span :class="iconMode" class="icon iconfont"/>
+  <span>
+    <i :class="iconMode" class="icon iconfont" />
+  </span>
 </template>
 
 <script>

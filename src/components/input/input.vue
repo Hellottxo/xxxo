@@ -48,20 +48,21 @@
       :class="{focus: isFocus}"
       @focus="setFocus(true)"
       @blur="setFocus(false)"
-      ></textarea>
+      />
 
-      <span v-if="wordLimit">{{`${input.length}/${maxLength}`}}</span>
+      <span class="word-limit" v-if="wordLimit">{{`${input.length}/${maxLength}`}}</span>
 
-      <i
+      <icon
       v-show="input && clearable && isMouseenter"
-      class="iconfont icon-reeor-fill"
-      @click="clearSelect"></i>
+      mode="reeor-fill"
+      @click="clearSelect"
+      />
 
-      <i
+      <icon
       v-if="type === 'password' && isMouseenter"
-      class="iconfont icon-browse"
+      mode="browse"
       @click="isPassword = !isPassword"
-      ></i>
+      />
 
       <span class="icon-suffix" v-if="$scopedSlots.suffix">
         <slot name="suffix"></slot>
@@ -72,12 +73,16 @@
 
 <script>
 import calctetxtareaHeight from './calctextareaHeight';
+import Icon from '../icon';
 
 export default {
   name: 'xo-input',
   model: {
     prop: 'inputValue',
     event: 'change',
+  },
+  components: {
+    Icon,
   },
   props: {
     inputValue: {
