@@ -12,15 +12,15 @@
     <code-card title="可清空的输入框" :code="code4">
       <xo-input v-model="input" clearable placeholder="可清空"/>
     </code-card>
-    <code-card title="带icon的输入框" :code="code5">
+    <code-card title="带前缀和后缀的输入框" :code="code5">
       <xo-input>
         <template v-slot:suffix>
-          <i class="iconfont icon-search"/>
+          <icon mode="search" />
         </template>
       </xo-input>
       <xo-input>
         <template v-slot:prefix>
-          <i class="iconfont icon-calendar"/>
+          <icon mode="calendar" />
         </template>
       </xo-input>
     </code-card>
@@ -37,6 +37,7 @@
 import Vue from "vue";
 import codeCard from "./code-card";
 import xoInput from "../../../src/components/input";
+import Icon from "../../../src/components/icon";
 import "../../../src/styles/index.less";
 export default {
   name: "button",
@@ -58,12 +59,12 @@ export default {
       code5: `
       <xo-input>
         <template v-slot:suffix>
-          <i class="iconfont icon-search"/>
+          <icon mode="search" />
         </template>
       </xo-input>
       <xo-input>
         <template v-slot:prefix>
-          <i class="iconfont icon-calendar"/>
+          <icon mode="calendar" />
         </template>
       </xo-input>
       `,
@@ -77,7 +78,8 @@ export default {
   },
   components: {
     xoInput,
-    codeCard
+    codeCard,
+    Icon
   }
 };
 </script>
