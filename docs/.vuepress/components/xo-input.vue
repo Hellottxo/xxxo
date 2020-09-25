@@ -4,7 +4,7 @@
       <xo-input/>
     </code-card>
     <code-card title="密码输入框" :code="code2">
-      <xo-input type="password" placeholder="请输入密码"/>
+      <xo-input type="password" placeholder="请输入密码" />
     </code-card>
     <code-card title="禁止输入的输入框" :code="code3">
       <xo-input disable placeholder="禁止输入"/>
@@ -40,7 +40,7 @@ import xoInput from "../../../src/components/input";
 import Icon from "../../../src/components/icon";
 import "../../../src/styles/index.less";
 export default {
-  name: "button",
+  name: 'doc-button',
   data() {
     return {
       input: 123,
