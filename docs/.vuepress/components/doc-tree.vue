@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import Vue from "vue";
 import codeCard from "./code-card";
 import xoTree from "../../../src/components/tree";
 import "../../../src/styles/index.less";

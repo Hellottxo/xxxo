@@ -17,65 +17,76 @@
       }"
     >
       <div ref="card">
-        <slot></slot>
+        <slot/>
       </div>
     </div>
-    <div v-if="isShowArrow">
-      <div v-if="$scopedSlots.footer && isShowHidden" class="xo-card_footer-content">
-        <slot name="footer"/>
-      </div>
+
+    <div v-show="isShowArrow">
+      <xo-collapse-transition>
+        <div v-show="$scopedSlots.footer && isShowHidden">
+          <div class="xo-card_footer-content">
+            <slot name="footer"/>
+          </div>
+        </div>
+      </xo-collapse-transition>
       <div class="xo-card_arrow" @click="showHidden">
         <span v-if="hiddenText" class="xo-card_footer-text">{{hiddenText}}</span>
-        <i
-          :class="{
-          'xo-card_arrow-transform': isShowHidden,
-          'iconfont': true,
-          'icon-arrow-down': true
-          }"
-        />
+        <span
+          class="xo-card_arrow-transform"
+          :style="{transform: isShowHidden ? 'rotate(180deg)' : 'rotate(0deg)'}"
+        >
+          <xo-icon mode="arrow-down"/>
+        </span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import xoCollapseTransition from "../transition";
+import xoIcon from "../icon";
+
 export default {
-  name: 'xo-card',
+  name: "xo-card",
   data() {
     return {
       isShowHidden: false,
-      isShowArrow: false,
+      isShowArrow: false
     };
+  },
+  components: {
+    xoCollapseTransition,
+    xoIcon
   },
   props: {
     shadow: {
       type: String,
-      default: '',
+      default: ""
     },
     maxHeight: Number,
     align: {
       type: String,
-      default: 'center',
+      default: "center"
     },
     hiddenText: {
       type: String,
-      default: '',
-    },
+      default: ""
+    }
   },
   methods: {
     showHidden() {
       this.isShowHidden = !this.isShowHidden;
-      this.$emit('visible-change', this.isShowHidden);
+      this.$emit("visible-change", this.isShowHidden);
     },
     showArrow() {
       if (!this.maxHeight && !this.$scopedSlots.footer) return false;
       return this.maxHeight
         ? this.maxHeight < this.$refs.card.clientHeight
         : true;
-    },
+    }
   },
   mounted() {
     this.isShowArrow = this.showArrow();
-  },
+  }
 };
 </script>

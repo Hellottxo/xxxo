@@ -53,12 +53,12 @@
 
       <span class="word-limit" v-if="wordLimit">{{`${input.length}/${maxLength}`}}</span>
 
-      <span @click="clearSelect">
-        <xo-icon v-show="input && clearable && isMouseenter" mode="reeor-fill"/>
+      <span @click="clearSelect" v-if="clearable">
+        <xo-icon v-show="input && isMouseenter" mode="reeor-fill"/>
       </span>
 
-      <span @click="isPassword = !isPassword">
-        <xo-icon v-if="type === 'password' && isMouseenter" mode="browse"/>
+      <span @click="isPassword = !isPassword" v-if="type === 'password'">
+        <xo-icon v-show="isMouseenter" mode="browse"/>
       </span>
 
       <span class="icon-suffix" v-if="$scopedSlots.suffix">

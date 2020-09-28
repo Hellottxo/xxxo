@@ -1,7 +1,7 @@
 # Rate 评分
 
 <ClientOnly>
-  <xo-rate/>
+  <doc-rate/>
 </ClientOnly>
 
 ## API

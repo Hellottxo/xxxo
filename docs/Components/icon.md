@@ -5,5 +5,5 @@
 :::
 
 <ClientOnly>
-  <xo-icon/>
+  <doc-icon/>
 </ClientOnly>

@@ -4,7 +4,7 @@
       <div class="title">{{title}}</div>
       <span>{{describle}}</span>
     </template>
-    <slot></slot>
+    <slot/>
     <template v-slot:footer>
       <div v-highlight>
         <pre>

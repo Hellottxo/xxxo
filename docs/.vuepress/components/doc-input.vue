@@ -4,7 +4,7 @@
       <xo-input/>
     </code-card>
     <code-card title="密码输入框" :code="code2">
-      <xo-input type="password" placeholder="请输入密码" />
+      <xo-input type="password" placeholder="请输入密码"/>
     </code-card>
     <code-card title="禁止输入的输入框" :code="code3">
       <xo-input disable placeholder="禁止输入"/>
@@ -15,12 +15,12 @@
     <code-card title="带前缀和后缀的输入框" :code="code5">
       <xo-input>
         <template v-slot:suffix>
-          <icon mode="search" />
+          <icon mode="search"/>
         </template>
       </xo-input>
       <xo-input>
         <template v-slot:prefix>
-          <icon mode="calendar" />
+          <icon mode="calendar"/>
         </template>
       </xo-input>
     </code-card>
@@ -34,13 +34,11 @@
 </template>
 
 <script>
-import Vue from "vue";
 import codeCard from "./code-card";
 import xoInput from "../../../src/components/input";
 import Icon from "../../../src/components/icon";
 import "../../../src/styles/index.less";
 export default {
-  name: 'doc-button',
   data() {
     return {
       input: 123,
