@@ -1,44 +1,44 @@
 <template>
   <div
-  class="xo-menu-item"
-  @click="handleClick"
-  :class="{
+    class="xo-menu-item"
+    @click="handleClick"
+    :class="{
     horizontalSelect: mode === 'horizontal' && selectIndex === index,
     verticalSelect: mode === 'vertical' && selectIndex === index,
     menuDisabled: disabled
   }"
   >
-    <slot></slot>
+    <slot/>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations } from "vuex";
 
 export default {
-  name: 'xo-menu-item',
+  name: "xo-menu-item",
   data() {
     return {};
   },
   props: {
     index: {
       type: String,
-      default: null,
+      default: null
     },
-    disabled: Boolean,
+    disabled: Boolean
   },
   computed: {
-    ...mapState('menuModuel', ['selectIndex', 'mode']),
+    ...mapState("menuModuel", ["selectIndex", "mode"])
   },
   methods: {
-    ...mapMutations('menuModuel', ['chgSelectIndex']),
+    ...mapMutations("menuModuel", ["chgSelectIndex"]),
     handleClick() {
       if (!this.disabled) {
         this.chgSelectIndex(this.index);
-        this.$emit('click', this);
+        this.$emit("click", this);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -55,9 +55,9 @@ export default {
   display: flex;
 }
 .xo-menu-item:hover {
-  color: #409EFF;
+  color: #409eff;
   i {
-    color: #409EFF;
+    color: #409eff;
   }
 }
 

@@ -32,38 +32,39 @@
 </template>
 
 <script>
-import xoCollapseTransition from "../transition";
-import xoIcon from "../icon"
+import xoCollapseTransition from '../transition';
+import xoIcon from '../icon';
+
 export default {
-  name: "xo-tree-node",
+  name: 'xo-tree-node',
   props: {
     data: Object,
     defaultExpand: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     nodeKey: String,
     defaultExpandAll: Boolean,
     childrenKey: {
       type: String,
-      default: "children"
+      default: 'children',
     },
-    selected: [String, Number]
+    selected: [String, Number],
   },
-  inject: ["setSelected"],
+  inject: ['setSelected'],
   data() {
     return {
-      collapse: false
+      collapse: false,
     };
   },
   components: {
     xoCollapseTransition,
-    xoIcon
+    xoIcon,
   },
   methods: {
     handleClick() {
       this.setSelected(this.data.nodeKey);
-    }
+    },
   },
   mounted() {
     if (this.defaultExpandAll) {
@@ -71,6 +72,6 @@ export default {
     } else {
       this.collapse = this.defaultExpand.includes(this.data[this.nodeKey]);
     }
-  }
+  },
 };
 </script>

@@ -69,54 +69,54 @@
 </template>
 
 <script>
-import calctetxtareaHeight from "./calctextareaHeight";
-import xoIcon from "../icon";
+import calctetxtareaHeight from './calctextareaHeight';
+import xoIcon from '../icon';
 
 export default {
-  name: "xo-input",
+  name: 'xo-input',
   model: {
-    prop: "inputValue",
-    event: "change"
+    prop: 'inputValue',
+    event: 'change',
   },
   components: {
-    xoIcon
+    xoIcon,
   },
   props: {
     inputValue: {
       type: [String, Number],
-      default: ""
+      default: '',
     },
     width: [String, Number],
     minWidth: [String, Number],
     maxWidth: [String, Number],
     disable: {
       type: Boolean,
-      default: false
+      default: false,
     },
     clearable: {
       type: Boolean,
-      default: false
+      default: false,
     },
     placeholder: {
       type: String,
-      default: "请输入内容"
+      default: '请输入内容',
     },
     type: {
       type: String,
-      default: "text"
+      default: 'text',
     },
     autoSize: {
       type: Boolean,
-      default: false
+      default: false,
     },
     wordLimit: {
       type: Boolean,
-      default: false
+      default: false,
     },
     maxLength: {
       type: Number,
-      default: 10
-    }
+      default: 10,
+    },
   },
   data() {
     return {
@@ -125,48 +125,48 @@ export default {
       isMouseenter: false,
       isPassword: false,
       inputWrapWidth: 0,
-      textareaHeight: "",
-      count: 0
+      textareaHeight: '',
+      count: 0,
     };
   },
   watch: {
     input(val) {
-      this.$emit("input", val);
-      this.$emit("change", val);
-      if (this.type === "textarea") {
+      this.$emit('input', val);
+      this.$emit('change', val);
+      if (this.type === 'textarea') {
         this.resizeTextarea();
       }
     },
     inputValue(val) {
       this.input = val;
-    }
+    },
   },
   methods: {
     setFocus(val) {
       if (val) {
-        this.$emit("focus", this.input);
+        this.$emit('focus', this.input);
       } else {
-        this.$emit("blur", this.input);
+        this.$emit('blur', this.input);
       }
       if (!this.disable) {
         this.isFocus = val;
       }
     },
     clearSelect() {
-      this.input = "";
-      this.$emit("input", "");
+      this.input = '';
+      this.$emit('input', '');
     },
     resizeTextarea() {
       this.textareaHeight = calctetxtareaHeight(
         this.$refs.textarea,
-        this.input
+        this.input,
       );
-    }
+    },
   },
   mounted() {
-    if (this.type === "password") {
+    if (this.type === 'password') {
       this.isPassword = true;
     }
-  }
+  },
 };
 </script>

@@ -9,7 +9,6 @@ export default {
   name: 'xo-icon',
   props: {
     mode: String,
-    class: String
   },
   computed: {
     iconMode() {

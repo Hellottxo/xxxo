@@ -43,50 +43,50 @@
 </template>
 
 <script>
-import xoCollapseTransition from "../transition";
-import xoIcon from "../icon";
+import xoCollapseTransition from '../transition';
+import xoIcon from '../icon';
 
 export default {
-  name: "xo-card",
+  name: 'xo-card',
   data() {
     return {
       isShowHidden: false,
-      isShowArrow: false
+      isShowArrow: false,
     };
   },
   components: {
     xoCollapseTransition,
-    xoIcon
+    xoIcon,
   },
   props: {
     shadow: {
       type: String,
-      default: ""
+      default: '',
     },
     maxHeight: Number,
     align: {
       type: String,
-      default: "center"
+      default: 'center',
     },
     hiddenText: {
       type: String,
-      default: ""
-    }
+      default: '',
+    },
   },
   methods: {
     showHidden() {
       this.isShowHidden = !this.isShowHidden;
-      this.$emit("visible-change", this.isShowHidden);
+      this.$emit('visible-change', this.isShowHidden);
     },
     showArrow() {
       if (!this.maxHeight && !this.$scopedSlots.footer) return false;
       return this.maxHeight
         ? this.maxHeight < this.$refs.card.clientHeight
         : true;
-    }
+    },
   },
   mounted() {
     this.isShowArrow = this.showArrow();
-  }
+  },
 };
 </script>

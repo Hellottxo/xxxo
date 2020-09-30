@@ -46,7 +46,7 @@ export default {
 
 <style scoped>
 .xo-card {
-  margin: 20px;
+  margin: 20px 0;
 }
 .title {
   font-weight: bold;

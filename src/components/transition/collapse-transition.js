@@ -1,3 +1,4 @@
+/* eslint-disable */
 export default {
   functional: true,
   name: 'collapse-transition',
@@ -40,7 +41,7 @@ export default {
           el.className = el.dataset.className;
           el.style.height = '';
           el.style.overflow = el.dataset.overflow;
-        }
+        },
       },
     };
     return createElement('transition', data, children);
