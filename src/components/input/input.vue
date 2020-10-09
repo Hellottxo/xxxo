@@ -1,71 +1,68 @@
 <template>
   <div class="xo-input">
     <div
-    class="xo-input_wrap"
-    :class="{'xo-disable': disable}"
-    :style="{
+      class="xo-input_wrap"
+      :class="{'xo-disable': disable}"
+      :style="{
       width: width,
       maxWidth: maxWidth,
       minWidth: minWidth
     }"
-    @mouseenter="isMouseenter=true"
-    @mouseleave="isMouseenter=false"
+      @mouseenter="isMouseenter=true"
+      @mouseleave="isMouseenter=false"
     >
       <span class="icon-prefix" v-if="$scopedSlots.prefix">
-        <slot name="prefix"></slot>
+        <slot name="prefix"/>
       </span>
 
       <input
-      v-if="type !== 'textarea'"
-      v-model="input"
-      :type="isPassword ? 'password' : 'text'"
-      :class="{
+        v-if="type !== 'textarea'"
+        v-model="input"
+        :type="isPassword ? 'password' : 'text'"
+        :class="{
         'xo-disable': disable,
         focus: isFocus
       }"
-      :style="{
+        :style="{
         width: width,
         maxWidth: maxWidth,
         minWidth: minWidth,
         paddingLeft: $scopedSlots.prefix ? `30px` : `15px`,
         paddingRight: $scopedSlots.suffix ? `30px` : `15px`,
       }"
-      :readonly="disable"
-      :placeholder="placeholder"
-      @focus="setFocus(true)"
-      @blur="setFocus(false)">
+        :readonly="disable"
+        :placeholder="placeholder"
+        @focus="setFocus(true)"
+        @blur="setFocus(false)"
+      >
 
       <textarea
-      v-else
-      ref="textarea"
-      v-model="input"
-      :style="{
+        v-else
+        ref="textarea"
+        v-model="input"
+        :style="{
         height: autoSize ? textareaHeight : '',
         width: width,
         maxWidth: maxWidth,
         minWidth: minWidth,}"
-      :maxLength="wordLimit ? maxLength : ''"
-      :class="{focus: isFocus}"
-      @focus="setFocus(true)"
-      @blur="setFocus(false)"
+        :maxLength="wordLimit ? maxLength : ''"
+        :class="{focus: isFocus}"
+        @focus="setFocus(true)"
+        @blur="setFocus(false)"
       />
 
       <span class="word-limit" v-if="wordLimit">{{`${input.length}/${maxLength}`}}</span>
 
-      <icon
-      v-show="input && clearable && isMouseenter"
-      mode="reeor-fill"
-      @click="clearSelect"
-      />
+      <span @click="clearSelect" v-if="clearable">
+        <xo-icon v-show="input && isMouseenter" mode="reeor-fill"/>
+      </span>
 
-      <icon
-      v-if="type === 'password' && isMouseenter"
-      mode="browse"
-      @click="isPassword = !isPassword"
-      />
+      <span @click="isPassword = !isPassword" v-if="type === 'password'">
+        <xo-icon v-show="isMouseenter" mode="browse"/>
+      </span>
 
       <span class="icon-suffix" v-if="$scopedSlots.suffix">
-        <slot name="suffix"></slot>
+        <slot name="suffix"/>
       </span>
     </div>
   </div>
@@ -73,7 +70,7 @@
 
 <script>
 import calctetxtareaHeight from './calctextareaHeight';
-import Icon from '../icon';
+import xoIcon from '../icon';
 
 export default {
   name: 'xo-input',
@@ -82,7 +79,7 @@ export default {
     event: 'change',
   },
   components: {
-    Icon,
+    xoIcon,
   },
   props: {
     inputValue: {
@@ -160,7 +157,10 @@ export default {
       this.$emit('input', '');
     },
     resizeTextarea() {
-      this.textareaHeight = calctetxtareaHeight(this.$refs.textarea, this.input);
+      this.textareaHeight = calctetxtareaHeight(
+        this.$refs.textarea,
+        this.input,
+      );
     },
   },
   mounted() {

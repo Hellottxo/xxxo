@@ -34,12 +34,10 @@
 </template>
 
 <script>
-import Vue from "vue";
 import codeCard from "./code-card";
 import xoButton from "../../../src/components/button";
 import "../../../src/styles/index.less";
 export default {
-  name: 'button',
   data() {
     return {
       code1: `

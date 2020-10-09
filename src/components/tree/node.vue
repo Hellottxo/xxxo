@@ -1,38 +1,40 @@
 <template>
-  <div class="xo-tree-node">
-    <ul>
-      <li>
-        <div class="xo-node">
-          <span
-          :class="{'xo-transform': collapse}"
-          v-if="data[childrenKey]"
-          @click="collapse=!collapse">
-            <i class="iconfont icon-arrow-right"></i>
-          </span>
-          <span
-          class="xo-node-title"
-          :class="{selected: data.nodeKey === selected}"
-          @click="handleClick">{{data.label}}</span>
-        </div>
-        <div v-if="data[childrenKey]">
-          <xo-tree-node
+  <li class="xo-tree-node">
+    <div class="xo-node">
+      <span
+        :class="{'xo-transform': collapse}"
+        v-if="data[childrenKey]"
+        @click="collapse=!collapse"
+      >
+        <xo-icon mode="arrow-right" />
+      </span>
+      <span
+        class="xo-node-title"
+        :class="{selected: data.nodeKey === selected}"
+        @click="handleClick"
+      >{{data.label}}</span>
+    </div>
+    <xo-collapse-transition>
+      <div v-if="data[childrenKey]" v-show="collapse">
+        <xo-tree-node
           :default-expand="defaultExpand"
+          :key="item[nodeKey]"
           :node-key="nodeKey"
-          v-show="collapse"
-          v-for="(item, index) in data[childrenKey]"
-          :key="index"
+          v-for="item in data[childrenKey]"
           :data="item"
           :children-key="childrenKey"
           :default-expand-all="defaultExpandAll"
           :selected="selected"
-          ></xo-tree-node>
-        </div>
-      </li>
-    </ul>
-  </div>
+        />
+      </div>
+    </xo-collapse-transition>
+  </li>
 </template>
 
 <script>
+import xoCollapseTransition from '../transition';
+import xoIcon from '../icon';
+
 export default {
   name: 'xo-tree-node',
   props: {
@@ -54,6 +56,10 @@ export default {
     return {
       collapse: false,
     };
+  },
+  components: {
+    xoCollapseTransition,
+    xoIcon,
   },
   methods: {
     handleClick() {

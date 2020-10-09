@@ -1,7 +1,7 @@
 ## Button 按钮
 
 <ClientOnly>
-  <xo-button/>
+  <doc-button/>
 </ClientOnly>
 
 ## API

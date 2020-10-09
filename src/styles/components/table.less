@@ -1,111 +1,48 @@
 .xo-table {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  position: relative;
-  .xo-table-header {
-    overflow: hidden;
-  }
-  .xo-table-body {
-    overflow: auto;
-    flex: 1;
-  }
-  .xo-table-fixed {
-    position: absolute;
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-  }
-  .hidden {
-      visibility: hidden;
-  }
-  .end {
-    box-shadow: -2px 0 6px -2px rgba(0,0,0,.2);
-  }
-  .start {
-    box-shadow: 2px 0 6px -2px rgba(0,0,0,.2);
-  }
-  .xo-table-fixed_body {
-    overflow: hidden;
-  }
-  .xo-table-body::-webkit-scrollbar {/*滚动条整体样式*/
-    width: 10px;     /*高宽分别对应横竖滚动条的尺寸*/
-    height: 10px;
-  }
-  .xo-table-body::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
-    border-radius: 10px;
-    background: #e8eaec;
-  }
-  .xo-table-body::-webkit-scrollbar-track {/*滚动条里面轨道*/
-    background: #fff;
-  }
+  color: @font-color;
+  font-size: 14px;
   table {
-    width: 100%;
-    table-layout: fixed;
+    margin: 0;
     border-collapse: collapse;
-    user-select: none;
-    font-size: 12px;
-    color: #515a6e;
+    display: table;
+    width: 100%;
   }
-  tr {
-    background: #fff;
+  th, td {
+    border: none;
+    padding: 0.6em 0;
+    background: @white;
   }
-  .hover {
-    background: #fafbfc;
+
+  tbody tr {
+    &:first-child {
+      border-top: none;
+      & > th {
+        border-top: none;
+      }
+    }
+    &:last-child th{
+      border-bottom: none;
+    }
   }
-  th {
-    border-bottom: 1px solid #e8eaec;
-    background-color: #f8f8f9;
+  
+  .xo-table-th {
+    padding: 0 1em;
   }
-  td {
-    padding: 3px;
-    border-bottom: 1px solid #e8eaec;
-  }
-  .stripe {
-    background-color: #f8f8f9;
-  }
-  .cell {
-    padding: 7px;
-    position: relative;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    word-break: break-all;
-    height: 30px;
+
+  .xo-table_wrap {
     box-sizing: border-box;
-    span {
-      padding-right: 5px;
-    }
-    i {
-      position: absolute;
-      top: 11px;
-      right: 10px;
-    }
-  }
-  .open {
-    transform: rotate(90deg);
-  }
-  .child-tr {
-    background-color: #f8f8f9;
-  }
-  .slot {
-    border-right: 1px solid #e8eaec;
-    border-bottom: 1px solid #e8eaec;
-    width: 100vh;
-  }
-  .highlight {
-    background-color: #ebf7ff !important;
+    overflow: auto;
+    border-bottom: @border;
+    border-left: @border;
+    border-right: @border;
   }
 }
-.border-right {
-  border-right: 1px solid #e8eaec;
+
+
+.xo-table-border th:not(:last-child) {
+  border-right: @border;
 }
-.border-left {
-  border-left: 1px solid #e8eaec;
-}
-.border-top {
-  border-top: 1px solid #e8eaec;
-}
-.border-bottom {
-  border-bottom: 1px solid #e8eaec;
+
+.xo-table-stripe tr:nth-child(2n) th {
+  background: @table-stripe-color;
 }

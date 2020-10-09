@@ -4,7 +4,7 @@
       <div class="title">{{title}}</div>
       <span>{{describle}}</span>
     </template>
-    <slot></slot>
+    <slot/>
     <template v-slot:footer>
       <div v-highlight>
         <pre>
@@ -46,7 +46,7 @@ export default {
 
 <style scoped>
 .xo-card {
-  margin: 20px;
+  margin: 20px 0;
 }
 .title {
   font-weight: bold;

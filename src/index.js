@@ -12,6 +12,7 @@ import xoSubMenu from './components/sub-menu/index';
 import xoButton from './components/button/index';
 import xoCard from './components/card/index';
 import xoIcon from './components/icon/index';
+import xoCollapseTransition from './components/transition';
 import Message from './components/message/index';
 import clickOutside from './directive/clickoutside/index';
 
@@ -30,12 +31,14 @@ const components = [
   xoButton,
   xoCard,
   xoIcon,
+  xoCollapseTransition,
 ];
 
 const install = (Vue) => {
   components.forEach((component) => {
     Vue.component(component.name, component);
   });
+  /* eslint-disable-next-line */
   Vue.prototype.$message = Message;
   Vue.use(clickOutside);
 };
@@ -63,4 +66,5 @@ export default {
   xoIcon,
   Message,
   clickOutside,
+  xoCollapseTransition,
 };

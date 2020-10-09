@@ -19,19 +19,13 @@
         >
           延迟5s关闭的消息
         </xo-button>
-        <xo-button
-          @click="handleClick('距离顶部300px的消息', 'primary', false, 3000, 300)"
-          type="primary"
-        >
-          距离顶部300px的消息
-        </xo-button>
       </div>
     </code-card>
   </div>
 </template>
 
 <script>
-import Vue from "vue";
+import Vue from 'vue';
 import codeCard from "./code-card";
 import xoButton from "../../../src/components/button";
 import Message from "../../../src/components/message";
@@ -83,13 +77,12 @@ export default {
       <script>
       export default {
         methods: {
-          handleClick(message, type, showClose, duration, top) {
+          handleClick(message, type, showClose, duration) {
             this.$message({
               message,
               type,
               showClose,
               duration,
-              top
             });
           }
         }

@@ -44,10 +44,8 @@
 <script>
 import xoCard from "../../../src/components/card";
 import "../../../src/styles/index.less";
-import Vue from "vue";
 import codeCard from "./code-card";
 export default {
-  name: 'card',
   data() {
     return {
       text: "展开",

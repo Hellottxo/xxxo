@@ -16,7 +16,7 @@
       disabled: disabled,
     }">
       <span>
-        <slot></slot>
+        <slot />
         <i v-if="icon != ''" class="iconfont" :class="`icon-${icon}`"></i>
       </span>
     </button>

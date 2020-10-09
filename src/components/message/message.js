@@ -10,7 +10,7 @@ const Message = (options) => {
   instance.message = options.message || '';
   instance.duration = options.duration || 3000;
   instance.showClose = options.showClose || false;
-  instance.top = options.top || 20;
+  instance.top = 20;
   instance.$mount();
   const content = document.createElement('DIV');
   content.className = 'xo-message-wrap';

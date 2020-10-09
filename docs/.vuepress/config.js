@@ -27,6 +27,7 @@ module.exports = {
         children: [
           '/components/icon',
           '/components/card',
+          '/components/transition',
           '/components/button',
           '/components/message',
           '/components/rate',

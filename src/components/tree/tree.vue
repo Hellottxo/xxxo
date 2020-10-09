@@ -1,16 +1,16 @@
 <template>
-  <div class="xo-tree">
+  <ul class="xo-tree">
     <xo-tree-node
-    v-for="(item, index) in data"
-    :node-key="nodeKey"
-    :key="index"
-    :data="item"
-    :default-expand="defaultExpand"
-    :default-expand-all="defaultExpandAll"
-    :children-key="childrenKey"
-    :selected="selected"
-    ></xo-tree-node>
-  </div>
+      v-for="item in data"
+      :key="item[nodeKey]"
+      :node-key="nodeKey"
+      :data="item"
+      :default-expand="defaultExpand"
+      :default-expand-all="defaultExpandAll"
+      :children-key="childrenKey"
+      :selected="selected"
+    />
+  </ul>
 </template>
 
 <script>
@@ -44,6 +44,7 @@ export default {
       default: () => [],
     },
     defaultExpandAll: Boolean,
+    nodeKey: String,
   },
   methods: {
     handleClick(nodeKey) {

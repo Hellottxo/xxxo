@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import Vue from "vue";
+import Vue from 'vue';
 import xoIcon from "../../../src/components/icon";
 import xoCard from "../../../src/components/card";
 import Message from "../../../src/components/message";
@@ -162,7 +162,6 @@ const ICON = [
 ];
 
 export default {
-  name: "icon",
   data() {
     return {
       ICON

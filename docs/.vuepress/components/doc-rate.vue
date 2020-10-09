@@ -34,7 +34,6 @@
 </template>
 
 <script>
-import Vue from "vue";
 import codeCard from "./code-card";
 import xoRate from "../../../src/components/rate";
 import "../../../src/styles/index.less";

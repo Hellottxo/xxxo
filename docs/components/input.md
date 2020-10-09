@@ -1,6 +1,6 @@
 # Input 输入框
 <ClientOnly>
-  <xo-input/>
+  <doc-input/>
 </ClientOnly>
 
 ## API

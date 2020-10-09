@@ -2,7 +2,7 @@
 
 
 <ClientOnly>
-  <xo-card/>
+  <doc-card/>
 </ClientOnly>
 
 ## API
