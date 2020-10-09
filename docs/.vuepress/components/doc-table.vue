@@ -16,11 +16,11 @@ export default {
         { key: "habbit", label: "爱好" }
       ],
       dataSource: [
-        { name: "困1", age: 10, habbit: "唱跳" },
-        { name: "困2", age: 11, habbit: "rap" },
-        { name: "困3", age: 12, habbit: "打篮球" },
-        { name: "困4", age: 12, habbit: "打篮球" },
-        { name: "困5", age: 12, habbit: "打篮球" },
+        { name: "困", age: 10, habbit: "唱跳" },
+        { name: "困", age: 11, habbit: "rap" },
+        { name: "困", age: 12, habbit: "打篮球" },
+        { name: "困", age: 12, habbit: "打篮球" },
+        { name: "困", age: 12, habbit: "打篮球" },
         ]
     };
   },
