@@ -11,8 +11,8 @@
       @mouseenter="isMouseenter=true"
       @mouseleave="isMouseenter=false"
     >
-      <span class="icon-prefix" v-if="$scopedSlots.prefix">
-        <slot name="prefix"/>
+      <span class="icon-prefix" v-if="prefix">
+        <xo-icon :mode="prefix" />
       </span>
 
       <input
@@ -27,8 +27,8 @@
         width: width,
         maxWidth: maxWidth,
         minWidth: minWidth,
-        paddingLeft: $scopedSlots.prefix ? `30px` : `15px`,
-        paddingRight: $scopedSlots.suffix ? `30px` : `15px`,
+        paddingLeft: prefix ? `30px` : `15px`,
+        paddingRight: suffix ? `30px` : `15px`,
       }"
         :readonly="disable"
         :placeholder="placeholder"
@@ -61,8 +61,8 @@
         <xo-icon v-show="isMouseenter" mode="browse"/>
       </span>
 
-      <span class="icon-suffix" v-if="$scopedSlots.suffix">
-        <slot name="suffix"/>
+      <span class="icon-suffix" v-if="suffix">
+        <xo-icon :mode="suffix"/>
       </span>
     </div>
   </div>
@@ -117,6 +117,14 @@ export default {
       type: Number,
       default: 10,
     },
+    prefix: {
+      type: String,
+      default: ''
+    },
+    suffix: {
+      type: String,
+      default: ''
+    },
   },
   data() {
     return {
@@ -167,6 +175,6 @@ export default {
     if (this.type === 'password') {
       this.isPassword = true;
     }
-  },
+  }
 };
 </script>

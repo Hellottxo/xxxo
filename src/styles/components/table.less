@@ -7,22 +7,20 @@
     display: table;
     width: 100%;
   }
-  th, td {
-    border: none;
-    padding: 0.6em 0;
-    background: @white;
-  }
 
   tbody tr {
     &:first-child {
       border-top: none;
-      & > th {
-        border-top: none;
-      }
     }
-    &:last-child th{
-      border-bottom: none;
+    &:hover td {
+      background: @table-hover-color;
     }
+  }
+
+  th, td {
+    border: none;
+    padding: 0.6em 0;
+    background: @white;
   }
   
   .xo-table-th {
@@ -39,10 +37,14 @@
 }
 
 
-.xo-table-border th:not(:last-child) {
-  border-right: @border;
+.xo-table-border {
+  th, td{
+    &:not(:last-child) {
+      border-right: @border;
+    }
+  }
 }
 
-.xo-table-stripe tr:nth-child(2n) th {
+.xo-table-stripe tr:nth-child(2n) td {
   background: @table-stripe-color;
 }

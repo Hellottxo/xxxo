@@ -6,14 +6,14 @@
       </colgroup>
       <tbody>
         <tr v-for="d in dataSource" :key="d[rowKey]">
-          <th v-for="c in columns" :key="c.key">
+          <td v-for="c in columns" :key="c.key">
             <div
               class="xo-table-th"
               :style="{
                 textAlign: c.align
               }"
             >{{d[c.key]}}</div>
-          </th>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -37,7 +37,6 @@ export default {
     },
     maxHeight: Number,
     showHeader: Boolean,
-    bordered: Boolean
   }
 };
 </script>

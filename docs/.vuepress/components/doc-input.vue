@@ -13,16 +13,8 @@
       <xo-input v-model="input" clearable placeholder="可清空"/>
     </code-card>
     <code-card title="带前缀和后缀的输入框" :code="code5">
-      <xo-input>
-        <template v-slot:suffix>
-          <icon mode="search"/>
-        </template>
-      </xo-input>
-      <xo-input>
-        <template v-slot:prefix>
-          <icon mode="calendar"/>
-        </template>
-      </xo-input>
+      <xo-input suffix="search" />
+      <xo-input prefix="calendar" />
     </code-card>
     <code-card title="文本框" :code="code6">
       <xo-input type="textarea" width="300" wordLimit :maxLength="30"/>
@@ -55,16 +47,10 @@ export default {
       <xo-input v-model="input" clearable placeholder="可清空"/>
       `,
       code5: `
-      <xo-input>
-        <template v-slot:suffix>
-          <icon mode="search" />
-        </template>
-      </xo-input>
-      <xo-input>
-        <template v-slot:prefix>
-          <icon mode="calendar" />
-        </template>
-      </xo-input>
+      suffix 和 prefix 的值从 Icon 组件中获取。
+
+      <xo-input suffix="search" />
+      <xo-input prefix="calendar" />
       `,
       code6: `
       <xo-input type="textarea" width="300" wordLimit :maxLength="30"/>
