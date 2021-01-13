@@ -1,4 +1,6 @@
-# xo
+# xo-ui
+仿写element-ui，预览地址：
+[xo-ui](http://xo.silenttt.top/xo-ui/)
 
 ## Project setup
 ```
@@ -7,22 +9,22 @@ yarn install
 
 ### Compiles and hot-reloads for development
 ```
-yarn run serve
+yarn serve
 ```
 
 ### Compiles and minifies for production
 ```
-yarn run build
+yarn build
 ```
 
 ### Run your tests
 ```
-yarn run test
+yarn test
 ```
 
 ### Lints and fixes files
 ```
-yarn run lint
+yarn lint
 ```
 
 ### Customize configuration

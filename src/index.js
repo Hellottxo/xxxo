@@ -6,9 +6,6 @@ import xoTree from './components/tree/index';
 import xoRate from './components/rate/index';
 import xoTimePicker from './components/timepicker/index';
 import xoDatePicker from './components/datepicker/index';
-import xoMenu from './components/menu/index';
-import xoMenuItem from './components/menu-item/index';
-import xoSubMenu from './components/sub-menu/index';
 import xoButton from './components/button/index';
 import xoCard from './components/card/index';
 import xoIcon from './components/icon/index';
@@ -25,9 +22,6 @@ const components = [
   xoRate,
   xoTimePicker,
   xoDatePicker,
-  xoMenu,
-  xoMenuItem,
-  xoSubMenu,
   xoButton,
   xoCard,
   xoIcon,
